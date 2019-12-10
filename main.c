@@ -7,9 +7,8 @@
 /*
  * Files' paths.
  */
-char* BWTFILEPATH = "bwtfiles/testdata_1.bwt";
+char* BWTFILEPATH = "bwtfiles/testdata_100.bwt";
 char* FASTQFILEPATH = "fastqfiles/unitData.fastq";
-char* FNAFILEPATH = "fnafiles/testdata_1.fna";
 
 /*
  * Global variables.
@@ -34,12 +33,10 @@ int main()
     testSet();
 
     BWTARRAYLENGTH = BWTFileSize(BWTFILEPATH, &hexArrayLength, charNumPerHex);
-    printf("bwtArrayLength: %d\n", BWTARRAYLENGTH);
-    printf("hexArrayLength: %d\n", hexArrayLength);
 
     BWT = (int*)malloc(sizeof(int) * BWTARRAYLENGTH);
 
-//    loadBWTFile(BWTFILEPATH, BWTARRAYLENGTH, hexArrayLength, charNumPerHex, BWT);
+    loadBWTFile(BWTFILEPATH, BWTARRAYLENGTH, hexArrayLength, charNumPerHex, BWT);
 
 
     free(BWT);

@@ -1,16 +1,16 @@
 # depslib dependency file v1.0
-1575949720 source:e:\c_projects\bio-info tech experiment 2\main.c
+1575960160 source:e:\c_projects\bio-info tech experiment 2\main.c
 	<stdio.h>
 	<stdlib.h>
 	"FileOperation.h"
 	"HelperFunction.h"
 
-1575949720 e:\c_projects\bio-info tech experiment 2\fileoperation.h
+1575960140 e:\c_projects\bio-info tech experiment 2\fileoperation.h
 	<stdio.h>
 	<stdlib.h>
 	"HelperFunction.h"
 
-1575949436 e:\c_projects\bio-info tech experiment 2\helperfunction.h
+1575959887 e:\c_projects\bio-info tech experiment 2\helperfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>

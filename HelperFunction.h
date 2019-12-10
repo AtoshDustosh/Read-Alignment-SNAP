@@ -96,6 +96,32 @@ void _charToHexTest() {
     printf("\n");
 }
 
+
+/**
+ * Transform hexadecimal numbers into characters (a, c, g, t, $)
+ *
+ * @param hexValue hexadecimal number
+ * @return 'a' if 0x1; 'c' if 0x2;
+ *         'g' if 0x3; 't' if 0x4;
+ *         '$' if 0x5; '*' otherwise
+ */
+char hexToChar(int hexValue){
+    switch(hexValue){
+    case 0x1:
+        return 'a';
+    case 0x2:
+        return 'c';
+    case 0x3:
+        return 'g';
+    case 0x4:
+        return 't';
+    case 0x5:
+        return '$';
+    default:
+        return '*';
+    }
+}
+
 /**
  * Transform characters (A, C, G, T, $) into hexadecimal numbers.
  *
@@ -104,7 +130,7 @@ void _charToHexTest() {
  *         0x2 if ch == 'C' || ch == 'c';
  *         0x3 if ch == 'G' || ch == 'g';
  *         0x4 if ch == 'T' || ch == 't';
- *         0x5 if ch == '$'; -1 otherwise.
+ *         0x5 if ch == '$'; 0x0 otherwise.
  */
 int charToHex(char ch) {
     switch(ch) {
@@ -123,7 +149,7 @@ int charToHex(char ch) {
     case '$':
         return 0x5;
     default:
-        return -1;
+        return 0x0;
     }
 }
 
