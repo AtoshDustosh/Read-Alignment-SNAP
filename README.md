@@ -1,1 +1,1 @@
-# Bowtie
+# Read alignment
