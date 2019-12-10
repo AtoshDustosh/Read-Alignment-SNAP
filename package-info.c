@@ -11,25 +11,26 @@
 /**
  * \note about ?.sam file:
  *  1. special header file needed for ?.sam file processing;
- *  2. not all fields are needed. I can just choose only the necessary and then implement.
+ *  2. not all fields are needed. I can just choose only the necessary.
  *  3. I think it's better to read reads to be aligned one by one instead of read them all
  *      at once in the beginning, which could cost a lot of memory.
- *  4. one question - why must I obey the regulations declared in the SAM regulation manual?
+ *  4. one thought - why must I obey the regulations declared in the SAM regulation manual?
  *      I can just use my own format to explain those fields as the SAM regulation and then
  *      transform the file into ?.sam file (^o')
+ *      ...
+ *      on second thought, this is even more troublesome.
  *
  *
- *
- * \note format of ?.sam file chosen to implement in this program.
- * @HD VN:1.6
- * @
- *
- *
- * QUESTIONS:
+ * \questions:
  *  1. should I fprintf results of read alignment one by one or store the results and
  *      fprintf them all in the end?
+ *      - no. Because in SAM file, some fields of an alignment points to the next alignment.
+ *      And on account of this, another question - should I store all results of alignment
+ *      in memory before fprintf, or there is another better way to do this?
  *  2. ... can I set all fields whose representation meaning is confused for me as
  *      unavailable?
+ *      - you'd better not ...
+ *  3. some other questions are annotated in the SAM format manual.
  */
 
 /**
