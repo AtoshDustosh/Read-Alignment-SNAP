@@ -6,11 +6,6 @@
 #include "HelperFunction.h"
 
 
-/**
- * Planning to make the program read while processing instead of read all data
- * at the beginning, as that may cost a lot memory.
- * Maybe I will need to use a file pointer and transfer it between functions.
- */
 
 int BWTFileSize(char* filePath, int* hexArrayLength, const int charNumPerHex);
 void loadBWTFile(char* filePath, int bwtArrayLength, int hexArrayLength, const int charNumPerHex,
