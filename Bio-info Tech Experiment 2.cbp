@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Bio-info Tech Experiment 2" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="fastqfiles\;fnafiles\;bwtfiles\;" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Bio-info Tech Experiment 2" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Bio-info Tech Experiment 2" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="FileOperation.h" />
+		<Unit filename="HelperFunction.h" />
+		<Unit filename="bwtfiles/testExample.bwt">
+			<Option virtualFolder="bwtfiles/" />
+		</Unit>
+		<Unit filename="bwtfiles/testdata_1.bwt">
+			<Option virtualFolder="bwtfiles/" />
+		</Unit>
+		<Unit filename="bwtfiles/testdata_100.bwt">
+			<Option virtualFolder="bwtfiles/" />
+		</Unit>
+		<Unit filename="bwtfiles/testdata_1000.bwt">
+			<Option virtualFolder="bwtfiles/" />
+		</Unit>
+		<Unit filename="fastqfiles/testdata_124.fastq">
+			<Option virtualFolder="fastqfiles/" />
+		</Unit>
+		<Unit filename="fastqfiles/unitData.fastq">
+			<Option virtualFolder="fastqfiles/" />
+		</Unit>
+		<Unit filename="fnafiles/testExample.fna">
+			<Option virtualFolder="fnafiles/" />
+		</Unit>
+		<Unit filename="fnafiles/testdata_1.fna">
+			<Option virtualFolder="fnafiles/" />
+		</Unit>
+		<Unit filename="fnafiles/testdata_100.fna">
+			<Option virtualFolder="fnafiles/" />
+		</Unit>
+		<Unit filename="fnafiles/testdata_1000.fna">
+			<Option virtualFolder="fnafiles/" />
+		</Unit>
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

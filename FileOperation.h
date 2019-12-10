@@ -13,7 +13,7 @@
  */
 
 int BWTFileSize(char* filePath, int* hexArrayLength, const int charNumPerHex);
-void loadBWTFile(char* filePath, int bwtArrayLength, int* hexArrayLength, const int charNumPerHex,
+void loadBWTFile(char* filePath, int bwtArrayLength, int hexArrayLength, const int charNumPerHex,
                  int* BWT);
 
 /**
@@ -28,33 +28,39 @@ void loadBWTFile(char* filePath, int bwtArrayLength, int* hexArrayLength, const 
  * @param charNumPerHex #(char) per hexadecimal number
  * @param BWT[] array used for storing data
  */
-void loadBWTFile(char* filePath, int bwtArrayLength, int* hexArrayLength, const int charNumPerHex,
+void loadBWTFile(char* filePath, int bwtArrayLength, int hexArrayLength, const int charNumPerHex,
                  int* BWT) {
-////    printf("Loading data in %s... \n", filePath);
-////    FILE* fp = fopen(filePath, "r");
-////    int ifData = 0;
-////    int bwtDataPointer = 0;
-////
-////    if(fp != NULL && bwtDataPointer < bwtArrayLength) {
-////        char ch = fgetc(fp);
-////        while(ch != EOF) {
-////            if(ch == '\n' && !ifData) {
-////                // according to format of *.bwt file
-////                // data part is after the first line
-////                ifData = 1;
-////            }
-////            if(ifData && ch != '\n') {
-////                // if not '\n' and is already in the data part
-////                // store char into the array
-////                BWT[bwtDataPointer++] = lowerCase(ch);
-////            }
-////            ch = fgetc(fp);
-////        }
-////    } else {
-////        printf("failed to open file %s", filePath);
-////        exit(-1);
-////    }
-////    free(fp);
+//    printf("Loading data in %s... \n", filePath);
+//
+//    int ifData = 0;   // if the file pointer is now in the data part
+//
+//    int bwtArrayPointer = 0; // pointer to bwt data file
+//    int hexArrayPointer = 0; // pointer to hexadecimal array
+//
+//    int charCount = 0;  // #(char) added to an 32-bit integer
+//
+//    FILE* fp = fopen(filePath, "r");
+//    if(fp != NULL && bwtArrayPointer < bwtArrayLength) {
+//        char ch = fgetc(fp);
+//        while(ch != EOF) {
+//            if(ch == '\n' && !ifData) {
+//                // according to format of *.bwt file
+//                // data part is after the first line
+//                ifData = 1;
+//            }
+//            if(ifData && ch != '\n') {
+//                // if not '\n' and is already in the data part
+//                // store char into the array
+//                charCount++;
+//
+//            }
+//            ch = fgetc(fp);
+//        }
+//    } else {
+//        printf("failed to open file %s", filePath);
+//        exit(-1);
+//    }
+//    free(fp);
 }
 
 /**

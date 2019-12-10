@@ -11,12 +11,12 @@
 void _myStrLengthTest();
 void _lowerCaseTest();
 void _hexadecimalTest();
-void _char2HexTest();
+void _charToHexTest();
 
 /*
  * Important funcs.
  */
-int char2Hex(char ch);
+int charToHex(char ch);
 int myStrLength(char str[]);
 char lowerCase(char ch);
 
@@ -76,7 +76,7 @@ void _hexadecimalTest() {
 /**
  * Test char-to-hex function.
  */
-void _char2HexTest(){
+void _charToHexTest() {
     printf("\n**************** _char2HexTest ****************\n");
     char a = 'a';
     char A = 'A';
@@ -86,12 +86,12 @@ void _char2HexTest(){
     char G = 'G';
     char t = 't';
     char T = 'T';
-    printf("%c, 0x%x | %c, 0x%x\n", a, char2Hex(a), A, char2Hex(A));
-    printf("%c, 0x%x | %c, 0x%x\n", c, char2Hex(c), C, char2Hex(C));
-    printf("%c, 0x%x | %c, 0x%x\n", g, char2Hex(g), G, char2Hex(G));
-    printf("%c, 0x%x | %c, 0x%x\n", t, char2Hex(t), T, char2Hex(T));
-    printf("%c, 0x%x\n", '$', char2Hex('$'));
-    printf("%c, 0x%x\n", '2', char2Hex('2'));
+    printf("%c, 0x%x | %c, 0x%x\n", a, charToHex(a), A, charToHex(A));
+    printf("%c, 0x%x | %c, 0x%x\n", c, charToHex(c), C, charToHex(C));
+    printf("%c, 0x%x | %c, 0x%x\n", g, charToHex(g), G, charToHex(G));
+    printf("%c, 0x%x | %c, 0x%x\n", t, charToHex(t), T, charToHex(T));
+    printf("%c, 0x%x\n", '$', charToHex('$'));
+    printf("%c, 0x%x\n", '2', charToHex('2'));
 
     printf("\n");
 }
@@ -104,9 +104,9 @@ void _char2HexTest(){
  *         0x2 if ch == 'C' || ch == 'c';
  *         0x3 if ch == 'G' || ch == 'g';
  *         0x4 if ch == 'T' || ch == 't';
- *         0x0 if ch == '$'; -1 otherwise.
+ *         0x5 if ch == '$'; -1 otherwise.
  */
-int char2Hex(char ch) {
+int charToHex(char ch) {
     switch(ch) {
     case 'A':
     case 'a':
@@ -121,7 +121,7 @@ int char2Hex(char ch) {
     case 't':
         return 0x4;
     case '$':
-        return 0x0;
+        return 0x5;
     default:
         return -1;
     }
