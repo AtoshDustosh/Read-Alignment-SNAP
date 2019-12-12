@@ -5,7 +5,7 @@
 		<Option title="Bio-info Tech Experiment 2" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="fastqfiles\;fnafiles\;bwtfiles\;" />
+		<Option virtualFolders="fastqfiles\;bwtfiles\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/Bio-info Tech Experiment 2" prefix_auto="1" extension_auto="1" />
@@ -52,20 +52,13 @@
 		<Unit filename="fastqfiles/unitData.fastq">
 			<Option virtualFolder="fastqfiles/" />
 		</Unit>
-		<Unit filename="fnafiles/testExample.fna">
-			<Option virtualFolder="fnafiles/" />
-		</Unit>
-		<Unit filename="fnafiles/testdata_1.fna">
-			<Option virtualFolder="fnafiles/" />
-		</Unit>
-		<Unit filename="fnafiles/testdata_100.fna">
-			<Option virtualFolder="fnafiles/" />
-		</Unit>
-		<Unit filename="fnafiles/testdata_1000.fna">
-			<Option virtualFolder="fnafiles/" />
-		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="package-info.c">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
 		</Unit>
 		<Extensions>
 			<code_completion />

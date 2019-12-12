@@ -5,6 +5,20 @@
  *      and transfer it between functions.
  *  2. recommend to use a struct type to store a read or an alignment result.
  *      i.e. struct{ sequence(...); quality(...)} for a read from ?.fastq file.
+ *  date: 2019.12.12 22:09
+ *      About the choice of algorithms, I find BWA and Bowtie are similar fundamentally.
+ *  To be specific, they use identical method for exact matching. As for the in-exact
+ *  matching, Bowtie uses the same method as exact matching with a little replacement,
+ *  while BWA uses exact matching with interval backtracking and error-tolerance.
+ *  So I think maybe if I can just apply a similar algorithm while not necessarily
+ *  following their procedures. And it seems not very difficult.
+ *
+ *  date: 2019.12.12 22:34
+ *      BWA and Bowtie are both just using BWT arrays of X and X_inverse to implement
+ *  read-alignment. BWA permits insertion and deletion while Bowtie cannot implement them
+ *  because of its backtracking method using replacement of base-pairs.
+ *      Again I think it's feasible to directly build an algorithm while referring to
+ *  theses papers.
  *
  */
 
