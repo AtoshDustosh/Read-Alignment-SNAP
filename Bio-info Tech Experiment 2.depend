@@ -15,3 +15,10 @@
 	<stdlib.h>
 	<math.h>
 
+1576223041 source:e:\c_projects\bio-info tech experiment 2\headerimplementations\fileoperation.c
+	<stdio.h>
+	<stdlib.h>
+	"../headers/HelperFunction.h"
+
+1576223137 e:\c_projects\bio-info tech experiment 2\headers\helperfunction.h
+
