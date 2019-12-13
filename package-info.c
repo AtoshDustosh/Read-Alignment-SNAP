@@ -20,10 +20,15 @@
  *      Again I think it's feasible to directly build an algorithm while referring to
  *  theses papers.
  *
- *	data: 2019.12.12. 22:45
+ *	date: 2019.12.12. 22:45
  *		However, building an algorithm of one's own may influence the communication with 
  *	other people. Well, as there is few people to talk with, it's probably not a matter. 
- * 
+ *
+ * 	date: 2019.12.13 15:12
+ * 		Generally finished reading SNAP. If I choose to use SNAP, I'll have to implement
+ * 	a hash-table and another approximate string matching method, despite that this is not
+ * 	very difficult. But considering the workload, SNAP is probably not a good choice. 
+ *  
  */
 
 /**
