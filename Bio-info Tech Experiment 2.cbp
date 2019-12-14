@@ -5,7 +5,7 @@
 		<Option title="Bio-info Tech Experiment 2" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="headers\;headerImplementations\;" />
+		<Option virtualFolders="headers\;src\;data\;data\fna\;data\fastq\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/Bio-info Tech Experiment 2" prefix_auto="1" extension_auto="1" />
@@ -32,8 +32,62 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="data/fastq/testdata_124.fastq">
+			<Option virtualFolder="data/fastq/" />
+		</Unit>
+		<Unit filename="data/fastq/unitData.fastq">
+			<Option virtualFolder="data/fastq/" />
+		</Unit>
+		<Unit filename="data/fna/NC_008253.fna">
+			<Option virtualFolder="data/fna/" />
+		</Unit>
+		<Unit filename="data/fna/testExample.fna">
+			<Option virtualFolder="data/fna/" />
+		</Unit>
+		<Unit filename="data/fna/testdata_1.fna">
+			<Option virtualFolder="data/fna/" />
+		</Unit>
+		<Unit filename="data/fna/testdata_100.fna">
+			<Option virtualFolder="data/fna/" />
+		</Unit>
+		<Unit filename="data/fna/testdata_1000.fna">
+			<Option virtualFolder="data/fna/" />
+		</Unit>
+		<Unit filename="headers/ArrayOperation.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/ArrayOperation.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/AuxiliaryFunction.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/AuxiliaryFunction.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/FileOperation.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/FileOperation.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/HashTable.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/HashTable.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
 		<Unit filename="package-info.c">
 			<Option compilerVar="CC" />
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Unit filename="src/main.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="src/" />
 		</Unit>
 		<Extensions>
 			<code_completion />

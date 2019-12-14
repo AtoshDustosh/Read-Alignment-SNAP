@@ -22,3 +22,33 @@
 
 1576223137 e:\c_projects\bio-info tech experiment 2\headers\helperfunction.h
 
+1576307477 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+	<stdlib.h>
+	<stdio.h>
+	"AuxiliaryFunction.h"
+
+1576307691 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+	<stdio.h>
+	<stdlib.h>
+	"FileOperation.h"
+	"AuxiliaryFunction.h"
+
+1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
+
+1576306923 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+	<stdio.h>
+	<stdlib.h>
+	"../headers/AuxiliaryFunction.h"
+	"../headers/FileOperation.h"
+
+1576306688 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+
+1576225278 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
+
+1576307516 source:e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.c
+	<stdlib.h>
+	<stdio.h>
+	"ArrayOperation.h"
+
+1576306616 e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.h
+
