@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-#include "MyArgs.h"
-
 /**
  * A collection of test in this header file.
  */
@@ -38,11 +36,25 @@ void _lowerCaseTest();
  */
 void _transBufToHexIntTest();
 
+/**
+ * Test function extractCharHex.
+ */
+void _extractCharHexTest();
 
 
 /*
  * Working functions.
  */
+
+/**
+ * Extract the hexadecimal number of a char compressed in a 64-bit hexInt.
+ *
+ * @param charIndex the sequence index of the char to be extracted
+ * @param hexInt a 64-bit hexadecimal integer
+ * @param charNumPerHex #(chars) per hexadecimal number
+ * @return extracted hexadecimal number to the corresponding index
+ */
+uint64_t extractCharHex(uint64_t charIndex, uint64_t hexInt, uint64_t charNumPerHex);
 
 /**
  * Transform characters stored in a char array buffer to an 64-bit unsigned

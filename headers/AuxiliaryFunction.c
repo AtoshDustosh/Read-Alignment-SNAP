@@ -1,5 +1,7 @@
 #include "AuxiliaryFunction.h"
 
+#include "MyArgs.h"
+
 #define HEX_FOR_LETTER_A 0x0
 #define HEX_FOR_LETTER_C 0x1
 #define HEX_FOR_LETTER_G 0x2
@@ -14,6 +16,7 @@ void _AuxiliaryFunctionTestSet() {
     _hexToCharTest();
     _lowerCaseTest();
     _transBufToHexIntTest();
+    _extractCharHexTest();
 }
 
 /*
@@ -95,9 +98,46 @@ void _transBufToHexIntTest() {
     printf("hex_integer: 0x%16"PRIx64"\n", hexInt);
 }
 
+/**
+ * Test function extractCharHex.
+ */
+void _extractCharHexTest() {
+    printf("\n**************** _extractCharHexTest ****************\n");
+    uint64_t hexInt = 0x27fd3de1e41a90ce;
+    char* charSequence = "AGCTTTTCATTCTGACTGCAACGGGCAATATG";
+    uint64_t i = 0;
+    uint64_t length = CHAR_NUM_PER_HEX;
+
+    for(i = 0; i < length; i++){
+        int index = i % CHAR_NUM_PER_HEX;
+        uint64_t extractedHex = extractCharHex(index, hexInt, CHAR_NUM_PER_HEX);
+        printf("%c, 0x%"PRIx64"\n", charSequence[i], extractedHex);
+    }
+
+}
+
+
 /*
  * Working functions.
  */
+
+
+/**
+ * Extract the hexadecimal number of a char compressed in a 64-bit hexInt.
+ *
+ * @param charIndex the sequence index of the char to be extracted
+ *      (i.e. index is like 0, 1, 2, ... , maxLength - 1)
+ * @param hexInt a 64-bit hexadecimal integer
+ * @param charNumPerHex #(chars) per hexadecimal number
+ * @return extracted hexadecimal number to the corresponding index
+ */
+uint64_t extractCharHex(uint64_t charIndex, uint64_t hexInt, uint64_t charNumPerHex) {
+    uint64_t bitInterval = sizeof(uint64_t) * 8 / charNumPerHex;
+    uint64_t bitShiftLeft = charIndex * bitInterval;
+    uint64_t bitShiftRight = bitInterval * (charNumPerHex - 1);
+
+    return (hexInt << bitShiftLeft) >> bitShiftRight;
+}
 
 /**
  * Transform characters stored in a char array buffer to an 64-bit unsigned

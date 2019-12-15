@@ -22,8 +22,9 @@
 
 1576223137 e:\c_projects\bio-info tech experiment 2\headers\helperfunction.h
 
-1576389926 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1576393464 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
+	"MyArgs.h"
 
 1576389956 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
 	"FileOperation.h"
@@ -41,11 +42,10 @@
 	"../headers/DataType.h"
 	"../headers/ArrayOperation.h"
 
-1576390078 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1576393464 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
-	"MyArgs.h"
 
 1576389529 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
 	<stdio.h>
@@ -63,7 +63,7 @@
 
 1576389976 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
 
-1576381491 source:e:\c_projects\bio-info tech experiment 2\headers\datatype.c
+1576392672 source:e:\c_projects\bio-info tech experiment 2\headers\datatype.c
 	"DataType.h"
 
 1576381476 e:\c_projects\bio-info tech experiment 2\headers\datatype.h

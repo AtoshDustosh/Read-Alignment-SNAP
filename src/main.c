@@ -6,7 +6,6 @@
 #include "../headers/DataType.h"
 #include "../headers/ArrayOperation.h"
 
-
 char* fnaFilePath = "data/fna/testdata_100.fna";
 
 void testSet();
