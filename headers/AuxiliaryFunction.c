@@ -1,12 +1,9 @@
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "AuxiliaryFunction.h"
 
-#define HEX_FOR_LETTER_A 0x1
-#define HEX_FOR_LETTER_C 0x2
-#define HEX_FOR_LETTER_G 0x4
-#define HEX_FOR_LETTER_T 0x8
+#define HEX_FOR_LETTER_A 0x0
+#define HEX_FOR_LETTER_C 0x1
+#define HEX_FOR_LETTER_G 0x2
+#define HEX_FOR_LETTER_T 0x3
 
 
 /**
@@ -49,10 +46,10 @@ void _charToHexTest() {
  */
 void _hexToCharTest() {
     printf("\n**************** _hexToCharTest ****************\n");
-    int hexA = 0x1;
-    int hexC = 0x2;
-    int hexG = 0x4;
-    int hexT = 0x8;
+    int hexA = HEX_FOR_LETTER_A;
+    int hexC = HEX_FOR_LETTER_C;
+    int hexG = HEX_FOR_LETTER_G;
+    int hexT = HEX_FOR_LETTER_T;
     int hexWTF = 0xa;
     printf("0x%x -> %c\n", hexA, hexToChar(hexA));
     printf("0x%x -> %c\n", hexC, hexToChar(hexC));
@@ -76,18 +73,26 @@ void _lowerCaseTest() {
  */
 void _transBufToHexIntTest() {
     printf("\n**************** _transBufToHexIntTest ****************\n");
-    const bufSize = 8;
-    char buf1[9] = {'a', 'a', 'c', 'g', 't', 'g', 't', 'c', '\0'};
-    int hexInt = 0;
+    const uint64_t charNumPerHex = CHAR_NUM_PER_HEX;
+    uint64_t bufSize = CHAR_NUM_PER_HEX;
+    char *buf = NULL;
+    // 01010101 00100010 01110111 01010101 00000000 10101010 11111111 00000000
+    // 0x5522775500AAFF00
+    uint64_t hexInt = 0;
 
-    hexInt = transBufToHexInt(buf1, bufSize);
-    printf("buf1: %s\n", buf1);
-    printf("hex_integer: 0x%x\n", hexInt);
+    bufSize = 32;
+    buf = "ccccagagctctccccaaaaggggttttaaaa";
+    // 01010101 00100010 01110111 01010101 00000000 10101010 11111111 00000000
+    // 0x5522775500AAFF00
+    hexInt = transBufToHex(buf, bufSize, charNumPerHex);
+    printf("buf1: %s\n", buf);
+    printf("hex_integer: %#"PRIx64"\n", hexInt);
 
-    char buf2[9] = {'a', 'a', 'c', ' ', ' ', ' ', ' ', ' ', '\0'};
-    hexInt = transBufToHexInt(buf2, bufSize);
-    printf("buf2: %s\n", buf2);
-    printf("hex_integer: 0x%x\n", hexInt);
+    bufSize = 16;
+    buf = "ccccagagctctcccc";
+    hexInt = transBufToHex(buf, bufSize, charNumPerHex);
+    printf("buf2: %s\n", buf);
+    printf("hex_integer: %#"PRIx64"\n", hexInt);
 }
 
 /*
@@ -95,20 +100,24 @@ void _transBufToHexIntTest() {
  */
 
 /**
- * Transform characters stored in a buffer to an hexadecimal integer.
+ * Transform characters stored in a buffer to an 64-bit unsigned hexadecimal
+ * integer.
  *
- * @param buf buffer
+ * @param buf char buffer
  * @param bufSize size of buffer
- * @return hexadecimal integer corresponding to buffer
+ * @param charNumPerHex #(chars) per hexadecimal number
+ * @return 64-bit hexadecimal integer corresponding to buffer
  */
-int transBufToHexInt(char buf[], int bufSize) {
-    int i = 0;
-    int hexInt = 0x0;
+uint64_t transBufToHex(char* buf, uint64_t bufSize, uint64_t charNumPerHex) {
+    uint64_t i = 0;
+    uint64_t hexInt = 0x0;
 
-    for(i = 0; i < bufSize; i++){
-        int hexBit = charToHex(buf[i]);
-        hexInt = hexInt | (hexBit << ((bufSize - i - 1) * 4));
-//        printf("0x%x\n", hexInt);
+    uint64_t bitInterval = sizeof(uint64_t) * 8 / charNumPerHex;
+    for(i = 0; i < bufSize; i++) {
+        uint64_t hexBit = charToHex(buf[i]);
+        uint64_t bitShift = charNumPerHex - i - 1;
+        hexInt = hexInt | (hexBit << (bitShift * bitInterval));
+//        printf("%c, %#"PRIx64"\n", buf[i], hexInt);
     }
     return hexInt;
 }
@@ -117,7 +126,8 @@ int transBufToHexInt(char buf[], int bufSize) {
  * Get the lower case of a character.
  *
  * @param ch an English letter
- * @return lower case of ch if ch is in upper case; ch otherwise.
+ * @return lower case of ch if ch is in upper case, i.e. 'A' -> 'a';
+ *      ch otherwise, i.e. 'A' -> 'A', '*' -> '*'
  */
 char lowerCase(char ch) {
     if(ch >= 'A' && ch <= 'Z') {
@@ -128,14 +138,14 @@ char lowerCase(char ch) {
 }
 
 /**
- * Transform hexadecimal numbers into characters (a, c, g, t, $)
+ * Transform hexadecimal numbers into characters (a, c, g, t)
  *
  * @param hexValue hexadecimal number
- * @return 'a' if 0x1; 'c' if 0x2;
- *         'g' if 0x4; 't' if 0x8;
+ * @return 'a' if 0x0; 'c' if 0x1;
+ *         'g' if 0x2; 't' if 0x3;
  *         '*' otherwise.
  */
-char hexToChar(int hex) {
+char hexToChar(uint64_t hex) {
     switch(hex) {
     case HEX_FOR_LETTER_A:
         return 'a';
@@ -154,13 +164,13 @@ char hexToChar(int hex) {
  * Transform characters (A, C, G, T) into hexadecimal numbers.
  *
  * @param ch character
- * @return 0x1 if ch == 'A' || ch == 'a';
- *         0x2 if ch == 'C' || ch == 'c';
- *         0x4 if ch == 'G' || ch == 'g';
- *         0x8 if ch == 'T' || ch == 't';
+ * @return 0x0 if ch == 'A' || ch == 'a';
+ *         0x1 if ch == 'C' || ch == 'c';
+ *         0x2 if ch == 'G' || ch == 'g';
+ *         0x3 if ch == 'T' || ch == 't';
  *         0x0 otherwise.
  */
-int charToHex(char ch) {
+uint64_t charToHex(char ch) {
     ch = lowerCase(ch);
     switch(ch) {
     case 'a':

@@ -81,6 +81,7 @@
 		<Unit filename="headers/HashTable.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
+		<Unit filename="headers/MyArgs.h" />
 		<Unit filename="package-info.c">
 			<Option compilerVar="CC" />
 			<Option virtualFolder="src/" />

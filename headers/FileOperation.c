@@ -1,10 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "FileOperation.h"
-#include "AuxiliaryFunction.h"
 
-#define NUM_OF_CHAR_PER_HEX 8
+#include "AuxiliaryFunction.h"
+#include "MyArgs.h"
+
 
 /**
  * Get the size of data (DNA sequence) of a ?.fna file.
@@ -58,7 +56,7 @@ void loadFnaData(char* filePath, int dataLength, int* T) {
     }
 
     char ch = fgetc(fp);
-    char buffer[NUM_OF_CHAR_PER_HEX];
+    char buffer[CHAR_NUM_PER_HEX];
     int bufferCount = 0;
     int hexInt = 0;
     while(ch != EOF && i < dataLength) {
@@ -69,23 +67,23 @@ void loadFnaData(char* filePath, int dataLength, int* T) {
         }
         if(dataZone && ch != '\n') {
             // if not '\n' and is already in the data zone
-            buffer[bufferCount++] = ch;
-            if(bufferCount == NUM_OF_CHAR_PER_HEX) {
-                hexInt = transBufToHexInt(buffer, NUM_OF_CHAR_PER_HEX);
-                printf("0x%x ", hexInt);
-                if((i + 1) % NUM_OF_CHAR_PER_HEX == 0){
-                    printf("\n");
-                }
-                T[i++] = hexInt;
-                bufferCount = 0;
-                clearCharArray(buffer, NUM_OF_CHAR_PER_HEX);
-            }
+//            buffer[bufferCount++] = ch;
+//            if(bufferCount == NUM_OF_CHAR_PER_HEX) {
+//                hexInt = transBufToHexInt(buffer, NUM_OF_CHAR_PER_HEX);
+//                printf("0x%8x ", hexInt);
+//                if((i + 1) % NUM_OF_CHAR_PER_HEX == 0){
+//                    printf("\n");
+//                }
+//                T[i++] = hexInt;
+//                bufferCount = 0;
+//                clearCharArray(buffer, NUM_OF_CHAR_PER_HEX);
+//            }
         }
         ch = fgetc(fp);
     }
-    hexInt = transBufToHexInt(buffer, NUM_OF_CHAR_PER_HEX);
-    printf("0x%x ", hexInt);
-    T[i++] = hexInt;
+//    hexInt = transBufToHexInt(buffer, NUM_OF_CHAR_PER_HEX);
+//    printf("0x%x ", hexInt);
+//    T[i++] = hexInt;
 
     free(fp);
 }

@@ -1,6 +1,9 @@
 #ifndef FILEOPERATION_H_INCLUDED
 #define FILEOPERATION_H_INCLUDED
 
+#include <stdio.h>
+#include <stdlib.h>
+
 /**
  * Get the size of data (DNA sequence) of a ?.fna file.
  *
