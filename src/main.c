@@ -5,6 +5,7 @@
 #include "../headers/FileOperation.h"
 #include "../headers/DataType.h"
 #include "../headers/ArrayOperation.h"
+#include "../headers/HashTable.h"
 
 
 /*
@@ -34,7 +35,7 @@ int main() {
 
     dataLength = fnaDataSize(fnaFilePath);
     T = (uint64_t*)malloc(sizeof(uint64_t) * dataLength);
-    loadFnaData(fnaFilePath, dataLength, T);
+//    loadFnaData(fnaFilePath, dataLength, T);
 
     initialization();
     loadOneRead(fastqFilePath1, &fpointer1, &read1);
@@ -49,6 +50,7 @@ void testSet() {
     _AuxiliaryFunctionTestSet();
     _ArrayOperationTestSet();
     _DataTypeTestSet();
+    _HashTableTestSet();
 }
 
 void initialization(){

@@ -155,6 +155,8 @@ void loadOneRead(char* filePath, FILE** fpointer, Read* readPointer) {
 }
 
 
+
+
 /*
  * Static functions. (file-localized functions)
  */

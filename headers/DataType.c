@@ -37,6 +37,23 @@ static void _uint64_tTest() {
     printf("(num1 << 1) >> 1: %#"PRIx64"\n", (num1 << 1) >> 1);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * Working functions.
  */

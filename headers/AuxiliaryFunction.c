@@ -146,6 +146,22 @@ static void _transHexToBufTest() {
     printf("buf: %s\n", buf);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * Working functions.
  */
