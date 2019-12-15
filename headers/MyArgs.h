@@ -1,6 +1,9 @@
 #ifndef MYARGS_H_INCLUDED
 #define MYARGS_H_INCLUDED
 
+/**
+ * \alert DO NOT MODIFY THIS ARG
+ */
 #define CHAR_NUM_PER_HEX 32
 
 

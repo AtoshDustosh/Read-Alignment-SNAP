@@ -8,6 +8,14 @@
 #define HEX_FOR_LETTER_T 0x3
 
 
+static void _charToHexTest();
+static void _hexToCharTest();
+static void _lowerCaseTest();
+static void _transBufToHexIntTest();
+static void _extractCharHexTest();
+static void _transHexToBufTest();
+
+
 /**
  * A collection of test in this header file.
  */
@@ -17,7 +25,9 @@ void _AuxiliaryFunctionTestSet() {
     _lowerCaseTest();
     _transBufToHexIntTest();
     _extractCharHexTest();
+    _transHexToBufTest();
 }
+
 
 /*
  * Tests for working functions.
@@ -26,7 +36,7 @@ void _AuxiliaryFunctionTestSet() {
 /**
  * Test function charToHex.
  */
-void _charToHexTest() {
+static void _charToHexTest() {
     printf("\n**************** _charToHexTest ****************\n");
     char a = 'a';
     char A = 'A';
@@ -47,7 +57,7 @@ void _charToHexTest() {
 /**
  * Test function hexToChar.
  */
-void _hexToCharTest() {
+static void _hexToCharTest() {
     printf("\n**************** _hexToCharTest ****************\n");
     uint64_t hexA = HEX_FOR_LETTER_A;
     uint64_t hexC = HEX_FOR_LETTER_C;
@@ -64,7 +74,7 @@ void _hexToCharTest() {
 /**
  * Test function lowerCase.
  */
-void _lowerCaseTest() {
+static void _lowerCaseTest() {
     printf("\n**************** _lowerCaseTest ****************\n");
     printf("lowerCase(%c) -> %c\n", 'A', lowerCase('A'));
     printf("lowerCase(%c) -> %c\n", 'a', lowerCase('a'));
@@ -74,7 +84,7 @@ void _lowerCaseTest() {
 /**
  * Test function transBufToHexInt.
  */
-void _transBufToHexIntTest() {
+static void _transBufToHexIntTest() {
     printf("\n**************** _transBufToHexIntTest ****************\n");
     const uint64_t charNumPerHex = CHAR_NUM_PER_HEX;
     uint64_t contentSize = CHAR_NUM_PER_HEX;
@@ -101,25 +111,68 @@ void _transBufToHexIntTest() {
 /**
  * Test function extractCharHex.
  */
-void _extractCharHexTest() {
+static void _extractCharHexTest() {
     printf("\n**************** _extractCharHexTest ****************\n");
     uint64_t hexInt = 0x27fd3de1e41a90ce;
     char* charSequence = "AGCTTTTCATTCTGACTGCAACGGGCAATATG";
     uint64_t i = 0;
     uint64_t length = CHAR_NUM_PER_HEX;
 
-    for(i = 0; i < length; i++){
+    printf("0x%16"PRIx64"\n", hexInt);
+    printf("%s\n", charSequence);
+    for(i = 0; i < length; i++) {
         int index = i % CHAR_NUM_PER_HEX;
         uint64_t extractedHex = extractCharHex(index, hexInt, CHAR_NUM_PER_HEX);
-        printf("%c, 0x%"PRIx64"\n", charSequence[i], extractedHex);
+        printf("%c-0x%"PRIx64" ", charSequence[i], extractedHex);
+        if((i + 1) % 8 == 0) {
+            printf("\n");
+        }
     }
-
 }
 
+/**
+ * Test function transHexToStr.
+ */
+static void _transHexToBufTest() {
+    printf("\n**************** _transHexToBufTest ****************\n");
+    uint64_t hexInt = 0x27fd3de1e41a90ce;
+    char* buf = (char*)malloc(sizeof(char) * BUFSIZ);
+
+    uint64_t beginIndex = 0;
+    uint64_t endIndex = CHAR_NUM_PER_HEX - 1;
+
+    printf("hexInt: 0x%"PRIx64"\n", hexInt);
+    transHexToBuf(hexInt, beginIndex, endIndex, buf, CHAR_NUM_PER_HEX);
+    printf("buf: %s\n", buf);
+}
 
 /*
  * Working functions.
  */
+
+/**
+ * Transform a 64-bit unsigned hexadecimal integer to a string.
+ *
+ * \note clear buffer before putting it int this method
+ *
+ * @param hexInt 64-bit hexadecimal integer
+ * @param beginIndex beginning index of string in the hexInt
+ * @param endIndex ending index of string in the hexInt
+ * @param buf buffer of string transformed from the hexInt
+ * @param charNumPerHex #(chars) per hexadecimal number
+ */
+void transHexToBuf(uint64_t hexInt, uint64_t beginIndex, uint64_t endIndex,
+                   char* buf, uint64_t charNumPerHex) {
+    uint64_t i = 0;
+    uint64_t length = endIndex - beginIndex + 1;
+
+    for(i = 0; i < length; i++) {
+        uint64_t charHex = extractCharHex(beginIndex + i, hexInt, charNumPerHex);
+        buf[i] = hexToChar(charHex);
+        printf("charHex: 0x%"PRIx64", char: %c\n", charHex, buf[i]);
+    }
+    buf[i] = '\0';
+}
 
 
 /**

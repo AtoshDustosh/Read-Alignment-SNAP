@@ -10,41 +10,23 @@
  */
 void _AuxiliaryFunctionTestSet();
 
-
-
-/*
- * Tests for working functions.
- */
-
-/**
- * Test function charToHex.
- */
-void _charToHexTest();
-
-/**
- * Test function hexToChar.
- */
-void _hexToCharTest();
-
-/**
- * Test function lowerCase.
- */
-void _lowerCaseTest();
-
-/**
- * Test function transBufToHexInt.
- */
-void _transBufToHexIntTest();
-
-/**
- * Test function extractCharHex.
- */
-void _extractCharHexTest();
-
-
 /*
  * Working functions.
  */
+
+/**
+ * Transform a 64-bit unsigned hexadecimal integer to a string.
+ *
+ * \note clear buffer before putting it int this method
+ *
+ * @param hexInt 64-bit hexadecimal integer
+ * @param beginIndex beginning index of string in the hexInt
+ * @param endIndex ending index of string in the hexInt
+ * @param buf buffer of string transformed from the hexInt
+ * @param charNumPerHex #(chars) per hexadecimal number
+ */
+void transHexToBuf(uint64_t hexInt, uint64_t beginIndex, uint64_t endIndex,
+                   char* buf, uint64_t charNumPerHex);
 
 /**
  * Extract the hexadecimal number of a char compressed in a 64-bit hexInt.

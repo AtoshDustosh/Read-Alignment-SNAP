@@ -11,18 +11,6 @@
 void _ArrayOperationTestSet();
 
 
-
-/*
- * Tests for working functions.
- */
-
-/**
- * Test function clearCharArray.
- */
-void _clearCharArrayTest();
-
-
-
 /*
  * Working functions.
  */

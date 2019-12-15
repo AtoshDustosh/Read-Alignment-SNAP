@@ -22,19 +22,20 @@
 
 1576223137 e:\c_projects\bio-info tech experiment 2\headers\helperfunction.h
 
-1576393464 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1576403817 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	"MyArgs.h"
 
-1576389956 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+1576406375 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
 	"FileOperation.h"
+	<string.h>
 	"ArrayOperation.h"
 	"AuxiliaryFunction.h"
 	"MyArgs.h"
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1576389956 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1576406382 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/AuxiliaryFunction.h"
@@ -42,31 +43,32 @@
 	"../headers/DataType.h"
 	"../headers/ArrayOperation.h"
 
-1576393464 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1576404855 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 
-1576389529 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
+1576402217 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
+	"DataType.h"
 
-1576389956 source:e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.c
+1576403823 source:e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.c
 	"ArrayOperation.h"
 
-1576381609 e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.h
+1576403817 e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.h
 	<stdio.h>
 	<stdlib.h>
 
 1576307759 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
 
-1576389976 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
+1576398266 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
 
-1576392672 source:e:\c_projects\bio-info tech experiment 2\headers\datatype.c
+1576405079 source:e:\c_projects\bio-info tech experiment 2\headers\datatype.c
 	"DataType.h"
 
-1576381476 e:\c_projects\bio-info tech experiment 2\headers\datatype.h
+1576405892 e:\c_projects\bio-info tech experiment 2\headers\datatype.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>

@@ -32,14 +32,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="data/fastq/testdata_124.fastq">
+		<Unit filename="data/fastq/testdata_30_1.fastq">
+			<Option virtualFolder="data/fastq/" />
+		</Unit>
+		<Unit filename="data/fastq/testdata_30_2.fastq">
 			<Option virtualFolder="data/fastq/" />
 		</Unit>
 		<Unit filename="data/fastq/unitData.fastq">
 			<Option virtualFolder="data/fastq/" />
-		</Unit>
-		<Unit filename="data/fna/NC_008253.fna">
-			<Option virtualFolder="data/fna/" />
 		</Unit>
 		<Unit filename="data/fna/testExample.fna">
 			<Option virtualFolder="data/fna/" />

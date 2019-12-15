@@ -6,12 +6,27 @@
 #include "../headers/DataType.h"
 #include "../headers/ArrayOperation.h"
 
-char* fnaFilePath = "data/fna/testdata_100.fna";
 
+/*
+ * Global variables for ?.fna file.
+ */
+static char* fnaFilePath = "data/fna/testdata_100.fna";
+
+/*
+ * Global variables for ?.fastq files.
+ */
+static char* fastqFilePath1 = "data/fastq/testdata_30_1.fastq";
+static FILE* fpointer1 = NULL;
+static Read read1;
+//static char* fastqFilePath2 = "data/fastq/testdata_30_2.fastq";
+//static FILE* fpointer2 = NULL;
+//static Read read2;
+
+void initialization();
 void testSet();
 
-uint64_t dataLength = 0;
-uint64_t* T;
+static uint64_t dataLength = 0;
+static uint64_t* T;
 
 
 int main() {
@@ -21,6 +36,10 @@ int main() {
     T = (uint64_t*)malloc(sizeof(uint64_t) * dataLength);
     loadFnaData(fnaFilePath, dataLength, T);
 
+    initialization();
+    loadOneRead(fastqFilePath1, &fpointer1, &read1);
+    loadOneRead(fastqFilePath1, &fpointer1, &read1);
+
 
     free(T);
     return 0;
@@ -29,5 +48,10 @@ int main() {
 void testSet() {
     _AuxiliaryFunctionTestSet();
     _ArrayOperationTestSet();
-    _DataTypeTest();
+    _DataTypeTestSet();
+}
+
+void initialization(){
+    initializeRead(&read1);
+//    initializeRead(&read2);
 }
