@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <inttypes.h>
 
 /**
  * Get the size of data (DNA sequence) of a ?.fna file.
@@ -10,16 +11,16 @@
  * @param filePath file path
  * @return data size of ?.fna file
  */
-int fnaDataSize(char* filePath);
+uint64_t fnaDataSize(char* filePath);
 
 /**
- * Load ?.fna data file into memory - stored in an int[] array.
+ * Load ?.fna data file into memory - stored in an uint64_t[] array.
  *
  * @param filePath file Path
  * @param dataLength length of ?.fna data
- * @param T int[] array used to store data
+ * @param T uint64_t[] array used to store data
  */
-void loadFnaData(char* filePath, int dataLength, int* T);
+void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* T);
 
 
 #endif // FILEOPERATION_H_INCLUDED

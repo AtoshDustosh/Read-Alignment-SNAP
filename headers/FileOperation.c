@@ -1,5 +1,6 @@
 #include "FileOperation.h"
 
+#include "ArrayOperation.h"
 #include "AuxiliaryFunction.h"
 #include "MyArgs.h"
 
@@ -10,11 +11,11 @@
  * @param filePath file path
  * @return data size of ?.fna file
  */
-int fnaDataSize(char* filePath) {
-    printf("Calculating size of file %s ... \n", filePath);
+uint64_t fnaDataSize(char* filePath) {
+    printf("\nCalculating size of file %s ... \n", filePath);
     FILE* fp = fopen(filePath, "r");
-    int dataZone = 0;   // if the file pointer is now in the data zone
-    int dataLength = 0;
+    uint64_t dataZone = 0;   // if the file pointer is now in the data zone
+    uint64_t dataLength = 0;
 
     if(fp != NULL) {
         char ch = fgetc(fp);
@@ -38,17 +39,17 @@ int fnaDataSize(char* filePath) {
 }
 
 /**
- * Load ?.fna data file into memory - stored in an int[] array.
+ * Load ?.fna data file into memory - stored in an uint64_t[] array.
  *
  * @param filePath file Path
  * @param dataLength length of ?.fna data
- * @param T int[] array used to store data
+ * @param T uint64_t[] array used to store data
  */
-void loadFnaData(char* filePath, int dataLength, int* T) {
-    int i = 0;
-    printf("Loading data from file %s ...\n", filePath);
+void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* T) {
+    uint64_t i = 0;
+    printf("\nLoading data from file %s ...\n", filePath);
     FILE* fp = fopen(filePath, "r");
-    int dataZone = 0;   // if the file pointer is now in the data zone
+    uint64_t dataZone = 0;   // if the file pointer is now in the data zone
 
     if(fp == NULL) {
         printf("failed to open file %s\n", filePath);
@@ -56,9 +57,9 @@ void loadFnaData(char* filePath, int dataLength, int* T) {
     }
 
     char ch = fgetc(fp);
-    char buffer[CHAR_NUM_PER_HEX];
-    int bufferCount = 0;
-    int hexInt = 0;
+    char buffer[BUFSIZ];
+    uint64_t contentSize = 0;
+    uint64_t hexInt = 0;
     while(ch != EOF && i < dataLength) {
         if(ch == '\n' && !dataZone) {
             // according to format of *.fna file
@@ -67,23 +68,24 @@ void loadFnaData(char* filePath, int dataLength, int* T) {
         }
         if(dataZone && ch != '\n') {
             // if not '\n' and is already in the data zone
-//            buffer[bufferCount++] = ch;
-//            if(bufferCount == NUM_OF_CHAR_PER_HEX) {
-//                hexInt = transBufToHexInt(buffer, NUM_OF_CHAR_PER_HEX);
-//                printf("0x%8x ", hexInt);
-//                if((i + 1) % NUM_OF_CHAR_PER_HEX == 0){
-//                    printf("\n");
-//                }
-//                T[i++] = hexInt;
-//                bufferCount = 0;
-//                clearCharArray(buffer, NUM_OF_CHAR_PER_HEX);
-//            }
+            buffer[contentSize++] = ch;
+            if(contentSize == CHAR_NUM_PER_HEX) {
+                buffer[contentSize] = '\0';
+                hexInt = transBufToHex(buffer, contentSize, CHAR_NUM_PER_HEX);
+                printf("0x%16"PRIx64"\t", hexInt);
+                if((i + 1) % 4 == 0) {
+                    printf("\n");
+                }
+                T[i++] = hexInt;
+                contentSize = 0;
+                clearCharArray(buffer, CHAR_NUM_PER_HEX);
+            }
         }
         ch = fgetc(fp);
     }
-//    hexInt = transBufToHexInt(buffer, NUM_OF_CHAR_PER_HEX);
-//    printf("0x%x ", hexInt);
-//    T[i++] = hexInt;
+    hexInt = transBufToHex(buffer, contentSize, CHAR_NUM_PER_HEX);
+    printf("0x%16"PRIx64" ", hexInt);
+    T[i++] = hexInt;
 
     free(fp);
 }

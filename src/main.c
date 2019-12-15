@@ -11,15 +11,15 @@ char* fnaFilePath = "data/fna/testdata_100.fna";
 
 void testSet();
 
-int dataLength = 0;
-int* T;
+uint64_t dataLength = 0;
+uint64_t* T;
 
 
 int main() {
     testSet();
 
     dataLength = fnaDataSize(fnaFilePath);
-    T = (int*)malloc(sizeof(int) * dataLength);
+    T = (uint64_t*)malloc(sizeof(uint64_t) * dataLength);
     loadFnaData(fnaFilePath, dataLength, T);
 
 
@@ -27,7 +27,7 @@ int main() {
     return 0;
 }
 
-void testSet(){
+void testSet() {
     _AuxiliaryFunctionTestSet();
     _ArrayOperationTestSet();
     _DataTypeTest();

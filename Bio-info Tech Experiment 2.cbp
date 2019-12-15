@@ -67,6 +67,13 @@
 		<Unit filename="headers/AuxiliaryFunction.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
+		<Unit filename="headers/DataType.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/DataType.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
 		<Unit filename="headers/FileOperation.c">
 			<Option compilerVar="CC" />
 			<Option virtualFolder="headers/" />
@@ -81,7 +88,9 @@
 		<Unit filename="headers/HashTable.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
-		<Unit filename="headers/MyArgs.h" />
+		<Unit filename="headers/MyArgs.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
 		<Unit filename="package-info.c">
 			<Option compilerVar="CC" />
 			<Option virtualFolder="src/" />

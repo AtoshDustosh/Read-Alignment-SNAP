@@ -45,13 +45,15 @@ void _transBufToHexIntTest();
  */
 
 /**
- * Transform characters stored in a buffer to an hexadecimal integer.
+ * Transform characters stored in a char array buffer to an 64-bit unsigned
+ * hexadecimal integer.
  *
- * @param buf buffer
- * @param bufSize size of buffer
- * @return hexadecimal integer corresponding to buffer
+ * @param buf char buffer
+ * @param contentSize size of content
+ * @param charNumPerHex #(chars) per hexadecimal number
+ * @return 64-bit hexadecimal integer corresponding to buffer
  */
-uint64_t transBufToHex(char buf[], uint64_t bufSize, uint64_t charNumPerHex);
+uint64_t transBufToHex(char* buf, uint64_t contentSize, uint64_t charNumPerHex);
 
 /**
  * Get the lower case of a character.

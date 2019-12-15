@@ -33,12 +33,12 @@ void _charToHexTest() {
     char G = 'G';
     char t = 't';
     char T = 'T';
-    printf("%c, 0x%x | %c, 0x%x\n", a, charToHex(a), A, charToHex(A));
-    printf("%c, 0x%x | %c, 0x%x\n", c, charToHex(c), C, charToHex(C));
-    printf("%c, 0x%x | %c, 0x%x\n", g, charToHex(g), G, charToHex(G));
-    printf("%c, 0x%x | %c, 0x%x\n", t, charToHex(t), T, charToHex(T));
-    printf("%c, 0x%x\n", '$', charToHex('$'));
-    printf("%c, 0x%x\n", '2', charToHex('2'));
+    printf("%c, 0x%"PRIx64" | %c, 0x%"PRIx64"\n", a, charToHex(a), A, charToHex(A));
+    printf("%c, 0x%"PRIx64" | %c, 0x%"PRIx64"\n", c, charToHex(c), C, charToHex(C));
+    printf("%c, 0x%"PRIx64" | %c, 0x%"PRIx64"\n", g, charToHex(g), G, charToHex(G));
+    printf("%c, 0x%"PRIx64" | %c, 0x%"PRIx64"\n", t, charToHex(t), T, charToHex(T));
+    printf("%c, 0x%"PRIx64"\n", '$', charToHex('$'));
+    printf("%c, 0x%"PRIx64"\n", '2', charToHex('2'));
 }
 
 /**
@@ -46,16 +46,16 @@ void _charToHexTest() {
  */
 void _hexToCharTest() {
     printf("\n**************** _hexToCharTest ****************\n");
-    int hexA = HEX_FOR_LETTER_A;
-    int hexC = HEX_FOR_LETTER_C;
-    int hexG = HEX_FOR_LETTER_G;
-    int hexT = HEX_FOR_LETTER_T;
-    int hexWTF = 0xa;
-    printf("0x%x -> %c\n", hexA, hexToChar(hexA));
-    printf("0x%x -> %c\n", hexC, hexToChar(hexC));
-    printf("0x%x -> %c\n", hexG, hexToChar(hexG));
-    printf("0x%x -> %c\n", hexT, hexToChar(hexT));
-    printf("0x%x -> %c\n", hexWTF, hexToChar(hexWTF));
+    uint64_t hexA = HEX_FOR_LETTER_A;
+    uint64_t hexC = HEX_FOR_LETTER_C;
+    uint64_t hexG = HEX_FOR_LETTER_G;
+    uint64_t hexT = HEX_FOR_LETTER_T;
+    uint64_t hexWTF = 0xa;
+    printf("0x%"PRIx64" -> %c\n", hexA, hexToChar(hexA));
+    printf("0x%"PRIx64" -> %c\n", hexC, hexToChar(hexC));
+    printf("0x%"PRIx64" -> %c\n", hexG, hexToChar(hexG));
+    printf("0x%"PRIx64" -> %c\n", hexT, hexToChar(hexT));
+    printf("0x%"PRIx64" -> %c\n", hexWTF, hexToChar(hexWTF));
 }
 
 /**
@@ -74,25 +74,25 @@ void _lowerCaseTest() {
 void _transBufToHexIntTest() {
     printf("\n**************** _transBufToHexIntTest ****************\n");
     const uint64_t charNumPerHex = CHAR_NUM_PER_HEX;
-    uint64_t bufSize = CHAR_NUM_PER_HEX;
+    uint64_t contentSize = CHAR_NUM_PER_HEX;
     char *buf = NULL;
     // 01010101 00100010 01110111 01010101 00000000 10101010 11111111 00000000
     // 0x5522775500AAFF00
     uint64_t hexInt = 0;
 
-    bufSize = 32;
+    contentSize = 32;
     buf = "ccccagagctctccccaaaaggggttttaaaa";
     // 01010101 00100010 01110111 01010101 00000000 10101010 11111111 00000000
     // 0x5522775500AAFF00
-    hexInt = transBufToHex(buf, bufSize, charNumPerHex);
+    hexInt = transBufToHex(buf, contentSize, charNumPerHex);
     printf("buf1: %s\n", buf);
-    printf("hex_integer: %#"PRIx64"\n", hexInt);
+    printf("hex_integer: 0x%16"PRIx64"\n", hexInt);
 
-    bufSize = 16;
+    contentSize = 16;
     buf = "ccccagagctctcccc";
-    hexInt = transBufToHex(buf, bufSize, charNumPerHex);
+    hexInt = transBufToHex(buf, contentSize, charNumPerHex);
     printf("buf2: %s\n", buf);
-    printf("hex_integer: %#"PRIx64"\n", hexInt);
+    printf("hex_integer: 0x%16"PRIx64"\n", hexInt);
 }
 
 /*
@@ -100,20 +100,20 @@ void _transBufToHexIntTest() {
  */
 
 /**
- * Transform characters stored in a buffer to an 64-bit unsigned hexadecimal
- * integer.
+ * Transform characters stored in a char array buffer to an 64-bit unsigned
+ * hexadecimal integer.
  *
  * @param buf char buffer
- * @param bufSize size of buffer
+ * @param contentSize size of content
  * @param charNumPerHex #(chars) per hexadecimal number
  * @return 64-bit hexadecimal integer corresponding to buffer
  */
-uint64_t transBufToHex(char* buf, uint64_t bufSize, uint64_t charNumPerHex) {
+uint64_t transBufToHex(char* buf, uint64_t contentSize, uint64_t charNumPerHex) {
     uint64_t i = 0;
     uint64_t hexInt = 0x0;
 
     uint64_t bitInterval = sizeof(uint64_t) * 8 / charNumPerHex;
-    for(i = 0; i < bufSize; i++) {
+    for(i = 0; i < contentSize; i++) {
         uint64_t hexBit = charToHex(buf[i]);
         uint64_t bitShift = charNumPerHex - i - 1;
         hexInt = hexInt | (hexBit << (bitShift * bitInterval));

@@ -3,7 +3,7 @@
 /**
  * A collection of test in this header file.
  */
-void _ArrayOperationTestSet(){
+void _ArrayOperationTestSet() {
     _clearCharArrayTest();
 }
 
@@ -16,13 +16,13 @@ void _ArrayOperationTestSet(){
 /**
  * Test function clearCharArray.
  */
-void _clearCharArrayTest(){
+void _clearCharArrayTest() {
     printf("\n**************** _clearCharArrayTest ****************\n");
     int i = 0;
     char charArray[4] = {'a', 'c', 'g', 't'};
 
     printf("charArray: ");
-    for(i = 0; i < 4; i++){
+    for(i = 0; i < 4; i++) {
         printf("%c.", charArray[i]);
     }
     printf(".\n");
@@ -31,7 +31,7 @@ void _clearCharArrayTest(){
     clearCharArray(charArray, 4);
 
     printf("charArray: ");
-    for(i = 0; i < 4; i++){
+    for(i = 0; i < 4; i++) {
         printf("%c.", charArray[i]);
     }
     printf(".\n");
@@ -50,9 +50,9 @@ void _clearCharArrayTest(){
  * @param charArray char array
  * @param arrayLength length of array
  */
-void clearCharArray(char charArray[], int arrayLength){
+void clearCharArray(char charArray[], int arrayLength) {
     int i = 0;
-    for(i = 0; i < arrayLength; i++){
+    for(i = 0; i < arrayLength; i++) {
         charArray[i] = ' ';
     }
 }
