@@ -32,9 +32,6 @@ void _HashTableTestSet();
  */
 
 
-
-
-
 /**
  * Display the hash table.
  *
@@ -46,7 +43,7 @@ void displayHashTable(HashTable* hashTable, uint64_t tableSize);
 /**
  * Add a hash string with specific key as a hash cell into hash table.
  *
- * @param str string
+ * @param str string used for calculating hash index
  * @param key key of the string
  * @param tableSize size of the hash table
  * @param hashTable hash table
@@ -62,12 +59,12 @@ void addHashCell(char* str, uint64_t key, HashTable* hashTable, uint64_t tableSi
 void initHashTable(uint64_t tableSize, HashTable* hashTable);
 
 /**
- * Hash function used for calculating hash key of a string.
+ * Calculating the hash table index of a string.
  *
  * @param str input string
  * @param tableSize size of the hash table
- * @return hash value
+ * @return hash table index
  */
-uint64_t hashFunc(char *str, uint64_t tableSize);
+uint64_t hashIndex(char *str, uint64_t tableSize);
 
 #endif // HASHTABLE_H_INCLUDED
