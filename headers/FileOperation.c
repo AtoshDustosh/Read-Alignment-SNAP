@@ -78,7 +78,7 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* T) {
             buffer[contentSize++] = ch;
             if(contentSize == CHAR_NUM_PER_HEX) {
                 buffer[contentSize] = '\0';
-                hexInt = transBufToHex(buffer, contentSize, CHAR_NUM_PER_HEX);
+                hexInt = transBufToHex(buffer, CHAR_NUM_PER_HEX);
                 printf("0x%16"PRIx64"\t", hexInt);
                 if((i + 1) % 4 == 0) {
                     printf("\n");
@@ -90,7 +90,7 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* T) {
         }
         ch = fgetc(fp);
     }
-    hexInt = transBufToHex(buffer, contentSize, CHAR_NUM_PER_HEX);
+    hexInt = transBufToHex(buffer, CHAR_NUM_PER_HEX);
     printf("0x%16"PRIx64" ", hexInt);
     T[i++] = hexInt;
 

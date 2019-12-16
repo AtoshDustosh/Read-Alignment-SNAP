@@ -22,11 +22,11 @@
 
 1576223137 e:\c_projects\bio-info tech experiment 2\headers\helperfunction.h
 
-1576406889 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1576480227 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	"MyArgs.h"
 
-1576413193 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+1576477819 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
 	"FileOperation.h"
 	<string.h>
 	"ArrayOperation.h"
@@ -35,7 +35,7 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1576419016 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1576478736 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/AuxiliaryFunction.h"
@@ -44,7 +44,7 @@
 	"../headers/ArrayOperation.h"
 	"../headers/HashTable.h"
 
-1576404855 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1576478736 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -62,8 +62,9 @@
 	<stdio.h>
 	<stdlib.h>
 
-1576420778 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
+1576482002 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
 	"HashTable.h"
+	"AuxiliaryFunction.h"
 
 1576398266 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
 
@@ -75,7 +76,7 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1576418323 e:\c_projects\bio-info tech experiment 2\headers\hashtable.h
+1576461209 e:\c_projects\bio-info tech experiment 2\headers\hashtable.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>

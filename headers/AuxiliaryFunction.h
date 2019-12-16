@@ -31,23 +31,22 @@ void transHexToBuf(uint64_t hexInt, uint64_t beginIndex, uint64_t endIndex,
 /**
  * Extract the hexadecimal number of a char compressed in a 64-bit hexInt.
  *
- * @param charIndex the sequence index of the char to be extracted
+ * @param offset offset of in the 64-bit hexInt (equals to index of the char)
  * @param hexInt a 64-bit hexadecimal integer
  * @param charNumPerHex #(chars) per hexadecimal number
  * @return extracted hexadecimal number to the corresponding index
  */
-uint64_t extractCharHex(uint64_t charIndex, uint64_t hexInt, uint64_t charNumPerHex);
+uint64_t extractCharHex(uint64_t offset, uint64_t hexInt, uint64_t charNumPerHex);
 
 /**
- * Transform characters stored in a char array buffer to an 64-bit unsigned
+ * Transform a string stored in a char array buffer to an 64-bit unsigned
  * hexadecimal integer.
  *
  * @param buf char buffer
- * @param contentSize size of content
  * @param charNumPerHex #(chars) per hexadecimal number
  * @return 64-bit hexadecimal integer corresponding to buffer
  */
-uint64_t transBufToHex(char* buf, uint64_t contentSize, uint64_t charNumPerHex);
+uint64_t transBufToHex(char* buf, uint64_t charNumPerHex);
 
 /**
  * Get the lower case of a character.

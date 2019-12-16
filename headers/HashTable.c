@@ -1,12 +1,13 @@
 #include "HashTable.h"
 
+#include "AuxiliaryFunction.h"
 
 
 static void _initHashTableTest();
 static void _addHashCellTest();
 
-static void randomString(char* str, int strLength);
-static unsigned int ELFhash(char *str);
+static void randomString(char* str, uint64_t strLength);
+static uint64_t ELFhash(char *str);
 
 /**
  * A collection of test in this header file.
@@ -31,14 +32,15 @@ static void _initHashTableTest() {
 
     initHashTable(tableSize, &hashTable);
 
-    uint64_t i = 0;
-    for(i = 0; i < tableSize; i++) {
-        HashCell cell = hashTable.hashList[i];
-        printf("cell key: %"PRIu64". ", cell.key);
-        printf("cell flag: %d.", cell.flag);
-        printf("next cell: 0x%p. ", cell.nextCell);
-        printf("\n");
-    }
+    displayHashTable(&hashTable, tableSize);
+//    uint64_t i = 0;
+//    for(i = 0; i < tableSize; i++) {
+//        HashCell cell = hashTable.hashList[i];
+//        printf("cell key: %"PRIu64". ", cell.key);
+//        printf("cell flag: %d.", cell.flag);
+//        printf("next cell: 0x%p. ", cell.nextCell);
+//        printf("\n");
+//    }
 }
 
 /**
@@ -47,48 +49,21 @@ static void _initHashTableTest() {
 static void _addHashCellTest() {
     printf("\n**************** _addHashCellTest ****************\n");
     HashTable hashTable;
-    uint64_t tableSize = 31;
+    uint64_t tableSize = 50;
     printf("hash table size: %"PRIu64"\n", tableSize);
 
     initHashTable(tableSize, &hashTable);
 
     uint64_t i = 0;
     char str[12];
-    int strLength = 10;
+    uint64_t strLength = 10;
     for(i = 0; i < tableSize; i++) {
-        if(i > tableSize - 3) {
-            str[0] = 'a';
-            str[1] = 'a';
-            str[2] = 'a';
-            str[3] = 'a';
-            str[4] = 'a';
-            str[5] = 'a';
-            str[6] = 'a';
-            str[7] = 'a';
-            str[8] = 'a';
-            str[9] = 'a';
-            str[10] = '\0';
-        } else {
-            randomString(str, strLength);
-        }
+        randomString(str, strLength);
         addHashCell(str, i, &hashTable, tableSize);
     }
 
-    int collisionCount = 0;
-    for(i = 0; i < tableSize; i++) {
-        HashCell cell = hashTable.hashList[i];
-        printf("%"PRIu64"\t", i);
-        printf("cell key: %"PRIu64"\t", cell.key);
-        printf("cell flag: %d\t", cell.flag);
-        if(cell.flag > 1){
-            collisionCount = collisionCount + (cell.flag - 1);
-        }
-        printf("next cell: 0x%p\t", cell.nextCell);
-        printf("\n");
-    }
-    printf("collision count: %d\n", collisionCount);
+    displayHashTable(&hashTable, tableSize);
 }
-
 
 
 
@@ -99,6 +74,37 @@ static void _addHashCellTest() {
  */
 
 
+/**
+ * Display the hash table.
+ *
+ * @param hashTable hash table
+ * @param tableSize size of the table
+ */
+void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
+    uint64_t i = 0;
+
+    uint64_t totalBucketLength = 0;
+    float bucketUsedCount = 0;
+    for(i = 0; i < tableSize; i++) {
+        printf("%"PRIu64"\t", i);
+        HashCell* hashCell = &(hashTable->hashList[i]);
+        totalBucketLength = totalBucketLength + hashCell->flag;
+        bucketUsedCount = bucketUsedCount + (hashCell->flag && 1);
+        do {
+            if(hashCell == NULL || hashCell->flag == 0) {
+                break;
+            } else {
+                printf("->\t");
+            }
+            printf("(%"PRIu64", %d, 0x%p)\t", hashCell->key, hashCell->flag, hashCell->nextCell);
+            hashCell = hashCell->nextCell;
+        } while(1);
+        printf("\n");
+    }
+
+    printf("average bucket length: %f\n", totalBucketLength / bucketUsedCount);
+    printf("bucket usage ratio: %f\n", bucketUsedCount / tableSize);
+}
 
 /**
  * Add a hash string with specific key as a hash cell into hash table.
@@ -116,6 +122,7 @@ void addHashCell(char* str, uint64_t key, HashTable* hashTable, uint64_t tableSi
     // if there is no hash-cell using that hash index
     if(hashCell->flag == 0) {
         hashCell->key = key;
+//        hashCell->str = "abcdef";
         hashCell->flag = 1;
         hashCell->nextCell = NULL;
         return;
@@ -126,7 +133,7 @@ void addHashCell(char* str, uint64_t key, HashTable* hashTable, uint64_t tableSi
     do {
         // search to find a hash-cell whose next-hash-cell is NULL
         hashCell->flag++;   // use flag to count #(collisions)
-//        printf("(%d, %d, %p)\t", hashCell->key, hashCell->flag, hashCell->nextCell);
+//        printf("(%d, %s, %d, 0x%p)\t", hashCell->key, hashCell->str, hashCell->flag, hashCell->nextCell);
         if(hashCell->nextCell != NULL) {
             hashCell = hashCell->nextCell;
         } else {
@@ -137,6 +144,7 @@ void addHashCell(char* str, uint64_t key, HashTable* hashTable, uint64_t tableSi
     // put a new hash-cell to the next-hash-cell
     HashCell* newHashCell = (HashCell*)malloc(sizeof(HashCell));
     newHashCell->key = key;
+//    newHashCell->str = "aaaaaa";
     newHashCell->flag = 1;
     newHashCell->nextCell = NULL;
     hashCell->nextCell = newHashCell;
@@ -185,10 +193,10 @@ uint64_t hashFunc(char *str, uint64_t tableSize) {
  * @param str generated string
  * @param strLength length of string
  */
-static void randomString(char* str, int strLength) {
-    int i = 0;
+static void randomString(char* str, uint64_t strLength) {
+    uint64_t i = 0;
     for(i = 0; i < strLength; i++) {
-        char randChar = (rand() % 26) + 'a';
+        char randChar = (rand() % 26) % 4 + 'a';
         str[i] = randChar;
     }
     str[i] = '\0';
@@ -201,17 +209,17 @@ static void randomString(char* str, int strLength) {
  * @param str input string
  * @param hash key value
  */
-static unsigned int ELFhash(char *str) {
-    unsigned int hash = 0;
-    unsigned int x = 0;
+static uint64_t ELFhash(char *str) {
+    uint64_t hash = 0;
 
-    while(*str) {
-        hash = (hash << 4) + *str;
-        if((x = hash & 0xf0000000) != 0) {
-            hash ^= (x >> 24);
-            hash &= ~x;
+    while(*str != '\0') {
+        uint64_t x = hash & 0xf000000000000000;
+        hash = (hash << 4) + lowerCase(*str) - 'a';
+        if(x != 0) {
+            hash = hash ^ (x >> 60);
+            hash = hash & ~x;
         }
-        str++;
+        str++;  // use pointers to go forward on a string
     }
-    return (hash & 0x7fffffff);
+    return (hash & 0x7fffffffffffffff);
 }

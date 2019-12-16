@@ -7,6 +7,7 @@
 
 typedef struct _define_HashCell {
     uint64_t key;
+//    char* str;
     int flag;
     struct _define_HashCell* nextCell;
 } HashCell;
@@ -30,6 +31,17 @@ void _HashTableTestSet();
  * Working functions.
  */
 
+
+
+
+
+/**
+ * Display the hash table.
+ *
+ * @param hashTable hash table
+ * @param tableSize size of the table
+ */
+void displayHashTable(HashTable* hashTable, uint64_t tableSize);
 
 /**
  * Add a hash string with specific key as a hash cell into hash table.
