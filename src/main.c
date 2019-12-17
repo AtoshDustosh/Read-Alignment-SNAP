@@ -36,7 +36,7 @@ int main() {
 
     dataLength = fnaDataSize(fnaFilePath);
     T = (uint64_t*)malloc(sizeof(uint64_t) * dataLength);
-//    loadFnaData(fnaFilePath, dataLength, T);
+    loadFnaData(fnaFilePath, dataLength, T);
 
     initialization();
     loadOneRead(fastqFilePath1, &fpointer1, &read1);

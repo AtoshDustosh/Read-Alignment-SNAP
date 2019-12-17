@@ -99,7 +99,8 @@ void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
             } else {
                 printf("->\t");
             }
-            printf("(%"PRIu64", %d, 0x%p)\t", hashCell->key, hashCell->flag, hashCell->nextCell);
+            printf("(%"PRIu64", %d, 0x%p)\t", hashCell->key, hashCell->flag,
+                   hashCell->nextCell);
             hashCell = hashCell->nextCell;
         } while(1);
         printf("\n");

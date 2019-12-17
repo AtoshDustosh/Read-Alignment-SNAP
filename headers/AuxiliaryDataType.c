@@ -78,13 +78,15 @@ static void _HexCodedStringBufferTest() {
 
 
 void initStringBuffer(StringBuffer* strBuf) {
+    free(strBuf->buffer);
     strBuf->buffer = NULL;
     strBuf->length = 0;
 }
 
 void initHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
+    free(hexCodedStrBuf->hexArray);
     hexCodedStrBuf->hexArray = NULL;
-    hexCodedStrBuf->arrayLength = 0;
+    hexCodedStrBuf->arrayLength = 1;
     hexCodedStrBuf->strLength = 0;
 }
 
