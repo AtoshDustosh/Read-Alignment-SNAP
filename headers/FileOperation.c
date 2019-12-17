@@ -10,12 +10,6 @@
 static void loadOneRead_projectBufferToRead(char* buffer, uint64_t fastqLine, Read* read);
 
 
-/**
- * Get the size of data (DNA sequence) of a ?.fna file.
- *
- * @param filePath file path
- * @return data size of ?.fna file
- */
 uint64_t fnaDataSize(char* filePath) {
     printf("\nCalculating size of file %s ... \n", filePath);
     FILE* fp = fopen(filePath, "r");
@@ -45,13 +39,6 @@ uint64_t fnaDataSize(char* filePath) {
     return dataLength;
 }
 
-/**
- * Load ?.fna data file into memory - stored in an uint64_t[] array.
- *
- * @param filePath file path
- * @param dataLength length of ?.fna data
- * @param T uint64_t[] array used to store data
- */
 void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* T) {
     printf("\nLoading data from file %s ...\n", filePath);
     FILE* fp = fopen(filePath, "r");
@@ -78,7 +65,7 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* T) {
             buffer[contentSize++] = ch;
             if(contentSize == CHAR_NUM_PER_HEX) {
                 buffer[contentSize] = '\0';
-                hexInt = transBufToHex(buffer, CHAR_NUM_PER_HEX);
+//                hexInt = transBufTo64BitHex(buffer, CHAR_NUM_PER_HEX);
                 printf("0x%16"PRIx64"\t", hexInt);
                 if((i + 1) % 4 == 0) {
                     printf("\n");
@@ -90,22 +77,13 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* T) {
         }
         ch = fgetc(fp);
     }
-    hexInt = transBufToHex(buffer, CHAR_NUM_PER_HEX);
+//    hexInt = transBufTo64BitHex(buffer, CHAR_NUM_PER_HEX);
     printf("0x%16"PRIx64" ", hexInt);
     T[i++] = hexInt;
 
     free(fp);
 }
 
-/**
- * Open a ?.fastq file and load a read into memory.
- * If fpointer is not NULL, directly load a read into memory.
- *
- * @param filePath file path
- * @param fpointer pointer to a file pointer - points to start position in file
- *      of next readPointer when the method finishes
- * @param readPointer pointer to a Read data type used for storing a read
- */
 void loadOneRead(char* filePath, FILE** fpointer, Read* readPointer) {
     printf("\n");
     if(*fpointer == NULL) {
@@ -188,6 +166,14 @@ static void loadOneRead_projectBufferToRead(char* buffer, uint64_t fastqLine, Re
         exit(EXIT_FAILURE);
     }
 }
+
+
+
+
+
+
+
+
 
 
 

@@ -63,18 +63,18 @@
 		<Unit filename="headers/ArrayOperation.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
+		<Unit filename="headers/AuxiliaryDataType.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/AuxiliaryDataType.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
 		<Unit filename="headers/AuxiliaryFunction.c">
 			<Option compilerVar="CC" />
 			<Option virtualFolder="headers/" />
 		</Unit>
 		<Unit filename="headers/AuxiliaryFunction.h">
-			<Option virtualFolder="headers/" />
-		</Unit>
-		<Unit filename="headers/DataType.c">
-			<Option compilerVar="CC" />
-			<Option virtualFolder="headers/" />
-		</Unit>
-		<Unit filename="headers/DataType.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
 		<Unit filename="headers/FileOperation.c">
@@ -92,6 +92,13 @@
 			<Option virtualFolder="headers/" />
 		</Unit>
 		<Unit filename="headers/MyArgs.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/cDataType.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/cDataType.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
 		<Unit filename="package-info.c">

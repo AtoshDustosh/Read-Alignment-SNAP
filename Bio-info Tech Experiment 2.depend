@@ -22,11 +22,12 @@
 
 1576223137 e:\c_projects\bio-info tech experiment 2\headers\helperfunction.h
 
-1576480227 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1576553932 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
+	<math.h>
 	"MyArgs.h"
 
-1576477819 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+1576503048 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
 	"FileOperation.h"
 	<string.h>
 	"ArrayOperation.h"
@@ -35,36 +36,37 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1576478736 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1576550994 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
+	"../headers/AuxiliaryDataType.h"
 	"../headers/AuxiliaryFunction.h"
 	"../headers/FileOperation.h"
-	"../headers/DataType.h"
+	"../headers/cDataType.h"
 	"../headers/ArrayOperation.h"
 	"../headers/HashTable.h"
 
-1576478736 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1576551652 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
+	"AuxiliaryDataType.h"
 
-1576402217 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
+1576501725 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
-	"DataType.h"
+	"AuxiliaryDataType.h"
 
-1576406889 source:e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.c
+1576503138 source:e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.c
 	"ArrayOperation.h"
 
 1576403817 e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.h
 	<stdio.h>
 	<stdlib.h>
 
-1576485971 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
+1576503101 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
 	"HashTable.h"
-	"AuxiliaryFunction.h"
 
 1576398266 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
 
@@ -76,7 +78,24 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1576483905 e:\c_projects\bio-info tech experiment 2\headers\hashtable.h
+1576506270 e:\c_projects\bio-info tech experiment 2\headers\hashtable.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+
+1576503091 source:e:\c_projects\bio-info tech experiment 2\headers\cdatatype.c
+	"cDataType.h"
+
+1576501603 e:\c_projects\bio-info tech experiment 2\headers\cdatatype.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+
+1576552458 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
+	"AuxiliaryDataType.h"
+	<string.h>
+
+1576553143 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>

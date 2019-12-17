@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
+#include "AuxiliaryDataType.h"
+
 /**
  * A collection of test in this header file.
  */
@@ -14,39 +16,39 @@ void _AuxiliaryFunctionTestSet();
  * Working functions.
  */
 
-/**
- * Transform a 64-bit unsigned hexadecimal integer to a string.
- *
- * \note clear buffer before putting it int this method
- *
- * @param hexInt 64-bit hexadecimal integer
- * @param beginIndex beginning index of string in the hexInt
- * @param endIndex ending index of string in the hexInt
- * @param buf buffer of string transformed from the hexInt
- * @param charNumPerHex #(chars) per hexadecimal number
- */
-void transHexToBuf(uint64_t hexInt, uint64_t beginIndex, uint64_t endIndex,
-                   char* buf, uint64_t charNumPerHex);
+
+
+
 
 /**
- * Extract the hexadecimal number of a char compressed in a 64-bit hexInt.
+ * Transform a hex-coded string buffer to a string buffer.
+ *
+ * @param hexCodedStrBuf hex-coded string buffer
+ * @param strBuf string buffer
+ * @param charNumPerHex #(chars) per hexadecimal number
+ */
+void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBuf,
+        StringBuffer* strBuf, uint64_t charNumPerHex);
+
+/**
+ * Extract the hexadecimal bits of a char compressed in a 64-bit hexInt.
  *
  * @param offset offset of in the 64-bit hexInt (equals to index of the char)
  * @param hexInt a 64-bit hexadecimal integer
  * @param charNumPerHex #(chars) per hexadecimal number
  * @return extracted hexadecimal number to the corresponding index
  */
-uint64_t extractCharHex(uint64_t offset, uint64_t hexInt, uint64_t charNumPerHex);
+uint64_t extractCharBitsFromHexInt(uint64_t offset, uint64_t hexInt, uint64_t charNumPerHex);
 
 /**
- * Transform a string stored in a char array buffer to an 64-bit unsigned
- * hexadecimal integer.
+ * Transform a string buffer to a hex-coded string buffer.
  *
- * @param buf char buffer
+ * @param strBuf string buffer
+ * @param hexCodedStrBuf hex-coded string buffer
  * @param charNumPerHex #(chars) per hexadecimal number
- * @return 64-bit hexadecimal integer corresponding to buffer
  */
-uint64_t transBufToHex(char* buf, uint64_t charNumPerHex);
+void transStringBufferToHexCodedStringBuffer(StringBuffer* strBuf,
+        HexCodedStringBuffer* hexCodedStrBuf, uint64_t charNumPerHex);
 
 /**
  * Get the lower case of a character.

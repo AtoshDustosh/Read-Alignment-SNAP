@@ -1,19 +1,14 @@
 #include "HashTable.h"
 
-#include "AuxiliaryFunction.h"
-
 
 static void _initHashTableTest();
 static void _addHashCellTest();
 
 static void randomString(char* str, uint64_t strLength);
 static uint64_t MyHash(char* str);
-static uint64_t BPHash(char* str);
-static uint64_t ELFhash(char *str);
+//static uint64_t BPHash(char* str);
+//static uint64_t ELFhash(char *str);
 
-/**
- * A collection of test in this header file.
- */
 void _HashTableTestSet() {
     _initHashTableTest();
     _addHashCellTest();
@@ -43,7 +38,7 @@ static void _initHashTableTest() {
 static void _addHashCellTest() {
     printf("\n**************** _addHashCellTest ****************\n");
     HashTable hashTable;
-    uint64_t tableSize = 5000000;
+    uint64_t tableSize = 500000;
     printf("hash table size: %"PRIu64"\n", tableSize);
 
     initHashTable(tableSize, &hashTable);
@@ -57,7 +52,8 @@ static void _addHashCellTest() {
         addHashCell(str, i, &hashTable, tableSize);
     }
 
-    displayHashTable(&hashTable, tableSize);
+//    displayHashTable(&hashTable, tableSize);
+    checkHashTablePerformance(&hashTable, tableSize);
 }
 
 
@@ -68,33 +64,21 @@ static void _addHashCellTest() {
  * Working functions.
  */
 
-
-/**
- * Display the hash table.
- *
- * @param hashTable hash table
- * @param tableSize size of the table
- */
-void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
+void checkHashTablePerformance(HashTable* hashTable, uint64_t tableSize) {
     uint64_t i = 0;
 
     uint64_t totalBucketLength = 0;
     float bucketUsedCount = 0;
     for(i = 0; i < tableSize; i++) {
-//        printf("%"PRIu64"\t", i);
         HashCell* hashCell = &(hashTable->hashList[i]);
         totalBucketLength = totalBucketLength + hashCell->flag;
         bucketUsedCount = bucketUsedCount + (hashCell->flag && 1);
         do {
             if(hashCell == NULL || hashCell->flag == 0) {
                 break;
-            } else {
-//                printf("->\t");
             }
-//            printf("(%"PRIu64", %d, 0x%p)\t", hashCell->key, hashCell->flag, hashCell->nextCell);
             hashCell = hashCell->nextCell;
         } while(1);
-//        printf("\n");
     }
 
     printf("total bucket length: %"PRIu64"\n", totalBucketLength);
@@ -103,14 +87,25 @@ void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
     printf("bucket usage ratio: %f\n", bucketUsedCount / tableSize);
 }
 
-/**
- * Add a hash string with specific key as a hash cell into hash table.
- *
- * @param str string used for calculating hash index
- * @param key key of the string
- * @param tableSize size of the hash table
- * @param hashTable hash table
- */
+void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
+    uint64_t i = 0;
+
+    for(i = 0; i < tableSize; i++) {
+        printf("%"PRIu64"\t", i);
+        HashCell* hashCell = &(hashTable->hashList[i]);
+        do {
+            if(hashCell == NULL || hashCell->flag == 0) {
+                break;
+            } else {
+                printf("->\t");
+            }
+            printf("(%"PRIu64", %d, 0x%p)\t", hashCell->key, hashCell->flag, hashCell->nextCell);
+            hashCell = hashCell->nextCell;
+        } while(1);
+        printf("\n");
+    }
+}
+
 void addHashCell(char* str, uint64_t key, HashTable* hashTable, uint64_t tableSize) {
     uint64_t index = hashIndex(str, tableSize);
     HashCell* hashCell = &(hashTable->hashList[index]);
@@ -141,12 +136,6 @@ void addHashCell(char* str, uint64_t key, HashTable* hashTable, uint64_t tableSi
     hashCell->nextCell = newHashCell;
 }
 
-/**
- * Initialize a hash table of specific size.
- *
- * @param tableSize size of the hash table
- * @param hashTable hash table
- */
 void initHashTable(uint64_t tableSize, HashTable* hashTable) {
     hashTable->hashList = (HashCell*)malloc(sizeof(HashCell) * tableSize);
     uint64_t i = 0;
@@ -163,13 +152,6 @@ void initHashTable(uint64_t tableSize, HashTable* hashTable) {
     }
 }
 
-/**
- * Calculating the hash table index of a string.
- *
- * @param str input string
- * @param tableSize size of the hash table
- * @return hash table index
- */
 uint64_t hashIndex(char *str, uint64_t tableSize) {
     return MyHash(str) % tableSize;
 }
@@ -195,12 +177,12 @@ uint64_t hashIndex(char *str, uint64_t tableSize) {
  * @param str input string
  * @param hash value
  */
-static uint64_t MyHash(char* str){
+static uint64_t MyHash(char* str) {
     uint64_t hash = 0;
 
     while(*str != '\0') {
         uint64_t x = hash & 0xf000000000000000;
-        hash = (hash << 2) + lowerCase(*str);
+        hash = (hash << 2) + *str;
         if(x != 0) {
             hash = hash ^ (x >> 60);
             hash = hash & ~x;
@@ -210,49 +192,49 @@ static uint64_t MyHash(char* str){
     return (hash & 0x7fffffffffffffff);
 }
 
-/**
- * BPHash function. \note aborted
- *
- * total bucket length: 500000
- * average bucket length: 8.020018
- * bucket usage ratio: 0.124688
- *
- * @param str input string
- * @param hash value
- */
-static uint64_t BPHash(char* str) {
-    uint64_t hash = 0;
-    while(*str != '\0') {
-        hash = (hash << 7) ^ (*str);
-        str++;
-    }
-    return hash;
-}
-
-/**
- * ELFHash function.
- *
- * total bucket length: 5000000
- * average bucket length: 1.801436
- * bucket usage ratio: 0.555113
- *
- * @param str input string
- * @param hash value
- */
-static uint64_t ELFhash(char *str) {
-    uint64_t hash = 0;
-
-    while(*str != '\0') {
-        uint64_t x = hash & 0xf000000000000000;
-        hash = (hash << 4) + *str;
-        if(x != 0) {
-            hash = hash ^ (x >> 60);
-            hash = hash & ~x;
-        }
-        str++;  // use pointers to go forward on a string
-    }
-    return (hash & 0x7fffffffffffffff);
-}
+///**
+// * BPHash function. \note aborted
+// *
+// * total bucket length: 500000
+// * average bucket length: 8.020018
+// * bucket usage ratio: 0.124688
+// *
+// * @param str input string
+// * @param hash value
+// */
+//static uint64_t BPHash(char* str) {
+//    uint64_t hash = 0;
+//    while(*str != '\0') {
+//        hash = (hash << 7) ^ (*str);
+//        str++;
+//    }
+//    return hash;
+//}
+//
+///**
+// * ELFHash function.
+// *
+// * total bucket length: 5000000
+// * average bucket length: 1.801436
+// * bucket usage ratio: 0.555113
+// *
+// * @param str input string
+// * @param hash value
+// */
+//static uint64_t ELFhash(char *str) {
+//    uint64_t hash = 0;
+//
+//    while(*str != '\0') {
+//        uint64_t x = hash & 0xf000000000000000;
+//        hash = (hash << 4) + *str;
+//        if(x != 0) {
+//            hash = hash ^ (x >> 60);
+//            hash = hash & ~x;
+//        }
+//        str++;  // use pointers to go forward on a string
+//    }
+//    return (hash & 0x7fffffffffffffff);
+//}
 
 /**
  * Generate a random string at a specific length.

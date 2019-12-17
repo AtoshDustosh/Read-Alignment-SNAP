@@ -7,7 +7,6 @@
 
 typedef struct _define_HashCell {
     uint64_t key;
-//    char* str;
     int flag;
     struct _define_HashCell* nextCell;
 } HashCell;
@@ -23,14 +22,18 @@ typedef struct _define_HashTable {
 void _HashTableTestSet();
 
 
-
-
-
-
 /*
  * Working functions.
  */
 
+
+/**
+ * Check performance of the hash table.
+ *
+ * @param hashTable hash table
+ * @param tableSize size of the table
+ */
+void checkHashTablePerformance(HashTable* hashTable, uint64_t tableSize);
 
 /**
  * Display the hash table.

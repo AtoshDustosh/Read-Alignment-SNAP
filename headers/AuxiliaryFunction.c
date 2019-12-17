@@ -1,5 +1,7 @@
 #include "AuxiliaryFunction.h"
 
+#include <math.h>
+
 #include "MyArgs.h"
 
 #define HEX_FOR_LETTER_A 0x0
@@ -11,20 +13,17 @@
 static void _charToHexTest();
 static void _hexToCharTest();
 static void _lowerCaseTest();
-static void _transBufToHexIntTest();
-static void _extractCharHexTest();
+static void _transStringBufferToHexCodedStringBufferTest();
+static void _extractCharBitsFromHexIntTest();
 static void _transHexToBufTest();
 
 
-/**
- * A collection of test in this header file.
- */
 void _AuxiliaryFunctionTestSet() {
     _charToHexTest();
     _hexToCharTest();
     _lowerCaseTest();
-    _transBufToHexIntTest();
-    _extractCharHexTest();
+    _transStringBufferToHexCodedStringBufferTest();
+    _extractCharBitsFromHexIntTest();
     _transHexToBufTest();
 }
 
@@ -84,32 +83,56 @@ static void _lowerCaseTest() {
 /**
  * Test function transBufToHexInt.
  */
-static void _transBufToHexIntTest() {
+static void _transStringBufferToHexCodedStringBufferTest() {
     printf("\n**************** _transBufToHexIntTest ****************\n");
     const uint64_t charNumPerHex = CHAR_NUM_PER_HEX;
-    char *buf = NULL;
-    uint64_t hexInt = 0;
+    StringBuffer* strBuf = (StringBuffer*)malloc(sizeof(StringBuffer));
+    HexCodedStringBuffer* hexCodedStrBuf =
+        (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
 
-    buf = "ccccagagctctccccaaaaggggttttaaaa";
+    initStringBuffer(strBuf);
+    initHexCodedStringBuffer(hexCodedStrBuf);
+
+
+// test string length within charNumPerHex
+    strBuf->buffer = "ccccagagctctccccaaaaggggttttaaaa";
     // 01010101 00100010 01110111 01010101 00000000 10101010 11111111 00000000
     // 0x5522775500AAFF00
-    hexInt = transBufToHex(buf, charNumPerHex);
-    printf("buf1: %s\n", buf);
-    printf("hex_integer: 0x%16"PRIx64"\n", hexInt);
+    strBuf->length = 32;
+    transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
+
+    printStringBuffer(strBuf);
+    printHexCodedStringBuffer(hexCodedStrBuf);
     printf("expected: 0x5522775500aaff00\n");
 
-    buf = "ccccagagctctcccc";
-    hexInt = transBufToHex(buf, charNumPerHex);
-    printf("buf2: %s\n", buf);
-    printf("hex_integer: 0x%16"PRIx64"\n", hexInt);
+    strBuf->buffer = "ccccagagctctcccc";
+    // 01010101 00100010 01110111 01010101 00000000 00000000 00000000 00000000
+    // 0x5522775500AAFF00
+    strBuf->length = 16;
+    transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
+
+    printStringBuffer(strBuf);
+    printHexCodedStringBuffer(hexCodedStrBuf);
     printf("expected: 0x5522775500000000\n");
+
+// test string length over charNumPerHex
+    strBuf->buffer = "ccccagagctctccccaaaaggggttttaaaatatagagatatacaca";
+    // 01010101 00100010 01110111 01010101 00000000 10101010 11111111 00000000 ~
+    // ~ 11001100 10001000 11001100 01000100
+    // 0x5522775500AAFF00 0xCC88CC4400000000
+    strBuf->length = 48;
+    transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
+
+    printStringBuffer(strBuf);
+    printHexCodedStringBuffer(hexCodedStrBuf);
+    printf("expected: 0x5522775500aaff00, 0xcc88cc4400000000\n");
 }
 
 /**
- * Test function extractCharHex.
+ * Test function extractCharBitsFromHexInt.
  */
-static void _extractCharHexTest() {
-    printf("\n**************** _extractCharHexTest ****************\n");
+static void _extractCharBitsFromHexIntTest() {
+    printf("\n**************** _extractCharBitsFromHexIntTest ****************\n");
     uint64_t hexInt = 0x27fd3de1e41a90ce;
     char* charSequence = "agcttttcattctgactgcaacgggcaatatg";
     uint64_t i = 0;
@@ -119,7 +142,7 @@ static void _extractCharHexTest() {
     printf("%s\n", charSequence);
     for(i = 0; i < length; i++) {
         int offset = i % CHAR_NUM_PER_HEX;
-        uint64_t extractedHex = extractCharHex(offset, hexInt, CHAR_NUM_PER_HEX);
+        uint64_t extractedHex = extractCharBitsFromHexInt(offset, hexInt, CHAR_NUM_PER_HEX);
         printf("%c-0x%"PRIx64" ", charSequence[i], extractedHex);
         if((i + 1) % 8 == 0) {
             printf("\n");
@@ -132,16 +155,16 @@ static void _extractCharHexTest() {
  */
 static void _transHexToBufTest() {
     printf("\n**************** _transHexToBufTest ****************\n");
-    uint64_t hexInt = 0x27fd3de1e41a90ce;
-    char* buf = (char*)malloc(sizeof(char) * BUFSIZ);
-
-    uint64_t beginIndex = 0;
-    uint64_t endIndex = CHAR_NUM_PER_HEX - 1;
-
-    printf("hexInt: 0x%"PRIx64"\n", hexInt);
-    transHexToBuf(hexInt, beginIndex, endIndex, buf, CHAR_NUM_PER_HEX);
-    printf("buf: %s\n", buf);
-    printf("expected: agcttttcattctgactgcaacgggcaatatg\n");
+//    uint64_t hexInt = 0x27fd3de1e41a90ce;
+//    char* buf = (char*)malloc(sizeof(char) * BUFSIZ);
+//
+//    uint64_t beginIndex = 0;
+//    uint64_t endIndex = CHAR_NUM_PER_HEX - 1;
+//
+//    printf("hexInt: 0x%"PRIx64"\n", hexInt);
+//    transHexToBuf(hexInt, beginIndex, endIndex, buf, CHAR_NUM_PER_HEX);
+//    printf("buf: %s\n", buf);
+//    printf("expected: agcttttcattctgactgcaacgggcaatatg\n");
 }
 
 
@@ -164,39 +187,21 @@ static void _transHexToBufTest() {
  * Working functions.
  */
 
-/**
- * Transform a 64-bit unsigned hexadecimal integer to a string.
- *
- * \note clear buffer before putting it int this method
- *
- * @param hexInt 64-bit hexadecimal integer
- * @param beginIndex beginning index of string in the hexInt
- * @param endIndex ending index of string in the hexInt
- * @param buf buffer of string transformed from the hexInt
- * @param charNumPerHex #(chars) per hexadecimal number
- */
-void transHexToBuf(uint64_t hexInt, uint64_t beginIndex, uint64_t endIndex,
-                   char* buf, uint64_t charNumPerHex) {
-    uint64_t i = 0;
-    uint64_t length = endIndex - beginIndex + 1;
 
-    for(i = 0; i < length; i++) {
-        uint64_t charHex = extractCharHex(beginIndex + i, hexInt, charNumPerHex);
-        buf[i] = hexToChar(charHex);
-//        printf("charHex: 0x%"PRIx64", char: %c\n", charHex, buf[i]);
-    }
-    buf[i] = '\0';
+void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBuf,
+        StringBuffer* strBuf, uint64_t charNumPerHex) {
+//    uint64_t i = 0;
+//    uint64_t length = endIndex - beginIndex + 1;
+//
+//    for(i = 0; i < length; i++) {
+//        uint64_t charHex = extractCharBitsFromHexInt(beginIndex + i, hexInt, charNumPerHex);
+//        buf[i] = hexToChar(charHex);
+////        printf("charHex: 0x%"PRIx64", char: %c\n", charHex, buf[i]);
+//    }
+//    buf[i] = '\0';
 }
 
-/**
- * Extract the hexadecimal number of a char compressed in a 64-bit hexInt.
- *
- * @param offset offset of in the 64-bit hexInt (equals to index of the char)
- * @param hexInt a 64-bit hexadecimal integer
- * @param charNumPerHex #(chars) per hexadecimal number
- * @return extracted hexadecimal number to the corresponding index
- */
-uint64_t extractCharHex(uint64_t offset, uint64_t hexInt, uint64_t charNumPerHex) {
+uint64_t extractCharBitsFromHexInt(uint64_t offset, uint64_t hexInt, uint64_t charNumPerHex) {
     uint64_t bitInterval = sizeof(uint64_t) * 8 / charNumPerHex;
     uint64_t bitShiftLeft = offset * bitInterval;
     uint64_t bitShiftRight = bitInterval * (charNumPerHex - 1);
@@ -204,40 +209,39 @@ uint64_t extractCharHex(uint64_t offset, uint64_t hexInt, uint64_t charNumPerHex
     return (hexInt << bitShiftLeft) >> bitShiftRight;
 }
 
-/**
- * Transform a string stored in a char array buffer to an 64-bit unsigned
- * hexadecimal integer.
- *
- * @param buf char buffer
- * @param charNumPerHex #(chars) per hexadecimal number
- * @return 64-bit hexadecimal integer corresponding to buffer
- */
-uint64_t transBufToHex(char* buf, uint64_t charNumPerHex) {
-    uint64_t hexInt = 0x0;
+void transStringBufferToHexCodedStringBuffer(StringBuffer* strBuf,
+        HexCodedStringBuffer* hexCodedStrBuf, uint64_t charNumPerHex) {
+    // initialize hex-coded string buffer
+    initHexCodedStringBuffer(hexCodedStrBuf);
+    if(strBuf->length % charNumPerHex == 0) {
+        hexCodedStrBuf->arrayLength = strBuf->length / charNumPerHex;
+    } else {
+        hexCodedStrBuf->arrayLength = strBuf->length / charNumPerHex + 1;
+    }
+    hexCodedStrBuf->hexArray =
+        (uint64_t*)malloc(sizeof(uint64_t) * hexCodedStrBuf->arrayLength);
+    hexCodedStrBuf->strLength = strBuf->length;
 
     uint64_t bitInterval = sizeof(uint64_t) * 8 / charNumPerHex;
-    uint64_t i = 0;
-    char bufChar = *buf;
-    buf++;
+    uint64_t str_i = 0;
+    uint64_t array_i = 0;
+    char bufChar = strBuf->buffer[str_i++];
+    uint64_t hexInt = 0x0;
     while(bufChar != '\0') {
         uint64_t hexBit = charToHex(bufChar);
-        uint64_t bitShift = charNumPerHex - i - 1;
+        uint64_t bitShift = charNumPerHex - (str_i % charNumPerHex);
         hexInt = hexInt | (hexBit << (bitShift * bitInterval));
-//        printf("%c, %#"PRIx64"\n", bufChar, hexInt);
-        bufChar = *buf;
-        buf++;
-        i++;
+//        printf("%c\t%"PRIu64"\t%#"PRIx64"\n", bufChar, bitShift, hexInt);
+        bufChar = strBuf->buffer[str_i++];
+        // put hexInt into hex-coded string buffer when it's fully coded
+        if(str_i % charNumPerHex == 0 || bufChar == '\0') {
+            hexCodedStrBuf->hexArray[array_i++] = hexInt;
+            printf("hexInt: %#"PRIx64"\n", hexInt);
+            hexInt = 0x0;
+        }
     }
-    return hexInt;
 }
 
-/**
- * Get the lower case of a character.
- *
- * @param ch an English letter
- * @return lower case of ch if ch is in upper case, i.e. 'A' -> 'a';
- *      ch otherwise, i.e. 'A' -> 'A', '*' -> '*'
- */
 char lowerCase(char ch) {
     if(ch >= 'A' && ch <= 'Z') {
         return ch - ('A' - 'a');
@@ -246,14 +250,6 @@ char lowerCase(char ch) {
     }
 }
 
-/**
- * Transform hexadecimal numbers into characters (a, c, g, t)
- *
- * @param hexValue hexadecimal number
- * @return 'a' if 0x0; 'c' if 0x1;
- *         'g' if 0x2; 't' if 0x3;
- *         '*' otherwise.
- */
 char hexToChar(uint64_t hex) {
     switch(hex) {
     case HEX_FOR_LETTER_A:
@@ -269,16 +265,6 @@ char hexToChar(uint64_t hex) {
     }
 }
 
-/**
- * Transform characters (A, C, G, T) into hexadecimal numbers.
- *
- * @param ch character
- * @return 0x0 if ch == 'A' || ch == 'a';
- *         0x1 if ch == 'C' || ch == 'c';
- *         0x2 if ch == 'G' || ch == 'g';
- *         0x3 if ch == 'T' || ch == 't';
- *         0x0 otherwise.
- */
 uint64_t charToHex(char ch) {
     ch = lowerCase(ch);
     switch(ch) {
@@ -294,3 +280,13 @@ uint64_t charToHex(char ch) {
         return 0x0;
     }
 }
+
+
+/*
+ * Static functions. (file-localized functions)
+ */
+
+
+
+
+

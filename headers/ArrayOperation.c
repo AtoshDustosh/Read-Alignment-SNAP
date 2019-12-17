@@ -4,9 +4,6 @@
 static void _clearCharArrayTest();
 
 
-/**
- * A collection of test in this header file.
- */
 void _ArrayOperationTestSet() {
     _clearCharArrayTest();
 }
@@ -48,23 +45,10 @@ static void _clearCharArrayTest() {
 
 
 
-
-
-
-
-
-
-
 /*
  * Working functions.
  */
 
-/**
- * Clear char array to empty.
- *
- * @param charArray char array
- * @param arrayLength length of array
- */
 void clearCharArray(char charArray[], int arrayLength) {
     int i = 0;
     for(i = 0; i < arrayLength; i++) {

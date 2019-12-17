@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../headers/AuxiliaryDataType.h"
 #include "../headers/AuxiliaryFunction.h"
 #include "../headers/FileOperation.h"
-#include "../headers/DataType.h"
+#include "../headers/cDataType.h"
 #include "../headers/ArrayOperation.h"
 #include "../headers/HashTable.h"
 
@@ -41,15 +42,15 @@ int main() {
     loadOneRead(fastqFilePath1, &fpointer1, &read1);
     loadOneRead(fastqFilePath1, &fpointer1, &read1);
 
-
     free(T);
     return 0;
 }
 
 void testSet() {
+    _AuxiliaryDataTypeTestSet();
     _AuxiliaryFunctionTestSet();
     _ArrayOperationTestSet();
-    _DataTypeTestSet();
+    _cDataTypeTestSet();
     _HashTableTestSet();
 }
 

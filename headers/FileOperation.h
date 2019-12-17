@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-#include "DataType.h"
+#include "AuxiliaryDataType.h"
 
 /**
  * Get the size of data (DNA sequence) of a ?.fna file.
