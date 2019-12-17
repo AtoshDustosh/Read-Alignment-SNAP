@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+
 static void _StringBufferTest();
 static void _HexCodedStringBufferTest();
 

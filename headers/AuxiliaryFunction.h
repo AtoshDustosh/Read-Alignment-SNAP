@@ -1,5 +1,5 @@
-#ifndef AUXILIARYFUNCTIONS_H_INCLUDED
-#define AUXILIARYFUNCTIONS_H_INCLUDED
+#ifndef AUXILIARYFUNCTION_H_INCLUDED
+#define AUXILIARYFUNCTION_H_INCLUDED
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -81,8 +81,15 @@ char hexToChar(uint64_t hex);
  */
 uint64_t charToHex(char ch);
 
+/**
+ * Get the hex-code of the inverse of a base.
+ *
+ * @param base base
+ * @return hex-code of the inverse of a base
+ */
+uint64_t getInverseBaseHex(uint64_t base);
 
 
 
 
-#endif // AUXILIARYFUNCTIONS_H_INCLUDED
+#endif // AUXILIARYFUNCTION_H_INCLUDED

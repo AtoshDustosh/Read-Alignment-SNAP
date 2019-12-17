@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../headers/ArrayOperation.h"
 #include "../headers/AuxiliaryDataType.h"
 #include "../headers/AuxiliaryFunction.h"
-#include "../headers/FileOperation.h"
 #include "../headers/cDataType.h"
-#include "../headers/ArrayOperation.h"
+#include "../headers/FileOperation.h"
 #include "../headers/HashTable.h"
+#include "../headers/SNAP.h"
+
 
 
 /*
@@ -28,21 +30,22 @@ void initialization();
 void testSet();
 
 static uint64_t dataLength = 0;
-static uint64_t* T;
+static uint64_t* hexCodedDNA;
 
 
 int main() {
     testSet();
 
+
     dataLength = fnaDataSize(fnaFilePath);
-    T = (uint64_t*)malloc(sizeof(uint64_t) * dataLength);
-    loadFnaData(fnaFilePath, dataLength, T);
+    hexCodedDNA = (uint64_t*)malloc(sizeof(uint64_t) * dataLength);
+    loadFnaData(fnaFilePath, dataLength, hexCodedDNA);
 
     initialization();
     loadOneRead(fastqFilePath1, &fpointer1, &read1);
     loadOneRead(fastqFilePath1, &fpointer1, &read1);
 
-    free(T);
+    free(hexCodedDNA);
     return 0;
 }
 
@@ -54,7 +57,7 @@ void testSet() {
     _HashTableTestSet();
 }
 
-void initialization(){
+void initialization() {
     initializeRead(&read1);
 //    initializeRead(&read2);
 }

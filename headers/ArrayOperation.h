@@ -1,5 +1,5 @@
-#ifndef STRINGOPERATION_H_INCLUDED
-#define STRINGOPERATION_H_INCLUDED
+#ifndef ARRAYOPERATION_H_INCLUDED
+#define ARRAYOPERATION_H_INCLUDED
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,4 +24,4 @@ void _ArrayOperationTestSet();
 void clearCharArray(char charArray[], int arrayLength);
 
 
-#endif // STRINGOPERATION_H_INCLUDED
+#endif // ARRAYOPERATION_H_INCLUDED

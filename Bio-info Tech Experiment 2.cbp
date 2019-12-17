@@ -94,6 +94,13 @@
 		<Unit filename="headers/MyArgs.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
+		<Unit filename="headers/SNAP.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/SNAP.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
 		<Unit filename="headers/cDataType.c">
 			<Option compilerVar="CC" />
 			<Option virtualFolder="headers/" />

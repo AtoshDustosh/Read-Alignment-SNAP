@@ -308,6 +308,11 @@ uint64_t charToHex(char ch) {
     }
 }
 
+uint64_t getInverseBaseHex(uint64_t base) {
+    uint64_t fullHex = (1 << (64 / CHAR_NUM_PER_HEX)) - 1;
+    return (~base) & fullHex;
+}
+
 
 /*
  * Static functions. (file-localized functions)
