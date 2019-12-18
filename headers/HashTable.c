@@ -90,8 +90,10 @@ void checkHashTablePerformance(HashTable* hashTable, uint64_t tableSize) {
 void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
     uint64_t i = 0;
 
+    uint64_t maxBucketLength = 0;
     for(i = 0; i < tableSize; i++) {
-        printf("%"PRIu64"\t", i);
+        uint64_t tempLength = 0;
+        printf("hash cell %"PRIu64"\t", i);
         HashCell* hashCell = &(hashTable->hashList[i]);
         do {
             if(hashCell == NULL || hashCell->flag == 0) {
@@ -101,10 +103,15 @@ void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
             }
             printf("(%"PRIu64", %d, 0x%p)\t", hashCell->key, hashCell->flag,
                    hashCell->nextCell);
+            tempLength++;
             hashCell = hashCell->nextCell;
         } while(1);
         printf("\n");
+        if(tempLength > maxBucketLength){
+            maxBucketLength = tempLength;
+        }
     }
+    printf("Maximum bucket length: %"PRIu64"\n", maxBucketLength);
 }
 
 void addHashCell(char* str, uint64_t key, HashTable* hashTable, uint64_t tableSize) {

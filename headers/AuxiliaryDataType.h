@@ -60,6 +60,9 @@ void _AuxiliaryDataTypeTestSet();
  * Working functions.
  */
 
+
+
+
 /**
  * Initialize a string buffer with empty content.
  *

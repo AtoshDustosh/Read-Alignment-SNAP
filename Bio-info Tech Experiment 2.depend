@@ -22,7 +22,7 @@
 
 1576223137 e:\c_projects\bio-info tech experiment 2\headers\helperfunction.h
 
-1576577596 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1576655923 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	<math.h>
 	"MyArgs.h"
@@ -36,7 +36,7 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1576584487 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1576589205 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/ArrayOperation.h"
@@ -45,9 +45,9 @@
 	"../headers/cDataType.h"
 	"../headers/FileOperation.h"
 	"../headers/HashTable.h"
-	"../headers/SNAPConstruction.h"
+	"../headers/SNAP.h"
 
-1576587622 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1576655923 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -66,10 +66,10 @@
 	<stdio.h>
 	<stdlib.h>
 
-1576559770 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
+1576651913 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
 	"HashTable.h"
 
-1576398266 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
+1576591119 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
 
 1576413734 source:e:\c_projects\bio-info tech experiment 2\headers\datatype.c
 	"DataType.h"
@@ -96,7 +96,7 @@
 	"AuxiliaryDataType.h"
 	<string.h>
 
-1576583122 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
+1576654974 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -108,4 +108,14 @@
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
+
+1576587622 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
+	"SNAP.h"
+
+1576589325 e:\c_projects\bio-info tech experiment 2\headers\snap.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+	"HashTable.h"
+	"AuxiliaryDataType.h"
 

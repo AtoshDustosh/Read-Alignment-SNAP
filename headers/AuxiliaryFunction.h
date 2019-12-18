@@ -19,6 +19,16 @@ void _AuxiliaryFunctionTestSet();
 
 
 
+/**
+ * Calculate edit distance between 2 strings.
+ *
+ * @param str1 string 1
+ * @param str2 string 2
+ * @param EDmax maximum edit distance that can be accepted
+ * @return return edit distance between str1 and str2 if distance is within EDmax;
+ *      return EDmax if out of EDmax.
+ */
+uint64_t calculateEditDistance(StringBuffer* str1, StringBuffer* str2, uint64_t EDmax);
 
 /**
  * Transform a hex-coded string buffer to a string buffer.

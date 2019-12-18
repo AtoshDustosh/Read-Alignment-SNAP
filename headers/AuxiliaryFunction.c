@@ -16,6 +16,7 @@ static void _lowerCaseTest();
 static void _transStringBufferToHexCodedStringBufferTest();
 static void _extractCharBitsFromHexIntTest();
 static void _transHexCodedStringBufferToStringBufferTest();
+static void _calculateEditDistanceTest();
 
 
 void _AuxiliaryFunctionTestSet() {
@@ -25,6 +26,7 @@ void _AuxiliaryFunctionTestSet() {
     _transStringBufferToHexCodedStringBufferTest();
     _extractCharBitsFromHexIntTest();
     _transHexCodedStringBufferToStringBufferTest();
+    _calculateEditDistanceTest();
 }
 
 
@@ -190,6 +192,12 @@ static void _transHexCodedStringBufferToStringBufferTest() {
 
 }
 
+/**
+ * Test function calculateEditDistance.
+ */
+static void _calculateEditDistanceTest() {
+
+}
 
 
 
@@ -210,6 +218,44 @@ static void _transHexCodedStringBufferToStringBufferTest() {
  * Working functions.
  */
 
+uint64_t calculateEditDistance(StringBuffer* str1, StringBuffer* str2, uint64_t EDmax) {
+    /*
+     * Actually, considering the size of EDmax, we don't need to use uint64_t, and uint8_t
+     * is enough for EDmax and scoreMatrix.
+     * But for better correctness, we leave optimizations for future work.
+     */
+    const uint64_t rowNum = str1->length + 1;
+    const uint64_t columnNum = str2->length + 1;
+
+    /*
+     * Initializations.
+     */
+    char* strRow = (char*)malloc(sizeof(char) * rowNum);
+    char* strColumn = (char*)malloc(sizeof(char) * columnNum);
+    uint64_t matrix[rowNum][columnNum];
+
+    for(uint64_t i = 0; i < rowNum; i++){
+        for(uint64_t j = 0; j < columnNum j++){ // initialize scoring matrix
+            matrix[i][j] = 0
+        }
+    }
+    for(uint64_t i = 0; i < rowNum; i++){       // copy str1
+        strRow[i + 1] = str1->buffer[i];
+    }
+    strRow[0] = ' ';
+    for(uint64_t i = 0; i < columnNum; i++){    // copy str2
+        strColumn[i + 1] = str2->buffer[i];
+    }
+    strColumn[0] = ' ';
+
+    /*
+     * Start calculation.
+     */
+
+
+
+    return 0;
+}
 
 void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBuf,
         StringBuffer* strBuf, uint64_t charNumPerHex) {
