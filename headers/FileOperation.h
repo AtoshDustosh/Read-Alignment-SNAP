@@ -20,9 +20,9 @@ uint64_t fnaDataSize(char* filePath);
  *
  * @param filePath file path
  * @param dataLength length of ?.fna data
- * @param T uint64_t[] array used to store data
+ * @param hexCodedDNA hex-coded DNA sequence
  */
-void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* T);
+void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA);
 
 /**
  * Open a ?.fastq file and load a read into memory.

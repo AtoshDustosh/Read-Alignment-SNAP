@@ -22,12 +22,12 @@
 
 1576223137 e:\c_projects\bio-info tech experiment 2\headers\helperfunction.h
 
-1576655923 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1576675601 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	<math.h>
 	"MyArgs.h"
 
-1576577767 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+1576674261 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
 	"FileOperation.h"
 	<string.h>
 	"ArrayOperation.h"
@@ -36,7 +36,7 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1576589205 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1576675647 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/ArrayOperation.h"
@@ -45,15 +45,16 @@
 	"../headers/cDataType.h"
 	"../headers/FileOperation.h"
 	"../headers/HashTable.h"
+	"../headers/LandauVishkin.h"
 	"../headers/SNAP.h"
 
-1576655923 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1576668274 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 	"AuxiliaryDataType.h"
 
-1576501725 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
+1576672737 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -84,7 +85,7 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1576503091 source:e:\c_projects\bio-info tech experiment 2\headers\cdatatype.c
+1576656113 source:e:\c_projects\bio-info tech experiment 2\headers\cdatatype.c
 	"cDataType.h"
 
 1576501603 e:\c_projects\bio-info tech experiment 2\headers\cdatatype.h
@@ -92,11 +93,11 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1576583123 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
+1576671388 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
 	"AuxiliaryDataType.h"
 	<string.h>
 
-1576654974 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
+1576676302 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -117,5 +118,14 @@
 	<stdlib.h>
 	<inttypes.h>
 	"HashTable.h"
+	"AuxiliaryDataType.h"
+
+1576670609 source:e:\c_projects\bio-info tech experiment 2\headers\landauvishkin.c
+	"LandauVishkin.h"
+
+1576668319 e:\c_projects\bio-info tech experiment 2\headers\landauvishkin.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
 	"AuxiliaryDataType.h"
 

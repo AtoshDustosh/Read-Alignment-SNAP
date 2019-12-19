@@ -7,6 +7,7 @@
 #include "../headers/cDataType.h"
 #include "../headers/FileOperation.h"
 #include "../headers/HashTable.h"
+#include "../headers/LandauVishkin.h"
 #include "../headers/SNAP.h"
 
 
@@ -36,7 +37,6 @@ static uint64_t* hexCodedDNA;
 int main() {
     testSet();
 
-
     dataLength = fnaDataSize(fnaFilePath);
     hexCodedDNA = (uint64_t*)malloc(sizeof(uint64_t) * dataLength);
     loadFnaData(fnaFilePath, dataLength, hexCodedDNA);
@@ -55,6 +55,7 @@ void testSet() {
     _ArrayOperationTestSet();
     _cDataTypeTestSet();
     _HashTableTestSet();
+    _LandauVishkinTestSet();
 }
 
 void initialization() {

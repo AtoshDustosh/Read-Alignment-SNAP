@@ -91,6 +91,13 @@
 		<Unit filename="headers/HashTable.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
+		<Unit filename="headers/LandauVishkin.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/LandauVishkin.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
 		<Unit filename="headers/MyArgs.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
@@ -120,6 +127,15 @@
 			<code_completion />
 			<envvars />
 			<debugger />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project output_language="Chinese-Traditional" />
+				<doxyfile_build extract_all="1" />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

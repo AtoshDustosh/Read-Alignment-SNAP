@@ -20,13 +20,11 @@ static void _StringBufferTest() {
     printf("\n**************** _StringBufferTest ****************\n");
     StringBuffer* strBuf1 = (StringBuffer*)malloc(sizeof(StringBuffer));
     StringBuffer* strBuf2 = (StringBuffer*)malloc(sizeof(StringBuffer));
-    initStringBuffer(strBuf1);
-    initStringBuffer(strBuf2);
 
-    strBuf1->buffer = "1234567";
-    strBuf1->length = 7;
-    strBuf2->buffer = "1234";
-    strBuf2->length = 4;
+    char* str1 = "1234567";
+    char* str2 = "1234";
+    constructStringBuffer(strBuf1, str1, strlen(str1));
+    constructStringBuffer(strBuf2, str2, strlen(str2));
 
     printStringBuffer(strBuf1);
     printStringBuffer(strBuf2);
@@ -48,21 +46,16 @@ static void _HexCodedStringBufferTest() {
         (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
     HexCodedStringBuffer* hexCodedStrBuf2 =
         (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
-    initHexCodedStringBuffer(hexCodedStrBuf1);
-    initHexCodedStringBuffer(hexCodedStrBuf2);
 
     uint64_t arrayForTest1[] = {1, 2};
     uint64_t arrayLength1 = 2;
+    uint64_t strLength1 = 34;
     uint64_t arrayForTest2[] = {0x0123456789abcdef};
     uint64_t arrayLength2 = 1;
+    uint64_t strLength2 = 30;
 
-    hexCodedStrBuf1->hexArray = arrayForTest1;
-    hexCodedStrBuf1->arrayLength = arrayLength1;
-    hexCodedStrBuf1->strLength = 34;
-
-    hexCodedStrBuf2->hexArray = arrayForTest2;
-    hexCodedStrBuf2->arrayLength = arrayLength2;
-    hexCodedStrBuf2->strLength = 30;
+    constructHexCodedStringBuffer(hexCodedStrBuf1, arrayForTest1, arrayLength1, strLength1);
+    constructHexCodedStringBuffer(hexCodedStrBuf2, arrayForTest2, arrayLength2, strLength2);
 
     printHexCodedStringBuffer(hexCodedStrBuf1);
     printHexCodedStringBuffer(hexCodedStrBuf2);
@@ -76,19 +69,26 @@ static void _HexCodedStringBufferTest() {
  */
 
 
+void constructHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf, uint64_t* hexArray,
+                                   uint64_t arrayLength, uint64_t strLength) {
+    free(hexCodedStrBuf->hexArray);
+    hexCodedStrBuf->hexArray = hexArray;
+    hexCodedStrBuf->arrayLength = arrayLength;
+    hexCodedStrBuf->strLength = strLength;
+}
 
+void constructStringBuffer(StringBuffer* strBuf, char* buffer, uint64_t length) {
+    free(strBuf->buffer);
+    strBuf->buffer = buffer;
+    strBuf->length = length;
+}
 
 void initStringBuffer(StringBuffer* strBuf) {
-    free(strBuf->buffer);
-    strBuf->buffer = NULL;
-    strBuf->length = 0;
+    constructStringBuffer(strBuf, NULL, 0);
 }
 
 void initHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
-    free(hexCodedStrBuf->hexArray);
-    hexCodedStrBuf->hexArray = NULL;
-    hexCodedStrBuf->arrayLength = 1;
-    hexCodedStrBuf->strLength = 0;
+    constructHexCodedStringBuffer(hexCodedStrBuf, NULL, 1, 0);
 }
 
 void printStringBuffer(StringBuffer* strBuf) {

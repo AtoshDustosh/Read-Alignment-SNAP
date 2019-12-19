@@ -48,7 +48,6 @@ typedef struct _define_HexCodedStringBuffer {
     uint64_t strLength; // length of the string i.e. #(characters or letters)
 } HexCodedStringBuffer;
 
-
 /**
  * A collection of test in this header file.
  */
@@ -60,8 +59,25 @@ void _AuxiliaryDataTypeTestSet();
  * Working functions.
  */
 
+/**
+ * Construct a hex-coded string buffer with input (hexArray, arrayLength, strLength).
+ *
+ * @param hexCodedStrBuf hex-coded string buffer to be constructed
+ * @param hexArray hex-coded array
+ * @param arrayLength length of array
+ * @param strLength length of string
+ */
+void constructHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf, uint64_t* hexArray,
+                                   uint64_t arrayLength, uint64_t strLength);
 
-
+/**
+ * Construct a string buffer with input (buffer, length).
+ *
+ * @param strBuf string buffer to be constructed
+ * @param buffer string
+ * @param length string length
+ */
+void constructStringBuffer(StringBuffer* strBuf, char* buffer, uint64_t length);
 
 /**
  * Initialize a string buffer with empty content.

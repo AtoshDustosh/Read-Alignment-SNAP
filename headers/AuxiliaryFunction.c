@@ -16,7 +16,6 @@ static void _lowerCaseTest();
 static void _transStringBufferToHexCodedStringBufferTest();
 static void _extractCharBitsFromHexIntTest();
 static void _transHexCodedStringBufferToStringBufferTest();
-static void _calculateEditDistanceTest();
 
 
 void _AuxiliaryFunctionTestSet() {
@@ -26,7 +25,6 @@ void _AuxiliaryFunctionTestSet() {
     _transStringBufferToHexCodedStringBufferTest();
     _extractCharBitsFromHexIntTest();
     _transHexCodedStringBufferToStringBufferTest();
-    _calculateEditDistanceTest();
 }
 
 
@@ -97,15 +95,15 @@ static void _transStringBufferToHexCodedStringBufferTest() {
 
 
 // test string length within charNumPerHex
-    strBuf->buffer = "ccccagagctctccccaaaaggggttttaaaa";
-    // 01010101 00100010 01110111 01010101 00000000 10101010 11111111 00000000
-    // 0x5522775500AAFF00
+    strBuf->buffer = "ccccagagctctccccaaaaggggttttaacc";
+    // 01010101 00100010 01110111 01010101 00000000 10101010 11111111 00000101
+    // 0x5522775500AAFF05
     strBuf->length = 32;
     transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
 
     printStringBuffer(strBuf);
     printHexCodedStringBuffer(hexCodedStrBuf);
-    printf("expected: 0x5522775500aaff00\n");
+    printf("expected: 0x5522775500aaff05\n");
 
     strBuf->buffer = "ccccagagctctcccc";
     // 01010101 00100010 01110111 01010101 00000000 00000000 00000000 00000000
@@ -192,12 +190,6 @@ static void _transHexCodedStringBufferToStringBufferTest() {
 
 }
 
-/**
- * Test function calculateEditDistance.
- */
-static void _calculateEditDistanceTest() {
-
-}
 
 
 
@@ -217,45 +209,6 @@ static void _calculateEditDistanceTest() {
 /*
  * Working functions.
  */
-
-uint64_t calculateEditDistance(StringBuffer* str1, StringBuffer* str2, uint64_t EDmax) {
-    /*
-     * Actually, considering the size of EDmax, we don't need to use uint64_t, and uint8_t
-     * is enough for EDmax and scoreMatrix.
-     * But for better correctness, we leave optimizations for future work.
-     */
-    const uint64_t rowNum = str1->length + 1;
-    const uint64_t columnNum = str2->length + 1;
-
-    /*
-     * Initializations.
-     */
-    char* strRow = (char*)malloc(sizeof(char) * rowNum);
-    char* strColumn = (char*)malloc(sizeof(char) * columnNum);
-    uint64_t matrix[rowNum][columnNum];
-
-    for(uint64_t i = 0; i < rowNum; i++){
-        for(uint64_t j = 0; j < columnNum j++){ // initialize scoring matrix
-            matrix[i][j] = 0
-        }
-    }
-    for(uint64_t i = 0; i < rowNum; i++){       // copy str1
-        strRow[i + 1] = str1->buffer[i];
-    }
-    strRow[0] = ' ';
-    for(uint64_t i = 0; i < columnNum; i++){    // copy str2
-        strColumn[i + 1] = str2->buffer[i];
-    }
-    strColumn[0] = ' ';
-
-    /*
-     * Start calculation.
-     */
-
-
-
-    return 0;
-}
 
 void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBuf,
         StringBuffer* strBuf, uint64_t charNumPerHex) {
@@ -291,25 +244,26 @@ void transStringBufferToHexCodedStringBuffer(StringBuffer* strBuf,
     } else {
         hexCodedStrBuf->arrayLength = strBuf->length / charNumPerHex + 1;
     }
+
     hexCodedStrBuf->hexArray =
         (uint64_t*)malloc(sizeof(uint64_t) * hexCodedStrBuf->arrayLength);
     hexCodedStrBuf->strLength = strBuf->length;
 
     uint64_t bitInterval = sizeof(uint64_t) * 8 / charNumPerHex;
-    uint64_t str_i = 0;
+    uint64_t str_index = 0;
     uint64_t array_i = 0;
-    char bufChar = strBuf->buffer[str_i++];
+    char bufChar = strBuf->buffer[str_index++];
     uint64_t hexInt = 0x0;
     while(bufChar != '\0') {
         uint64_t hexBit = charToHex(bufChar);
-        uint64_t bitShift = charNumPerHex - (str_i % charNumPerHex);
+        uint64_t bitShift = (charNumPerHex - (str_index % charNumPerHex)) % charNumPerHex;
         hexInt = hexInt | (hexBit << (bitShift * bitInterval));
 //        printf("%c\t%"PRIu64"\t%#"PRIx64"\n", bufChar, bitShift, hexInt);
-        bufChar = strBuf->buffer[str_i++];
+        bufChar = strBuf->buffer[str_index++];
         // put hexInt into hex-coded string buffer when it's fully coded
-        if(str_i % charNumPerHex == 0 || bufChar == '\0') {
+        if(str_index % (charNumPerHex + 1) == 0 || bufChar == '\0') {
             hexCodedStrBuf->hexArray[array_i++] = hexInt;
-//            printf("hexInt: %#"PRIx64"\n", hexInt);
+//            printf("########hexInt: %#"PRIx64"\n", hexInt);
             hexInt = 0x0;
         }
     }
@@ -363,8 +317,6 @@ uint64_t getInverseBaseHex(uint64_t base) {
 /*
  * Static functions. (file-localized functions)
  */
-
-
 
 
 

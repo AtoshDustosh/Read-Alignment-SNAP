@@ -39,12 +39,11 @@ uint64_t fnaDataSize(char* filePath) {
     return dataLength;
 }
 
-void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* T) {
+void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA) {
     printf("\nLoading data from file %s ...\n", filePath);
     const uint64_t charNumPerHex = CHAR_NUM_PER_HEX;
-    FILE* fp = fopen(filePath, "r");
-    uint64_t dataZone = 0;   // if the file pointer is now in the data zone
 
+    FILE* fp = fopen(filePath, "r");
     if(fp == NULL) {
         printf("failed to open file %s\n", filePath);
         exit(EXIT_FAILURE);
@@ -56,49 +55,63 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* T) {
         (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
     uint64_t i = 0;
 
-    strBuf->buffer = (char*)malloc(sizeof(char) * (charNumPerHex + 1));
-    strBuf->length = 0;
-    hexCodedStrBuf->hexArray = (uint64_t*)malloc(sizeof(uint64_t) * 1);
-    hexCodedStrBuf->arrayLength = 1;
-    hexCodedStrBuf->strLength = 0;
+    char* buffer = (char*)malloc(sizeof(char) * (charNumPerHex + 1));
+    uint64_t* hexArray = (uint64_t*)malloc(sizeof(uint64_t) * 1);
+    uint64_t arrayLength = 1;
 
     uint64_t hexInt = 0;
+    uint64_t strLength = 0;
+    uint64_t dataZone = 0;   // if the file pointer is now in the data zone
     while(ch != EOF && i < dataLength) {
-        if(ch == '\n' && !dataZone) {
-            // according to format of *.fna file
-            // data part is after the first line
-            dataZone = 1;
-        }
-        if(dataZone && ch != '\n') {
-            // if not '\n' and is already in the data zone
-            strBuf->buffer[hexCodedStrBuf->strLength++] = ch;
-            if(hexCodedStrBuf->strLength % charNumPerHex == 0) {
-                strBuf->buffer[hexCodedStrBuf->strLength] = '\0';
-                transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
-                hexInt = hexCodedStrBuf->hexArray[0];
-
-                printf("0x%16"PRIx64"\t", hexInt);
-                if((i + 1) % 4 == 0) {
-                    printf("\n");
-                }
-                T[i++] = hexInt;
-                initStringBuffer(strBuf);
-                strBuf->buffer = (char*)malloc(sizeof(char) * (charNumPerHex + 1));
-                strBuf->length = 0;
-                initHexCodedStringBuffer(hexCodedStrBuf);
-                hexCodedStrBuf->hexArray = (uint64_t*)malloc(sizeof(uint64_t) * 1);
-                hexCodedStrBuf->arrayLength = 1;
-                hexCodedStrBuf->strLength = 0;
+        // according to format of *.fna file, data part is after the first line
+        if(dataZone == 0) {
+            if(ch == '\n') {
+                dataZone = 1;
             }
+            ch = fgetc(fp);
+            continue;
+        } else {
+            if(ch == '\n') {
+                ch = fgetc(fp);
+                continue;
+            }
+        }
+
+        buffer[strLength++] = ch;
+        if(strLength % charNumPerHex == 0) {
+            /**
+             * \alert extract a function if you have the time and fix this pile of shit.
+             */
+            buffer[strLength] = '\0';
+            constructStringBuffer(strBuf, buffer, 1);
+            constructHexCodedStringBuffer(hexCodedStrBuf, hexArray, arrayLength, strLength);
+            transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
+            hexInt = hexCodedStrBuf->hexArray[0];
+            hexCodedDNA[i++] = hexInt;
+            printf("%s\t", buffer);
+            printf("0x%16"PRIx64"\n", hexInt);
+//            if(i % 4 == 0) {
+//                printf("\n");
+//            }
+            buffer = (char*)malloc(sizeof(char) * (charNumPerHex + 1));
+            hexArray = (uint64_t*)malloc(sizeof(uint64_t) * 1);
+            strLength = 0;
         }
         ch = fgetc(fp);
     }
-    strBuf->buffer[hexCodedStrBuf->strLength] = '\0';
+    buffer[strLength] = '\0';
+    constructStringBuffer(strBuf, buffer, 1);
+    constructHexCodedStringBuffer(hexCodedStrBuf, hexArray, arrayLength, strLength);
     transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
     hexInt = hexCodedStrBuf->hexArray[0];
+    hexCodedDNA[i++] = hexInt;
+    printf("%s\t", buffer);
     printf("0x%16"PRIx64" ", hexInt);
-    T[i++] = hexInt;
 
+    free(buffer);
+    free(hexArray);
+    free(strBuf);
+    free(hexCodedStrBuf);
     free(fp);
 }
 
