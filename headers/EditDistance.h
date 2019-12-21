@@ -10,7 +10,7 @@
 /**
  * A collection of test in this header file.
  */
-void _LandauVishkinTestSet();
+void _EditDistanceTestSet();
 
 /*
  * Working functions.

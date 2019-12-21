@@ -10,6 +10,7 @@
 #define HEX_FOR_LETTER_T 0x3
 
 
+static void _getInverseBaseHexTest();
 static void _charToHexTest();
 static void _hexToCharTest();
 static void _lowerCaseTest();
@@ -19,6 +20,7 @@ static void _transHexCodedStringBufferToStringBufferTest();
 
 
 void _AuxiliaryFunctionTestSet() {
+    _getInverseBaseHexTest();
     _charToHexTest();
     _hexToCharTest();
     _lowerCaseTest();
@@ -31,6 +33,30 @@ void _AuxiliaryFunctionTestSet() {
 /*
  * Tests for working functions.
  */
+
+
+
+
+
+/**
+ * Test function getInverseBaseHex.
+ */
+static void _getInverseBaseHexTest() {
+    uint64_t hexA = HEX_FOR_LETTER_A;
+    uint64_t hexC = HEX_FOR_LETTER_C;
+    uint64_t hexG = HEX_FOR_LETTER_G;
+    uint64_t hexT = HEX_FOR_LETTER_T;
+
+    printf("\n**************** _getInverseBaseHexTest ****************\n");
+    printf("%c, 0x%"PRIx64" -> %c, 0x%"PRIx64"\n", hexToChar(hexA), hexA,
+           hexToChar(getInverseBaseHex(hexA)), getInverseBaseHex(hexA));
+    printf("%c, 0x%"PRIx64" -> %c, 0x%"PRIx64"\n", hexToChar(hexC), hexC,
+           hexToChar(getInverseBaseHex(hexC)), getInverseBaseHex(hexC));
+    printf("%c, 0x%"PRIx64" -> %c, 0x%"PRIx64"\n", hexToChar(hexG), hexG,
+           hexToChar(getInverseBaseHex(hexG)), getInverseBaseHex(hexG));
+    printf("%c, 0x%"PRIx64" -> %c, 0x%"PRIx64"\n", hexToChar(hexT), hexT,
+           hexToChar(getInverseBaseHex(hexT)), getInverseBaseHex(hexT));
+}
 
 /**
  * Test function charToHex.
@@ -311,6 +337,14 @@ uint64_t charToHex(char ch) {
 uint64_t getInverseBaseHex(uint64_t base) {
     uint64_t fullHex = (1 << (64 / CHAR_NUM_PER_HEX)) - 1;
     return (~base) & fullHex;
+}
+
+int minInt(int value1, int value2) {
+    if(value1 < value2) {
+        return value1;
+    } else {
+        return value2;
+    }
 }
 
 

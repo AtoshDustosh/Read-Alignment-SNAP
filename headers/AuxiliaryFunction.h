@@ -89,6 +89,13 @@ uint64_t charToHex(char ch);
  */
 uint64_t getInverseBaseHex(uint64_t base);
 
+/**
+ * Get the min value between 2 (int type) values.
+ *
+ * @param value1 value1
+ * @param value2 value2
+ */
+int minInt(int value1, int value2);
 
 
 

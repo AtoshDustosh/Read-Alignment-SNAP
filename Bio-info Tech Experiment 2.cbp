@@ -77,6 +77,13 @@
 		<Unit filename="headers/AuxiliaryFunction.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
+		<Unit filename="headers/EditDistance.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/EditDistance.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
 		<Unit filename="headers/FileOperation.c">
 			<Option compilerVar="CC" />
 			<Option virtualFolder="headers/" />
@@ -89,13 +96,6 @@
 			<Option virtualFolder="headers/" />
 		</Unit>
 		<Unit filename="headers/HashTable.h">
-			<Option virtualFolder="headers/" />
-		</Unit>
-		<Unit filename="headers/LandauVishkin.c">
-			<Option compilerVar="CC" />
-			<Option virtualFolder="headers/" />
-		</Unit>
-		<Unit filename="headers/LandauVishkin.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
 		<Unit filename="headers/MyArgs.h">

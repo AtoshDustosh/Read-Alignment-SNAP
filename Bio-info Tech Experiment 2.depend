@@ -22,7 +22,7 @@
 
 1576223137 e:\c_projects\bio-info tech experiment 2\headers\helperfunction.h
 
-1576675601 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1576909276 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	<math.h>
 	"MyArgs.h"
@@ -36,7 +36,7 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1576675647 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1576908404 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/ArrayOperation.h"
@@ -45,10 +45,10 @@
 	"../headers/cDataType.h"
 	"../headers/FileOperation.h"
 	"../headers/HashTable.h"
-	"../headers/LandauVishkin.h"
+	"../headers/EditDistance.h"
 	"../headers/SNAP.h"
 
-1576668274 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1576909276 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -124,6 +124,16 @@
 	"LandauVishkin.h"
 
 1576668319 e:\c_projects\bio-info tech experiment 2\headers\landauvishkin.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+	"AuxiliaryDataType.h"
+
+1576911818 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
+	"EditDistance.h"
+	"AuxiliaryFunction.h"
+
+1576848484 e:\c_projects\bio-info tech experiment 2\headers\editdistance.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>

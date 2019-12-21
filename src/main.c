@@ -7,7 +7,7 @@
 #include "../headers/cDataType.h"
 #include "../headers/FileOperation.h"
 #include "../headers/HashTable.h"
-#include "../headers/LandauVishkin.h"
+#include "../headers/EditDistance.h"
 #include "../headers/SNAP.h"
 
 
@@ -37,15 +37,15 @@ static uint64_t* hexCodedDNA;
 int main() {
     testSet();
 
-    dataLength = fnaDataSize(fnaFilePath);
-    hexCodedDNA = (uint64_t*)malloc(sizeof(uint64_t) * dataLength);
-    loadFnaData(fnaFilePath, dataLength, hexCodedDNA);
-
-    initialization();
-    loadOneRead(fastqFilePath1, &fpointer1, &read1);
-    loadOneRead(fastqFilePath1, &fpointer1, &read1);
-
-    free(hexCodedDNA);
+//    dataLength = fnaDataSize(fnaFilePath);
+//    hexCodedDNA = (uint64_t*)malloc(sizeof(uint64_t) * dataLength);
+//    loadFnaData(fnaFilePath, dataLength, hexCodedDNA);
+//
+//    initialization();
+//    loadOneRead(fastqFilePath1, &fpointer1, &read1);
+//    loadOneRead(fastqFilePath1, &fpointer1, &read1);
+//
+//    free(hexCodedDNA);
     return 0;
 }
 
@@ -55,7 +55,7 @@ void testSet() {
     _ArrayOperationTestSet();
     _cDataTypeTestSet();
     _HashTableTestSet();
-    _LandauVishkinTestSet();
+    _EditDistanceTestSet();
 }
 
 void initialization() {
