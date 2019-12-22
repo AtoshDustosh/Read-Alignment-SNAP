@@ -49,6 +49,7 @@ static void _addHashCellTest() {
     for(i = 0; i < tableSize; i++) {
         str = (char*)malloc(sizeof(char) * strLength);
         randomString(str, strLength);
+//        printf("%s, %"PRIu64"\n", str, MyHash(str));
         addHashCell(str, i, &hashTable, tableSize);
     }
 

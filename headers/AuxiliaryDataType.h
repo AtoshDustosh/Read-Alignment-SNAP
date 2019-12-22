@@ -48,6 +48,12 @@ typedef struct _define_HexCodedStringBuffer {
     uint64_t strLength; // length of the string i.e. #(characters or letters)
 } HexCodedStringBuffer;
 
+
+
+
+
+
+
 /**
  * A collection of test in this header file.
  */

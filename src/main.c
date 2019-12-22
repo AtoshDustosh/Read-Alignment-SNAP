@@ -5,9 +5,10 @@
 #include "../headers/AuxiliaryDataType.h"
 #include "../headers/AuxiliaryFunction.h"
 #include "../headers/cDataType.h"
+#include "../headers/EditDistance.h"
 #include "../headers/FileOperation.h"
 #include "../headers/HashTable.h"
-#include "../headers/EditDistance.h"
+#include "../headers/Queue.h"
 #include "../headers/SNAP.h"
 
 
@@ -56,6 +57,7 @@ void testSet() {
     _cDataTypeTestSet();
     _HashTableTestSet();
     _EditDistanceTestSet();
+    _QueueTestSet();
 }
 
 void initialization() {

@@ -118,6 +118,7 @@ static void _transStringBufferToHexCodedStringBufferTest() {
 
     initStringBuffer(strBuf);
     initHexCodedStringBuffer(hexCodedStrBuf);
+    printf("... initialization completed \n");
 
 
 // test string length within charNumPerHex

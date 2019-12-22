@@ -71,15 +71,34 @@ static void _HexCodedStringBufferTest() {
 
 void constructHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf, uint64_t* hexArray,
                                    uint64_t arrayLength, uint64_t strLength) {
+    if(hexCodedStrBuf == NULL) {
+        hexCodedStrBuf = (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
+    }
     free(hexCodedStrBuf->hexArray);
-    hexCodedStrBuf->hexArray = hexArray;
+    if(hexArray == NULL || arrayLength == 0) {
+        hexCodedStrBuf->hexArray = NULL;
+    } else {
+        hexCodedStrBuf->hexArray = (uint64_t*)malloc(sizeof(uint64_t) * arrayLength);
+        for(uint64_t i = 0; i < arrayLength; i++) {
+            hexCodedStrBuf->hexArray[i] = hexArray[i];
+        }
+    }
+
     hexCodedStrBuf->arrayLength = arrayLength;
     hexCodedStrBuf->strLength = strLength;
 }
 
 void constructStringBuffer(StringBuffer* strBuf, char* buffer, uint64_t length) {
+    if(strBuf == NULL) {
+        strBuf = (StringBuffer*)malloc(sizeof(StringBuffer));
+    }
     free(strBuf->buffer);
-    strBuf->buffer = buffer;
+    strBuf->buffer = (char*)malloc(sizeof(char) * (length + 1));
+    for(uint64_t i = 0; i < length; i++) {
+        strBuf->buffer[i] = buffer[i];
+    }
+
+    strBuf->buffer[length] = '\0';
     strBuf->length = length;
 }
 
@@ -92,11 +111,19 @@ void initHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
 }
 
 void printStringBuffer(StringBuffer* strBuf) {
+    if(strBuf == NULL) {
+        printf("ERROR: null pointer occurred when printing a string buffer. \n");
+        exit(EXIT_FAILURE);
+    }
     printf("string buffer (0x%p) - (%s, %"PRIu64")\n",
            strBuf, strBuf->buffer, strBuf->length);
 }
 
 void printHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
+    if(hexCodedStrBuf == NULL) {
+        printf("ERROR: null pointer occurred when printing a hex-coded string buffer. \n");
+        exit(EXIT_FAILURE);
+    }
     uint64_t i = 0;
     printf("hex-coded string buffer (0x%p) - ({", hexCodedStrBuf);
     uint64_t arrayLength = hexCodedStrBuf->arrayLength;
@@ -112,6 +139,10 @@ void printHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
 
 
 void initializeRead(Read *read) {
+    if(read == NULL) {
+        printf("ERROR: null pointer occurred when initializing a read. \n");
+        exit(EXIT_FAILURE);
+    }
 //    read->QNAME = (char*)malloc(sizeof(char) * BUFSIZ);
     read->FLAG = 0x0;
 //    read->RNAME = (char*)malloc(sizeof(char) * BUFSIZ);

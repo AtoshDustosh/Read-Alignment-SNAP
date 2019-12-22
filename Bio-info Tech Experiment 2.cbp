@@ -101,6 +101,13 @@
 		<Unit filename="headers/MyArgs.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
+		<Unit filename="headers/Queue.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/Queue.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
 		<Unit filename="headers/SNAP.c">
 			<Option compilerVar="CC" />
 			<Option virtualFolder="headers/" />

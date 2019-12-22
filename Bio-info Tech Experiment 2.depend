@@ -36,16 +36,17 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1576908404 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1576929938 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/ArrayOperation.h"
 	"../headers/AuxiliaryDataType.h"
 	"../headers/AuxiliaryFunction.h"
 	"../headers/cDataType.h"
+	"../headers/EditDistance.h"
 	"../headers/FileOperation.h"
 	"../headers/HashTable.h"
-	"../headers/EditDistance.h"
+	"../headers/Queue.h"
 	"../headers/SNAP.h"
 
 1576909276 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
@@ -67,7 +68,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1576651913 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
+1576931045 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
 	"HashTable.h"
 
 1576591119 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
@@ -93,11 +94,11 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1576671388 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
+1576995927 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
 	"AuxiliaryDataType.h"
 	<string.h>
 
-1576676302 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
+1576923186 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -129,8 +130,9 @@
 	<inttypes.h>
 	"AuxiliaryDataType.h"
 
-1576911818 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
+1576927543 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
 	"EditDistance.h"
+	<string.h>
 	"AuxiliaryFunction.h"
 
 1576848484 e:\c_projects\bio-info tech experiment 2\headers\editdistance.h
@@ -138,4 +140,12 @@
 	<stdlib.h>
 	<inttypes.h>
 	"AuxiliaryDataType.h"
+
+1576934495 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
+	"Queue.h"
+
+1576928693 e:\c_projects\bio-info tech experiment 2\headers\queue.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
 

@@ -1,0 +1,227 @@
+#include "Queue.h"
+
+
+static void _queueTest();
+
+
+void _QueueTestSet() {
+    _queueTest();
+}
+
+
+
+/*
+ * Tests for working functions.
+ */
+
+static void _queueTest() {
+    printf("\n**************** _queueTest ****************\n");
+    uint64_t returnValue = 0;
+
+    Queue* queueInstance = (Queue*)malloc(sizeof(Queue));
+    initQueue(queueInstance);
+
+    returnValue = isQueueEmpty(queueInstance);
+    printf("Queue is empty or not: %"PRIu64"\n", returnValue);
+
+    QueueCell* queueCell = newQueueCell(1);
+    printf("New queue cell's data: %"PRIu64"\n", queueCell->data);
+
+    printf("Construct a queue ...\n");
+    for(int i = 0; i < 10; i++) {
+        enQueue(queueInstance, newQueueCell(i));
+    }
+
+    printf("Queue:\n");
+    printQueue(queueInstance);
+
+    printf("Dequeue the queue ...\n");
+    printf("queue length: %"PRIu64"\n", queueInstance->length);
+    returnValue = queueInstance->length;
+    for(int i = 0; i < returnValue; i++) {
+        deQueue(queueInstance, queueCell);
+        /**< \todo */
+        printf("Queue cell: (%"PRIu64", 0x%p)\n", queueCell->data, queueCell->next);
+
+    }
+
+    deQueue(queueInstance, queueCell);
+}
+
+
+
+
+/*
+ * Working functions.
+ */
+
+
+
+
+
+QueueCell* newQueueCell(uint64_t data) {
+    /**< \note memory required by malloc will not be freed when the function ends */
+    QueueCell* queueCell = (QueueCell*)malloc(sizeof(QueueCell));
+    queueCell->data = data;
+    queueCell->next = NULL;
+    return queueCell;
+}
+
+
+void initQueue(Queue* queueInstance) {
+    if(queueInstance == NULL) {
+        printf("ERROR: null pointer occurred when initializing a queue. \n");
+        exit(EXIT_FAILURE);
+    }
+    queueInstance->head = NULL;
+    queueInstance->tail = NULL;
+    queueInstance->length = 0;
+}
+
+
+void setQueue(Queue* queueInstance, QueueCell* head, QueueCell* tail, uint64_t length) {
+    if(queueInstance == NULL) {
+        printf("ERROR: null pointer occurred when setting a queue. \n");
+        exit(EXIT_FAILURE);
+    }
+    if((head == NULL) ^ (tail == NULL)) {
+        printf("ERROR: cannot set a queue with only a head or a tail. \n");
+        exit(EXIT_FAILURE);
+    }
+    queueInstance->head = head;
+    queueInstance->tail = tail;
+    queueInstance->length = length;
+}
+
+
+
+void clearQueue(Queue* queueInstance) {
+    if(queueInstance == NULL) {
+        printf("ERROR: null pointer occurred when clearing a queue. \n");
+        exit(EXIT_FAILURE);
+    }
+    QueueCell* thisCell = queueInstance->head;
+    QueueCell* nextCell = NULL;
+    while(thisCell != NULL) {
+        nextCell = thisCell->next;
+        if(nextCell != NULL) {
+            free(thisCell);
+            thisCell = nextCell;
+        } else {
+            free(thisCell);
+            return;
+        }
+    }
+    initQueue(queueInstance);
+}
+
+
+uint64_t isQueueEmpty(Queue* queueInstance) {
+    if(queueInstance == NULL) {
+        printf("ERROR: null pointer occurred judging whether a queue is empty. \n");
+        exit(EXIT_FAILURE);
+    }
+    if(queueInstance->length != 0) {
+        return 1;
+    }
+    return 0;
+}
+
+
+uint64_t queueLength(Queue* queueInstance) {
+    if(queueInstance == NULL) {
+        printf("ERROR: null pointer occurred when getting the length of a queue. \n");
+        exit(EXIT_FAILURE);
+    }
+    return queueInstance->length;
+}
+
+
+QueueCell* getQueueHead(Queue* queueInstance) {
+    if(queueInstance == NULL) {
+        printf("ERROR: null pointer occurred when getting the head of a queue. \n");
+        exit(EXIT_FAILURE);
+    }
+    return queueInstance->head;
+}
+
+
+QueueCell* getQueueTail(Queue* queueInstance) {
+    if(queueInstance == NULL) {
+        printf("ERROR: null pointer occurred when getting the tail of a queue. \n");
+        exit(EXIT_FAILURE);
+    }
+    return queueInstance->tail;
+}
+
+
+void deQueue(Queue* queueInstance, QueueCell* queueCell) {
+    if(queueInstance == NULL) {
+        printf("ERROR: null pointer occurred when dequeuing a queue. \n");
+        exit(EXIT_FAILURE);
+    }
+    QueueCell* queueHead = queueInstance->head;
+
+    if(queueHead == NULL) {
+        /**< \note if queue is empty  */
+        printf("ERROR: Queue head is NULL!\n");
+        queueCell = NULL;
+        return;
+    }
+
+    *queueCell = *queueHead;
+
+    queueInstance->head = queueHead->next;
+    queueInstance->length = queueInstance->length - 1;
+    if(queueInstance->length == 0) {    // make the head consists with tail
+        initQueue(queueInstance);
+    }
+}
+
+
+void enQueue(Queue* queueInstance, QueueCell* queueCell) {
+    if(queueInstance == NULL || queueCell == NULL) {
+        printf("ERROR: null pointer occurred when dequeuing a queue. \n");
+        exit(EXIT_FAILURE);
+    }
+    QueueCell* queueTail = queueInstance->tail;
+
+    if(queueInstance->length == 0) {
+        queueInstance->head = queueCell;
+        queueInstance->tail = queueCell;
+        queueInstance->length = queueInstance->length + 1;
+        return;
+    }
+
+    queueTail->next = queueCell;
+
+    queueInstance->tail = queueCell;
+    queueInstance->length = queueInstance->length + 1;
+}
+
+
+void printQueue(Queue* queueInstance) {
+    if(queueInstance == NULL) {
+        printf("ERROR: null pointer occurred when printing a queue. \n");
+        exit(EXIT_FAILURE);
+    }
+    QueueCell* queueCell = NULL;
+
+    queueCell = queueInstance->head;
+    printf("\n");
+    printf("length: %"PRIu64"\n", queueInstance->length);
+    while(queueCell != NULL) {
+        printf("0x%p: (%"PRIu64", 0x%p) ->\n", queueCell, queueCell->data, queueCell->next);
+        queueCell = queueCell->next;
+    }
+    printf("NULL\n");
+}
+
+
+
+
+
+
+/*
+ * Static functions. (file-localized functions)
+ */
