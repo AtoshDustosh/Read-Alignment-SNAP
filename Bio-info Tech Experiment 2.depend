@@ -130,9 +130,10 @@
 	<inttypes.h>
 	"AuxiliaryDataType.h"
 
-1577102812 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
+1577113143 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
 	"EditDistance.h"
 	<string.h>
+	<strings.h>
 	"AuxiliaryFunction.h"
 	"Queue.h"
 
