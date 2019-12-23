@@ -27,25 +27,36 @@ static void _queueTest() {
     QueueCell* queueCell = newQueueCell(1);
     printf("New queue cell's data: %"PRIu64"\n", queueCell->data);
 
+    // dequeue an empty queue
+    deQueue(queueInstance, queueCell);
+
+    // construct a queue
     printf("Construct a queue ...\n");
-    for(int i = 0; i < 10; i++) {
+    for(uint64_t i = 0; i < 10; i++) {
         enQueue(queueInstance, newQueueCell(i));
     }
-
     printf("Queue:\n");
     printQueue(queueInstance);
 
+    // dequeue the queue
     printf("Dequeue the queue ...\n");
     printf("queue length: %"PRIu64"\n", queueInstance->length);
     returnValue = queueInstance->length;
-    for(int i = 0; i < returnValue; i++) {
+    for(uint64_t i = 0; i < returnValue / 2; i++) {
         deQueue(queueInstance, queueCell);
         /**< \todo */
-        printf("Queue cell: (%"PRIu64", 0x%p)\n", queueCell->data, queueCell->next);
-
+        printf("dequeue the queue cell: (%"PRIu64", 0x%p)\n", queueCell->data, queueCell->next);
     }
+    printf("Queue:\n");
+    printQueue(queueInstance);
 
-    deQueue(queueInstance, queueCell);
+    // clear the queue
+    printf("Clear the queue (0x%p) ...\n", queueInstance);
+    clearQueue(queueInstance);
+    printf("Queue:\n");
+    printQueue(queueInstance);
+
+    free(queueInstance);
 }
 
 
@@ -73,6 +84,7 @@ void initQueue(Queue* queueInstance) {
         printf("ERROR: null pointer occurred when initializing a queue. \n");
         exit(EXIT_FAILURE);
     }
+    clearQueue(queueInstance);
     queueInstance->head = NULL;
     queueInstance->tail = NULL;
     queueInstance->length = 0;
@@ -100,19 +112,21 @@ void clearQueue(Queue* queueInstance) {
         printf("ERROR: null pointer occurred when clearing a queue. \n");
         exit(EXIT_FAILURE);
     }
-    QueueCell* thisCell = queueInstance->head;
+    QueueCell* thisCell = NULL;
     QueueCell* nextCell = NULL;
+
+    thisCell = queueInstance->head;
+//    printf("queue length: %"PRIu64"\n", queueInstance->length);
     while(thisCell != NULL) {
+//        printf("0x%p: (%"PRIu64", 0x%p) ->\n", thisCell, thisCell->data, thisCell->next);
         nextCell = thisCell->next;
-        if(nextCell != NULL) {
-            free(thisCell);
-            thisCell = nextCell;
-        } else {
-            free(thisCell);
-            return;
-        }
+        free(thisCell);
+        queueInstance->length = queueInstance->length - 1;
+        thisCell = nextCell;
     }
-    initQueue(queueInstance);
+//    printf("NULL\n\n");
+    queueInstance->head = NULL;
+    queueInstance->tail = NULL;
 }
 
 
@@ -164,17 +178,20 @@ void deQueue(Queue* queueInstance, QueueCell* queueCell) {
 
     if(queueHead == NULL) {
         /**< \note if queue is empty  */
-        printf("ERROR: Queue head is NULL!\n");
+        printf("WARNING: Queue head is NULL!\n");
         queueCell = NULL;
         return;
     }
 
-    *queueCell = *queueHead;
+    queueCell->data = queueHead->data;
+    queueCell->next = queueHead->next;
 
-    queueInstance->head = queueHead->next;
+    free(queueHead);
+    queueInstance->head = queueCell->next;
     queueInstance->length = queueInstance->length - 1;
     if(queueInstance->length == 0) {    // make the head consists with tail
-        initQueue(queueInstance);
+        queueInstance->head = NULL;
+        queueInstance->tail = NULL;
     }
 }
 
@@ -208,13 +225,18 @@ void printQueue(Queue* queueInstance) {
     QueueCell* queueCell = NULL;
 
     queueCell = queueInstance->head;
-    printf("\n");
-    printf("length: %"PRIu64"\n", queueInstance->length);
+    printf("queue length: %"PRIu64"\n", queueInstance->length);
+    if(queueCell != NULL) {
+        printf("queue head: (%"PRIu64", 0x%p)\n",
+               queueInstance->head->data, queueInstance->head->next);
+        printf("queue tail: (%"PRIu64", 0x%p)\n",
+               queueInstance->tail->data, queueInstance->tail->next);
+    }
     while(queueCell != NULL) {
         printf("0x%p: (%"PRIu64", 0x%p) ->\n", queueCell, queueCell->data, queueCell->next);
         queueCell = queueCell->next;
     }
-    printf("NULL\n");
+    printf("NULL\n\n");
 }
 
 

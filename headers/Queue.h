@@ -48,7 +48,7 @@ QueueCell* newQueueCell(uint64_t data);
 /**
  * Initialize a queue.
  *
- * @param queueInstance an instance of Queue
+ * @param queueInstance an instance of Queue - cannot be NULL pointer
  */
 void initQueue(Queue* queueInstance);
 
@@ -56,7 +56,7 @@ void initQueue(Queue* queueInstance);
 /**
  * Set a queue with specific head, tail and length.
  *
- * @param queueInstance an instance of Queue
+ * @param queueInstance an instance of Queue - cannot be NULL pointer
  * @param head head of queue
  * @param tail tail of queue
  * @param length length of queue
@@ -67,7 +67,7 @@ void setQueue(Queue* queueInstance, QueueCell* head, QueueCell* tail, uint64_t l
 /**
  * Clear a queue.
  *
- * @param queueInstance an instance of Queue
+ * @param queueInstance an instance of Queue - cannot be NULL pointer
  */
 void clearQueue(Queue* queueInstance);
 
@@ -75,7 +75,7 @@ void clearQueue(Queue* queueInstance);
 /**
  * Judge whether a queue is empty.
  *
- * @param queueInstance an instance of Queue
+ * @param queueInstance an instance of Queue - cannot be NULL pointer
  * @return 1 if queue is empty; 0 otherwise
  */
 uint64_t isQueueEmpty(Queue* queueInstance);
@@ -84,7 +84,7 @@ uint64_t isQueueEmpty(Queue* queueInstance);
 /**
  * Get the length of a queue.
  *
- * @param queueInstance an instance of Queue
+ * @param queueInstance an instance of Queue - cannot be NULL pointer
  * @return length of the queue
  */
 uint64_t queueLength(Queue* queueInstance);
@@ -93,7 +93,7 @@ uint64_t queueLength(Queue* queueInstance);
 /**
  * Get the head of a queue.
  *
- * @param queueInstance an instance of Queue
+ * @param queueInstance an instance of Queue - cannot be NULL pointer
  * @return head of the queue
  */
 QueueCell* getQueueHead(Queue* queueInstance);
@@ -102,7 +102,7 @@ QueueCell* getQueueHead(Queue* queueInstance);
 /**
  * Get the tail of a queue.
  *
- * @param queueInstance an instance of Queue
+ * @param queueInstance an instance of Queue - cannot be NULL pointer
  * @return tail of the queue
  */
 QueueCell* getQueueTail(Queue* queueInstance);
@@ -111,7 +111,7 @@ QueueCell* getQueueTail(Queue* queueInstance);
 /**
  * Dequeue a queue and get the element dequeued.
  *
- * @param queueInstance an instance of Queue
+ * @param queueInstance an instance of Queue - cannot be NULL pointer
  * @param queueCell return element dequeued
  */
 void deQueue(Queue* queueInstance, QueueCell* queueCell);
@@ -120,7 +120,7 @@ void deQueue(Queue* queueInstance, QueueCell* queueCell);
 /**
  * Enqueue an element into a queue.
  *
- * @param queueInstance an instance of Queue
+ * @param queueInstance an instance of Queue - cannot be NULL pointer
  * @param queueCell element to be enqueued
  */
 void enQueue(Queue* queueInstance, QueueCell* queueCell);
@@ -129,7 +129,7 @@ void enQueue(Queue* queueInstance, QueueCell* queueCell);
 /**
  * Print a queue.
  *
- * @param queueInstance an instance of Queue
+ * @param queueInstance an instance of Queue - cannot be NULL pointer
  */
 void printQueue(Queue* queueInstance);
 

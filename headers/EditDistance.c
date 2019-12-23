@@ -3,12 +3,36 @@
 #include <string.h>
 
 #include "AuxiliaryFunction.h"
+#include "Queue.h"
 
 #define DIAGONALLYEXTENDED 1
 
-static void extendEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn,
-                                    uint64_t* EDmatrix, uint64_t* diagonallyExtendedMatrix, uint64_t startRow,
-                                    uint64_t startColumn, uint64_t EDmax);
+#define INITEDVALUE 1000
+
+static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn,
+                                   uint64_t* EDmatrix, uint64_t* diagonallyExtendedMatrix,
+                                   const uint64_t EDmax);
+
+
+
+
+
+static void extendEDMatrixDiagonally(StringBuffer* strRow, StringBuffer* strColumn,
+                                     uint64_t startRow, uint64_t startColumn, uint64_t* endRow,
+                                     uint64_t* endColumn, uint64_t* EDmatrix,
+                                     uint64_t* diagonallyExtendedMatrix, uint64_t EDmax);
+static void extendEDMatrixHorizontally(StringBuffer* strRow, StringBuffer* strColumn,
+                                       uint64_t startRow, uint64_t startColumn, uint64_t* EDmatrix,
+                                       uint64_t* diagonallyExtendedMatrix, uint64_t EDmax);
+static void extendEDMatrixVertically(StringBuffer* strRow, StringBuffer* strColumn,
+                                     uint64_t startRow, uint64_t startColumn, uint64_t* EDmatrix,
+                                     uint64_t* diagonallyExtendedMatrix, uint64_t EDmax);
+static void splitAfterExtension(StringBuffer* strRow, StringBuffer* strColumn,
+                                Queue* startRowQueue, Queue*startColumnQueue,
+                                uint64_t endRow, uint64_t endColumn, uint64_t* EDmatrix,
+                                uint64_t* diagonallyExtendedMatrix, uint64_t EDmax);
+
+
 
 /*
  * Declarations of tests.
@@ -30,25 +54,38 @@ void _EditDistanceTestSet() {
  */
 static void _calculateEditDistanceTest() {
     printf("\n**************** _calculateEditDistanceTest ****************\n");
-    StringBuffer* strBuf1 = (StringBuffer*)malloc(sizeof(StringBuffer));
-    StringBuffer* strBuf2 = (StringBuffer*)malloc(sizeof(StringBuffer));
-    initStringBuffer(strBuf1);
-    initStringBuffer(strBuf2);
-
-    strBuf1->buffer = "agtccg";
-    strBuf1->length = (uint64_t)strlen(strBuf1->buffer);
-    strBuf2->buffer = "agcgc";
-    strBuf2->length = (uint64_t)strlen(strBuf2->buffer);
+    StringBuffer* strBufRow = (StringBuffer*)malloc(sizeof(StringBuffer));
+    StringBuffer* strBufColumn = (StringBuffer*)malloc(sizeof(StringBuffer));
+    uint64_t maxBufLen = BUFSIZ;
+    char* CIGARbuffer = (char*)malloc(sizeof(char) * maxBufLen);
 
     uint64_t EDmax = 2;
 
-//    calculateEditDistance(strBuf1, strBuf1, EDmax);
+    char* string1 = NULL;
+    char* string2 = NULL;
+
+    string1 = "agtcgccgctgctgc";
+    string2 = "agcgcttgctgc";
+    constructStringBuffer(strBufColumn, string1, (uint64_t)strlen(string1));
+    constructStringBuffer(strBufRow, string2, (uint64_t)strlen(string2));
+    calculateEditDistance(strBufRow, strBufColumn, EDmax, CIGARbuffer, maxBufLen);
+
+//    printf("******************************************************************\n");
+//    string1 = "ccagtcgctgcgctt";
+//    string2 = "agcgcttgcgc";
+//    constructStringBuffer(strBufColumn, string1, (uint64_t)strlen(string1));
+//    constructStringBuffer(strBufRow, string2, (uint64_t)strlen(string2));
+//    calculateEditDistance(strBufRow, strBufColumn, EDmax, CIGARbuffer, maxBufLen);
+
+    free(strBufRow);
+    free(strBufColumn);
 }
 
 /*
  * Working functions.
  */
-uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uint64_t EDmax) {
+uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uint64_t EDmax,
+                               char* CIGARbuffer, uint64_t maxBufLen) {
     /*
      * Actually, considering the size of EDmax, we don't need to use uint64_t, and uint8_t
      * is enough for EDmax and scoreMatrix.
@@ -67,14 +104,16 @@ uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uin
 
     for(uint64_t i = 0; i < rowNum; i++) {      // initialize edit-distance matrix
         for(uint64_t j = 0; j < columnNum; j++) {
-            EDmatrix[i][j] = 0;
+            EDmatrix[i][j] = INITEDVALUE;
             diagonallyExtendedMatrix[i][j] = 0;
         }
     }
-    for(uint64_t i = 0; i < rowNum; i++) {      // initialize first row (bounder) of edit-distance matrix
+    for(uint64_t i = 0; i < rowNum;
+            i++) {      // initialize first row (bounder) of edit-distance matrix
         EDmatrix[i][0] = i;
     }
-    for(uint64_t i = 0; i < columnNum; i++) { // initialize first column (bounder) of edit-distance matrix
+    for(uint64_t i = 0; i < columnNum;
+            i++) { // initialize first column (bounder) of edit-distance matrix
         EDmatrix[0][i] = i;
     }
     for(uint64_t i = 0; i < rowNum; i++) {      // copy strBuf1
@@ -93,8 +132,8 @@ uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uin
     constructStringBuffer(strBufRow, strRow, rowNum);
     constructStringBuffer(strBufColumn, strColumn, columnNum);
 
-//    printStringBuffer(strBufRow);
-//    printStringBuffer(strBufColumn);
+    printStringBuffer(strBufRow);
+    printStringBuffer(strBufColumn);
 
     /*
      * Calculate the edit-distance matrix.
@@ -102,24 +141,30 @@ uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uin
     printf("initialized ED matrix:\n");
     for(uint64_t i = 0; i < rowNum; i++) {
         for(uint64_t j = 0; j < columnNum; j++) {
-            printf("%d\t", EDmatrix[i][j]);
+            printf("%"PRIu64"\t", EDmatrix[i][j]);
         }
         printf("\n\n");
     }
 
-    extendEditDistanceMatrix(strBufRow, strBufColumn, (uint64_t*)EDmatrix,
-                                          (uint64_t*)diagonallyExtendedMatrix, 0, 0, EDmax);
+    printf("rowNum: %"PRIu64", columnNum: %"PRIu64"\n", rowNum, columnNum);
+    fillEditDistanceMatrix(strBufRow, strBufColumn, (uint64_t*)EDmatrix,
+                           (uint64_t*)diagonallyExtendedMatrix, 2 * EDmax);
 
 
-    printf("ED matrix:\n");
+    printf("calculated ED matrix:\n");
     for(uint64_t i = 0; i < rowNum; i++) {
         for(uint64_t j = 0; j < columnNum; j++) {
-            printf("%d\t", EDmatrix[i][j]);
+            printf("%"PRIu64"\t", EDmatrix[i][j]);
         }
         printf("\n\n");
     }
 
+    /**< \todo handle CIGAR string - generated from EDmatrix */
 
+    free(strBufRow);
+    free(strBufColumn);
+    free(strRow);
+    free(strColumn);
     return 0;
 }
 
@@ -129,38 +174,257 @@ uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uin
  */
 
 /**
- * Extend the edit-distance matrix of 2 strings from (startRow, startColumn) to the end, or until
- * extensions cannot be made any more.
+ * Fill the edit-distance matrix of 2 strings until filling-work cannot be done any more.
  *
  * @param strRow row string of the edit-distance matrix
  * @param strColumn column string of the edit-distance matrix
  * @param EDmatrix edit-distance matrix - for i = 0 : n-1 {EDmatrix[0][i] = EDmatrix[i][0] = i};
- *      all other values are initialized as 0
+ *      all other values are initialized as INITEDVALUE
  * @param diagonallyExtendedMatrix flags marking whether a point has been tried to extend diagonally
- * @param startRow row of start point (startRow >= 1)
- * @param startColumn column of start point (startColumn >= 1)
  * @param EDmax maximum edit distance that can be allowed
- * @return whether extension succeeds or not
  */
-static void extendEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn,
-                                    uint64_t* EDmatrix, uint64_t* diagonallyExtendedMatrix, uint64_t startRow,
-                                    uint64_t startColumn, uint64_t EDmax) {
+static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn,
+                                   uint64_t* EDmatrix, uint64_t* diagonallyExtendedMatrix,
+                                   const uint64_t EDmax) {
     /**
-     * \note for "matrix[i][j]", use "matrix[row * rowNum + column]",
-     *       or "*(matrix + row * rowNum + column)".
+     * \note for "matrix[i][j]", use "matrix[row * columnNum + column]",
+     *       or "*(matrix + row * columnNum + column)".
      */
 
-    /**< \todo */
+    const uint64_t rowNum = strRow->length;
+    const uint64_t columnNum = strColumn->length;
 
+    uint64_t startRow = 0;
+    uint64_t startColumn = 0;
 
+    uint64_t endRow = 0;
+    uint64_t endColumn = 0;
+
+    Queue* startRowQueue = (Queue*)malloc(sizeof(Queue));
+    Queue* startColumnQueue = (Queue*)malloc(sizeof(Queue));
+    QueueCell* queueCell = (QueueCell*)malloc(sizeof(QueueCell));
+
+    /**< \note initializing enqueue operations */
+    initQueue(startRowQueue);
+    initQueue(startColumnQueue);
+    enQueue(startRowQueue, newQueueCell(startRow));
+    enQueue(startColumnQueue, newQueueCell(startColumn));
+
+    uint64_t row = 0;
+    uint64_t column = 0;
+    while(startRowQueue->length != 0 && startColumnQueue->length != 0) {
+        /**< \note dequeue operation */
+        deQueue(startRowQueue, queueCell);
+        startRow = queueCell->data;
+        deQueue(startColumnQueue, queueCell);
+        startColumn = queueCell->data;
+
+        printf(">>>>> dequeue and start from (%"PRIu64", %"PRIu64")\n", startRow, startColumn);
+        printf("ED matrix:\n");
+        for(uint64_t m = 0; m < rowNum; m++) {
+            for(uint64_t n = 0; n < columnNum; n++) {
+                printf("%"PRIu64"\t", *(EDmatrix + m * columnNum + n));
+            }
+            printf("\n\n");
+        }
+        printf("Diagonally-extended matrix:\n");
+        for(uint64_t m = 0; m < rowNum; m++) {
+            for(uint64_t n = 0; n < columnNum; n++) {
+                printf("%"PRIu64"\t", *(diagonallyExtendedMatrix + m * columnNum + n));
+            }
+            printf("\n\n");
+        }
+
+        endRow = startRow;
+        endColumn = startColumn;
+
+        /**
+         *\note processing procedures
+         */
+
+        /**< \note extend diagonally until encountering a mismatch, reaching ends of the matrix,
+            or encountering a point that has already been extended diagonally*/
+        extendEDMatrixDiagonally(strRow, strColumn, startRow, startColumn, &endRow, &endColumn,
+                                 EDmatrix, diagonallyExtendedMatrix, EDmax);
+        printf("extend diagonally:(%"PRIu64",%"PRIu64") to (%"PRIu64",%"PRIu64")\n",
+               startRow, startColumn, endRow, endColumn);
+
+        /**< \note extend horizontally and vertically from all points that have just been extended
+        diagonally */
+        row = startRow;
+        column = startColumn;
+        for(; row <= endRow && column <= endColumn; row++, column++) {
+            /**< \note extend horizontally within the range of  "ED <= EDmax" */
+            extendEDMatrixHorizontally(strRow, strColumn, row, column + 1, EDmatrix,
+                                       diagonallyExtendedMatrix, EDmax);
+            /**< \note extend vertically within the range of "ED <= EDmax*/
+            extendEDMatrixVertically(strRow, strColumn, row + 1, column, EDmatrix,
+                                     diagonallyExtendedMatrix, EDmax);
+        }
+
+        /**< \note process splitting operations */
+        /* conditions:
+        1. endRow + 1 == rowNum && endColumn + 1 == columnNum - finishes - end the process
+        2. endRow + 1 == rowNum && endColumn + 1 < columnNum - row ends
+        3. endRow + 1 < rowNum && endColumn + 1 == columnNum - column ends
+        4. endRow + 1 < rowNum && endColumn + 1 < columnNum
+            4.1 EDof(endRow, endColumn) != EDof(endRow + 1, endColumn + 1) &&
+                EDof(endRow + 1, endColumn + 1) <= EDmax - mismatch
+            4.2 EDof(endRow, endColumn) == EDof(endRow + 1, endColumn + 1) &&
+                EDof(endRow + 1, endColumn + 1) <= EDmax - match
+            4.3 EDof(endRow + 1, endColumn + 1) > EDmax - exceed range of EDmax
+        5. ... (NULL)
+        */
+        /**< \note the order of the following cases are based on
+            priority: min ED point > next point > right point > lower point */
+        splitAfterExtension(strRow, strColumn, startRowQueue, startColumnQueue, endRow, endColumn,
+                            EDmatrix, diagonallyExtendedMatrix, EDmax);
+    }
+    for(uint64_t m = 0; m < rowNum; m++) {
+        for(uint64_t n = 0; n < columnNum; n++) {
+            printf("%"PRIu64"\t", *(EDmatrix + m * columnNum + n));
+        }
+        printf("\n\n");
+    }
+    for(uint64_t m = 0; m < rowNum; m++) {
+        for(uint64_t n = 0; n < columnNum; n++) {
+            printf("%"PRIu64"\t", *(diagonallyExtendedMatrix + m * columnNum + n));
+        }
+        printf("\n\n");
+    }
+    free(startRowQueue);
+    free(startColumnQueue);
+    free(queueCell);
 }
 
+static void extendEDMatrixDiagonally(StringBuffer* strRow, StringBuffer* strColumn,
+                                     uint64_t startRow, uint64_t startColumn, uint64_t* endRow,
+                                     uint64_t* endColumn, uint64_t* EDmatrix,
+                                     uint64_t* diagonallyExtendedMatrix, uint64_t EDmax) {
+    uint64_t rowNum = strRow->length;
+    uint64_t columnNum = strColumn->length;
 
+    uint64_t row = startRow;
+    uint64_t column = startColumn;
 
+    *endRow = startRow;
+    *endColumn = startColumn;
+    for(; row < rowNum && column < columnNum; row++, column++) {
+        if(row == 0 || column == 0) {
+            continue;
+        }
+        char charOfThisRow = strRow->buffer[row];
+        char charOfThisColumn = strColumn->buffer[column];
+        uint64_t EDofLastPoint = *(EDmatrix + (row - 1) * columnNum + (column - 1));
+        uint64_t EDofLeftPoint = *(EDmatrix + row * columnNum + (column - 1));
+        uint64_t EDofUpperPoint =  *(EDmatrix + (row - 1) * columnNum + column);
 
+        uint64_t newEDvalue = 0;
+//        printf("(%"PRIu64", %"PRIu64") (%c, %c)\n", row, column, charOfThisRow, charOfThisColumn);
+        if(charOfThisRow == charOfThisColumn) {
+            newEDvalue = EDofLastPoint;
+            if(newEDvalue > EDmax) {
+                break;
+            }
+            *(EDmatrix + row * columnNum + column) = newEDvalue;
+            *(diagonallyExtendedMatrix + row * columnNum + column) = DIAGONALLYEXTENDED;
+            *endRow = *endRow + 1;
+            *endColumn = *endColumn + 1;
+        } else if(charOfThisRow != charOfThisColumn && DIAGONALLYEXTENDED !=
+                  *(diagonallyExtendedMatrix + row * columnNum + column)) {
+            newEDvalue = min_uint64_t(min_uint64_t(EDofLastPoint, EDofLeftPoint),
+                                      min_uint64_t(EDofLastPoint, EDofUpperPoint)) + 1;
+            if(newEDvalue > EDmax) {
+                break;
+            }
+            *(EDmatrix + row * columnNum + column) = newEDvalue;
+            /**< \note don't mark this point as diagonally-extended */
+            break;
+        } else {
+            break;
+        }
+    }
+}
 
+static void extendEDMatrixHorizontally(StringBuffer* strRow, StringBuffer* strColumn,
+                                       uint64_t startRow, uint64_t startColumn, uint64_t* EDmatrix,
+                                       uint64_t* diagonallyExtendedMatrix, uint64_t EDmax) {
+    uint64_t columnNum = strColumn->length;
 
+    for(uint64_t column = startColumn; column < columnNum; column++) {
+        char charOfThisRow = strRow->buffer[startRow];
+        char charOfThisColumn = strColumn->buffer[column];
 
+        uint64_t EDofLastPoint = *(EDmatrix + (startRow - 1) * columnNum + (column - 1));
+        uint64_t EDofLeftPoint = *(EDmatrix + startRow * columnNum + (column - 1));
+        uint64_t EDofUpperPoint = *(EDmatrix + (startRow - 1) * columnNum + column);
+
+        if(*(EDmatrix + startRow * columnNum + column) != INITEDVALUE) {
+            break;  /**< \note avoid adding the same matrix unit repeatedly */
+        }
+
+        uint64_t newEDvalue = 0;
+        if(charOfThisRow == charOfThisColumn) {
+            newEDvalue = EDofLastPoint;
+            if(newEDvalue > EDmax) {
+                break;
+            }
+            *(EDmatrix + startRow * columnNum + column) = newEDvalue;
+        } else {
+            newEDvalue = min_uint64_t(min_uint64_t(EDofLastPoint, EDofLeftPoint),
+                                      min_uint64_t(EDofLastPoint, EDofUpperPoint)) + 1;
+            if(newEDvalue > EDmax) {
+                break;
+            }
+            *(EDmatrix + startRow * columnNum + column) = newEDvalue;
+        }
+    }
+}
+
+static void extendEDMatrixVertically(StringBuffer* strRow, StringBuffer* strColumn,
+                                     uint64_t startRow, uint64_t startColumn, uint64_t* EDmatrix,
+                                     uint64_t* diagonallyExtendedMatrix, uint64_t EDmax) {
+    uint64_t rowNum = strRow->length;
+    uint64_t columnNum = strColumn->length;
+
+    for(uint64_t row = startRow; row < rowNum; row++) {
+        char charOfThisRow = strRow->buffer[row];
+        char charOfThisColumn = strColumn->buffer[startColumn];
+
+        uint64_t EDofLastPoint = *(EDmatrix + (row - 1) * columnNum + (startColumn - 1));
+        uint64_t EDofLeftPoint = *(EDmatrix + row * columnNum + (startColumn - 1));
+        uint64_t EDofUpperPoint = *(EDmatrix + (row - 1) * columnNum + startColumn);
+
+        if(*(EDmatrix + row * columnNum + startColumn) != INITEDVALUE) {
+            break;  /**< \note avoid adding the same matrix unit repeatedly */
+        }
+
+        uint64_t newEDvalue = 0;
+        if(charOfThisRow == charOfThisColumn) {
+            newEDvalue = EDofLastPoint;
+            if(newEDvalue > EDmax) {
+                break;
+            }
+            *(EDmatrix + row * columnNum + startColumn) = newEDvalue;
+        } else {
+            newEDvalue = min_uint64_t(min_uint64_t(EDofLastPoint, EDofLeftPoint),
+                                      min_uint64_t(EDofLastPoint, EDofUpperPoint)) + 1;
+            if(newEDvalue > EDmax) {
+                break;
+            }
+            *(EDmatrix + row * columnNum + startColumn) = newEDvalue;
+        }
+    }
+}
+
+static void splitAfterExtension(StringBuffer* strRow, StringBuffer* strColumn,
+                                Queue* startRowQueue, Queue*startColumnQueue,
+                                uint64_t endRow, uint64_t endColumn, uint64_t* EDmatrix,
+                                uint64_t* diagonallyExtendedMatrix, uint64_t EDmax) {
+    uint64_t rowNum = strRow->length;
+    uint64_t columnNum = strColumn->length;
+
+}
 
 
 

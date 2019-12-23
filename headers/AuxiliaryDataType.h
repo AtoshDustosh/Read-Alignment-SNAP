@@ -66,9 +66,10 @@ void _AuxiliaryDataTypeTestSet();
  */
 
 /**
- * Construct a hex-coded string buffer with input (hexArray, arrayLength, strLength).
+ * Construct a hex-coded string buffer with input (hexArray, arrayLength, strLength) by copying
+ * hexArray.
  *
- * @param hexCodedStrBuf hex-coded string buffer to be constructed
+ * @param hexCodedStrBuf hex-coded string buffer to be constructed - cannot be NULL pointer
  * @param hexArray hex-coded array
  * @param arrayLength length of array
  * @param strLength length of string
@@ -77,9 +78,9 @@ void constructHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf, uint64_
                                    uint64_t arrayLength, uint64_t strLength);
 
 /**
- * Construct a string buffer with input (buffer, length).
+ * Construct a string buffer with input (buffer, length) by copying buffer.
  *
- * @param strBuf string buffer to be constructed
+ * @param strBuf string buffer to be constructed - cannot be NULL pointer
  * @param buffer string
  * @param length string length
  */
@@ -88,35 +89,35 @@ void constructStringBuffer(StringBuffer* strBuf, char* buffer, uint64_t length);
 /**
  * Initialize a string buffer with empty content.
  *
- * @param strBuf string buffer
+ * @param strBuf string buffer - cannot be NULL pointer
  */
 void initStringBuffer(StringBuffer* strBuf);
 
 /**
  * Initialize a hex-coded string buffer with empty content.
  *
- * @param hexCodedStrBuf hex-coded string buffer
+ * @param hexCodedStrBuf hex-coded string buffer - cannot be NULL pointer
  */
 void initHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf);
 
 /**
  * Print a string buffer.
  *
- * @param strBuf string buffer
+ * @param strBuf string buffer - cannot be NULL pointer
  */
 void printStringBuffer(StringBuffer* strBuf);
 
 /**
  * Print a hex-coded string buffer.
  *
- * @param hexCodedStrBuf hex-coded string buffer
+ * @param hexCodedStrBuf hex-coded string buffer - cannot be NULL pointer
  */
 void printHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf);
 
 /**
  * Initialize a struct Read.
  *
- * @param read pointer to a Read struct type
+ * @param read pointer to a Read struct type - cannot be NULL pointer
  */
 void initializeRead(Read *read);
 

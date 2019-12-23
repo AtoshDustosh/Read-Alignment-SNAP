@@ -153,6 +153,9 @@ static void _transStringBufferToHexCodedStringBufferTest() {
     printStringBuffer(strBuf);
     printHexCodedStringBuffer(hexCodedStrBuf);
     printf("expected: 0x5522775500aaff00, 0xcc88cc4400000000\n");
+
+//    free(strBuf);
+//    free(hexCodedStrBuf);
 }
 
 /**
@@ -215,6 +218,8 @@ static void _transHexCodedStringBufferToStringBufferTest() {
     printStringBuffer(strBuf);
     printf("expected: agcttttcattctgactgcaacgggcaatatgttttttttaaaaaaaatttttttta\n");
 
+//    free(hexCodedStrBuf);
+//    free(strBuf);
 }
 
 
@@ -340,7 +345,7 @@ uint64_t getInverseBaseHex(uint64_t base) {
     return (~base) & fullHex;
 }
 
-int minInt(int value1, int value2) {
+uint64_t min_uint64_t(uint64_t value1, uint64_t value2) {
     if(value1 < value2) {
         return value1;
     } else {

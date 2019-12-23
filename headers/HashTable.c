@@ -51,6 +51,7 @@ static void _addHashCellTest() {
         randomString(str, strLength);
 //        printf("%s, %"PRIu64"\n", str, MyHash(str));
         addHashCell(str, i, &hashTable, tableSize);
+        free(str);
     }
 
 //    displayHashTable(&hashTable, tableSize);

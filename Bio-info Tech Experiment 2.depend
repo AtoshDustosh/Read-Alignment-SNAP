@@ -22,7 +22,7 @@
 
 1576223137 e:\c_projects\bio-info tech experiment 2\headers\helperfunction.h
 
-1576909276 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1577090131 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	<math.h>
 	"MyArgs.h"
@@ -36,7 +36,7 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1576929938 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577090633 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/ArrayOperation.h"
@@ -49,7 +49,7 @@
 	"../headers/Queue.h"
 	"../headers/SNAP.h"
 
-1576909276 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1577001846 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -68,7 +68,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1576931045 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
+1577089872 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
 	"HashTable.h"
 
 1576591119 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
@@ -94,11 +94,11 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1576995927 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
+1577090328 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
 	"AuxiliaryDataType.h"
 	<string.h>
 
-1576923186 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
+1576997954 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -130,21 +130,22 @@
 	<inttypes.h>
 	"AuxiliaryDataType.h"
 
-1576927543 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
+1577096359 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
 	"EditDistance.h"
 	<string.h>
 	"AuxiliaryFunction.h"
+	"Queue.h"
 
-1576848484 e:\c_projects\bio-info tech experiment 2\headers\editdistance.h
+1576998756 e:\c_projects\bio-info tech experiment 2\headers\editdistance.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 	"AuxiliaryDataType.h"
 
-1576934495 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
+1577090612 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
-1576928693 e:\c_projects\bio-info tech experiment 2\headers\queue.h
+1576997878 e:\c_projects\bio-info tech experiment 2\headers\queue.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
