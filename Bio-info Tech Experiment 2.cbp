@@ -56,6 +56,13 @@
 		<Unit filename="data/fna/testdata_1000.fna">
 			<Option virtualFolder="data/fna/" />
 		</Unit>
+		<Unit filename="headers/AVLTree.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/AVLTree.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
 		<Unit filename="headers/ArrayOperation.c">
 			<Option compilerVar="CC" />
 			<Option virtualFolder="headers/" />

@@ -4,6 +4,7 @@
 #include "../headers/ArrayOperation.h"
 #include "../headers/AuxiliaryDataType.h"
 #include "../headers/AuxiliaryFunction.h"
+#include "../headers/AVLTree.h"
 #include "../headers/cDataType.h"
 #include "../headers/EditDistance.h"
 #include "../headers/FileOperation.h"
@@ -51,13 +52,14 @@ int main() {
 }
 
 void testSet() {
-    _AuxiliaryDataTypeTestSet();
-    _AuxiliaryFunctionTestSet();
-    _ArrayOperationTestSet();
-    _cDataTypeTestSet();
-    _HashTableTestSet();
-    _QueueTestSet();
-    _EditDistanceTestSet();
+//    _AuxiliaryDataTypeTestSet();
+//    _AuxiliaryFunctionTestSet();
+    _AVLTreeTestSet();
+//    _ArrayOperationTestSet();
+//    _cDataTypeTestSet();
+//    _HashTableTestSet();
+//    _QueueTestSet();
+//    _EditDistanceTestSet();
 }
 
 void initialization() {

@@ -12,6 +12,10 @@
  */
 void _AuxiliaryFunctionTestSet();
 
+
+
+
+
 /*
  * Working functions.
  */
@@ -103,6 +107,13 @@ uint64_t getInverseBaseHex(uint64_t base);
  */
 uint64_t min_uint64_t(uint64_t value1, uint64_t value2);
 
+/**
+ * Get the max value between 2 (uint64_t type) values.
+ *
+ * @param value1 value1
+ * @param value2 value2
+ */
+uint64_t max_uint64_t(uint64_t value1, uint64_t value2);
 
 
 #endif // AUXILIARYFUNCTION_H_INCLUDED

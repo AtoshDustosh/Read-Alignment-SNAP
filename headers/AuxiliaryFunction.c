@@ -246,12 +246,12 @@ static void _transHexCodedStringBufferToStringBufferTest() {
 void reverseString(char* str) {
     uint64_t strLength = (uint64_t)strlen(str);
     char* temp = (char*)malloc(sizeof(char) * (strLength + 1));
-    for(uint64_t i = 0; i < strLength; i++){
+    for(uint64_t i = 0; i < strLength; i++) {
         temp[i] = str[i];
     }
     temp[strLength] = '\0';
 
-    for(uint64_t i = 0; i < strLength; i++){
+    for(uint64_t i = 0; i < strLength; i++) {
         str[i] = temp[strLength - 1 - i];
     }
     free(temp);
@@ -362,6 +362,14 @@ uint64_t getInverseBaseHex(uint64_t base) {
 
 uint64_t min_uint64_t(uint64_t value1, uint64_t value2) {
     if(value1 < value2) {
+        return value1;
+    } else {
+        return value2;
+    }
+}
+
+uint64_t max_uint64_t(uint64_t value1, uint64_t value2) {
+    if(value1 > value2) {
         return value1;
     } else {
         return value2;
