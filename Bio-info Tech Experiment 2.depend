@@ -6,28 +6,28 @@
 	<stdio.h>
 	<stdlib.h>
 
-1577090328 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
+1577195581 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
 	"AuxiliaryDataType.h"
 	<string.h>
 
-1576997954 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
+1577192943 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 
-1577172469 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1577194240 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	<math.h>
 	<string.h>
 	"MyArgs.h"
 
-1577172426 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1577195205 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 	"AuxiliaryDataType.h"
 
-1576591119 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
+1577192663 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
 
 1576656113 source:e:\c_projects\bio-info tech experiment 2\headers\cdatatype.c
 	"cDataType.h"
@@ -55,7 +55,7 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1576674261 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+1577199580 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
 	"FileOperation.h"
 	<string.h>
 	"ArrayOperation.h"
@@ -79,10 +79,12 @@
 1577158492 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
-1576587622 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
+1577199565 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
 	"SNAP.h"
+	"MyArgs.h"
+	"AuxiliaryFunction.h"
 
-1576589325 e:\c_projects\bio-info tech experiment 2\headers\snap.h
+1577196931 e:\c_projects\bio-info tech experiment 2\headers\snap.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -91,7 +93,7 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1577180407 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577199304 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/ArrayOperation.h"
@@ -105,7 +107,7 @@
 	"../headers/Queue.h"
 	"../headers/SNAP.h"
 
-1577182726 source:e:\c_projects\bio-info tech experiment 2\headers\avltree.c
+1577182791 source:e:\c_projects\bio-info tech experiment 2\headers\avltree.c
 	"AVLTree.h"
 	"AuxiliaryFunction.h"
 	"Queue.h"

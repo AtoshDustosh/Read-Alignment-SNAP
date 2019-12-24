@@ -10,17 +10,17 @@
  *
  */
 typedef struct _define_Read {
-    char QNAME[BUFSIZ];
-    int FLAG;
-    char RNAME[BUFSIZ];
-    int POS;
-    float MAPQ;
-    char CIGAR[BUFSIZ];
-    char RNEXT[BUFSIZ];
-    int PNEXT;
-    int TLEN;
-    char SEQ[BUFSIZ];
-    char QUAL[BUFSIZ];
+    char QNAME[BUFSIZ]; // name of read
+    int FLAG;           // bit-flags
+    char RNAME[BUFSIZ]; // name of reference
+    int POS;            // offset on ref
+    float MAPQ;         // (pass)
+    char CIGAR[BUFSIZ]; // CIGAR
+    char RNEXT[BUFSIZ]; // name of reference of mate read alignment
+    int PNEXT;          // offset on ref of mate read
+    int TLEN;           // length of template
+    char SEQ[BUFSIZ];   // sequence of read
+    char QUAL[BUFSIZ];  // quality of read
 } Read;
 
 /**

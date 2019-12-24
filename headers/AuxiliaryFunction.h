@@ -34,7 +34,7 @@ void reverseString(char* str);
  * Transform a hex-coded string buffer to a string buffer.
  *
  * @param hexCodedStrBuf hex-coded string buffer
- * @param strBuf string buffer
+ * @param / @return strBuf string buffer
  * @param charNumPerHex #(chars) per hexadecimal number
  */
 void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBuf,
@@ -48,13 +48,13 @@ void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBu
  * @param charNumPerHex #(chars) per hexadecimal number
  * @return extracted hexadecimal number to the corresponding index
  */
-uint64_t extractCharBitsFromHexInt(uint64_t offset, uint64_t hexInt, uint64_t charNumPerHex);
+uint64_t extractCharBitFromHexInt(uint64_t offset, uint64_t hexInt, uint64_t charNumPerHex);
 
 /**
  * Transform a string buffer to a hex-coded string buffer.
  *
  * @param strBuf string buffer
- * @param hexCodedStrBuf hex-coded string buffer
+ * @param / @return hexCodedStrBuf hex-coded string buffer
  * @param charNumPerHex #(chars) per hexadecimal number
  */
 void transStringBufferToHexCodedStringBuffer(StringBuffer* strBuf,

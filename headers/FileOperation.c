@@ -35,7 +35,7 @@ uint64_t fnaDataSize(char* filePath) {
     }
     free(fp);
 
-    printf("data size in file %s is %"PRIu64"\n", filePath, dataLength);
+    printf("data size in file %s is %"PRIu64" bp\n", filePath, dataLength);
     return dataLength;
 }
 
@@ -83,7 +83,7 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA) {
              * \alert extract a function if you have the time and fix this pile of shit.
              */
             buffer[strLength] = '\0';
-            constructStringBuffer(strBuf, buffer, 1);
+            constructStringBuffer(strBuf, buffer, charNumPerHex);
             constructHexCodedStringBuffer(hexCodedStrBuf, hexArray, arrayLength, strLength);
             transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
             hexInt = hexCodedStrBuf->hexArray[0];
@@ -100,13 +100,13 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA) {
         ch = fgetc(fp);
     }
     buffer[strLength] = '\0';
-    constructStringBuffer(strBuf, buffer, 1);
+    constructStringBuffer(strBuf, buffer, charNumPerHex);
     constructHexCodedStringBuffer(hexCodedStrBuf, hexArray, arrayLength, strLength);
     transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
     hexInt = hexCodedStrBuf->hexArray[0];
     hexCodedDNA[i++] = hexInt;
     printf("%s\t", buffer);
-    printf("0x%16"PRIx64" ", hexInt);
+    printf("0x%16"PRIx64"\n", hexInt);
 
     free(buffer);
     free(hexArray);

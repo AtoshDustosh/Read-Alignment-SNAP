@@ -173,7 +173,7 @@ static void _extractCharBitsFromHexIntTest() {
     printf("%s\n", charSequence);
     for(i = 0; i < length; i++) {
         int offset = i % CHAR_NUM_PER_HEX;
-        uint64_t extractedHex = extractCharBitsFromHexInt(offset, hexInt, CHAR_NUM_PER_HEX);
+        uint64_t extractedHex = extractCharBitFromHexInt(offset, hexInt, CHAR_NUM_PER_HEX);
         printf("%c-0x%"PRIx64" ", charSequence[i], extractedHex);
         if((i + 1) % 8 == 0) {
             printf("\n");
@@ -267,7 +267,7 @@ void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBu
     for(i = 0; i < hexCodedStrBuf->strLength; i++) {
         uint64_t hexArrayIndex = i / charNumPerHex;
         uint64_t charHex =
-            extractCharBitsFromHexInt(i, hexCodedStrBuf->hexArray[hexArrayIndex], charNumPerHex);
+            extractCharBitFromHexInt(i, hexCodedStrBuf->hexArray[hexArrayIndex], charNumPerHex);
         strBuf->buffer[i] = hexToChar(charHex);
 //        printf("charHex: 0x%"PRIx64", char: %c\n", charHex, strBuf->buffer[i]);
     }
@@ -275,7 +275,7 @@ void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBu
     strBuf->buffer[i] = '\0';
 }
 
-uint64_t extractCharBitsFromHexInt(uint64_t offset, uint64_t hexInt, uint64_t charNumPerHex) {
+uint64_t extractCharBitFromHexInt(uint64_t offset, uint64_t hexInt, uint64_t charNumPerHex) {
     uint64_t bitInterval = sizeof(uint64_t) * 8 / charNumPerHex;
     uint64_t bitShiftLeft = offset * bitInterval;
     uint64_t bitShiftRight = bitInterval * (charNumPerHex - 1);

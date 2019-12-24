@@ -6,7 +6,5 @@
  */
 #define CHAR_NUM_PER_HEX 32
 
-#define S_MER_LENGTH 20
-
 
 #endif // MYARGS_H_INCLUDED

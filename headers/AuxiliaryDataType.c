@@ -82,7 +82,7 @@ void constructHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf, uint64_
         exit(EXIT_FAILURE);
     }
     /**< \alert DO NOT FREE hexCodedStrBuf->hexArray!
-        When initialized, you won't know where that pointer points to */
+        When initialized, you won't know where the pointer points to */
     if(hexArray == NULL || arrayLength == 0) {
         hexCodedStrBuf->hexArray = NULL;
     } else {
@@ -102,7 +102,7 @@ void constructStringBuffer(StringBuffer* strBuf, char* buffer, uint64_t length) 
         exit(EXIT_FAILURE);
     }
     /**< \alert DO NOT FREE strBuf->buffer!
-        When initialized, you won't know where that pointer points to */
+        When initialized, you won't know where the pointer points to */
     strBuf->buffer = (char*)malloc(sizeof(char) * (length + 1));
     for(uint64_t i = 0; i < length; i++) {
         strBuf->buffer[i] = buffer[i];
