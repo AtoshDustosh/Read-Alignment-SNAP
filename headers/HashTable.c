@@ -54,6 +54,8 @@ static void _addHashCellTest() {
         free(str);
     }
 
+//    printf("search hash cell of \"aaccgaca\": %"PRIu64"\n",
+//           searchHashCell("aaccgaca", &hashTable, tableSize)->key);
 //    displayHashTable(&hashTable, tableSize);
     checkHashTablePerformance(&hashTable, tableSize);
 }
@@ -65,6 +67,11 @@ static void _addHashCellTest() {
 /*
  * Working functions.
  */
+
+HashCell* searchHashCell(char* str, HashTable* hashTable, uint64_t tableSize) {
+    return &(hashTable->hashList[hashIndex(str, tableSize)]);
+}
+
 
 void checkHashTablePerformance(HashTable* hashTable, uint64_t tableSize) {
     uint64_t i = 0;
@@ -109,7 +116,7 @@ void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
             hashCell = hashCell->nextCell;
         } while(1);
         printf("\n");
-        if(tempLength > maxBucketLength){
+        if(tempLength > maxBucketLength) {
             maxBucketLength = tempLength;
         }
     }

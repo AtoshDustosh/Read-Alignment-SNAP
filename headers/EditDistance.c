@@ -38,7 +38,7 @@ static void splitAfterExtension(StringBuffer* strRow, StringBuffer* strColumn,
  */
 static uint64_t processEDMatrix(StringBuffer* strRow, StringBuffer* strColumn, uint64_t* EDmatrix,
                                 char* CIGARbuffer, uint64_t maxBufLen, const uint64_t EDmax);
-static void parseCIGAR(char* CIGARbuffer, uint64_t maxBufLen);
+static void parseCIGAR(char* CIGARbuffer);
 
 /*
  * Declarations of tests.
@@ -63,30 +63,37 @@ static void _calculateEditDistanceTest() {
     StringBuffer* strBufRow = (StringBuffer*)malloc(sizeof(StringBuffer));
     StringBuffer* strBufColumn = (StringBuffer*)malloc(sizeof(StringBuffer));
     uint64_t maxBufLen = BUFSIZ;
-    char* CIGARbuffer = (char*)malloc(sizeof(char) * maxBufLen);
+    char* CIGAR = (char*)malloc(sizeof(char) * maxBufLen);
 
     uint64_t EDmax = 4;
+    uint64_t bestED = 0;
 
     char* string1 = NULL;
     char* string2 = NULL;
 
-//    string1 = "agtcgccgctgctgc";
-//    string2 = "agcgcttgctgc";
-////    string1 = "agtcgccgctgctgc";  // out of EDmax
-////    string2 = "agggggggtgc";
-//    constructStringBuffer(strBufColumn, string1, (uint64_t)strlen(string1));
-//    constructStringBuffer(strBufRow, string2, (uint64_t)strlen(string2));
-//    calculateEditDistance(strBufRow, strBufColumn, EDmax, CIGARbuffer, maxBufLen);
+    string1 = "agtcgccgctgctgc";
+    string2 = "agcgcttgctgc";
+//    string1 = "agtcgccgctgctgc";  // out of EDmax
+//    string2 = "agggggggtgc";
+    constructStringBuffer(strBufColumn, string1, (uint64_t)strlen(string1));
+    constructStringBuffer(strBufRow, string2, (uint64_t)strlen(string2));
+    bestED = calculateEditDistance(strBufRow, strBufColumn, EDmax, CIGAR, maxBufLen);
+    printf("Best edit-distance: %"PRIu64"\n", bestED);
+    printf("CIGAR: %s\n", CIGAR);
 
     printf("******************************************************************\n");
     string1 = "ccagtcgctgcgctt";
     string2 = "agcgcttgcgc";
     constructStringBuffer(strBufColumn, string1, (uint64_t)strlen(string1));
     constructStringBuffer(strBufRow, string2, (uint64_t)strlen(string2));
-    calculateEditDistance(strBufRow, strBufColumn, EDmax, CIGARbuffer, maxBufLen);
+    bestED = calculateEditDistance(strBufRow, strBufColumn, EDmax, CIGAR, maxBufLen);
+    printf("Best edit-distance: %"PRIu64"\n", bestED);
+    printf("CIGAR: %s\n", CIGAR);
 
-    free(strBufRow);
-    free(strBufColumn);
+    /**< \note I don't know why freeing strBufRow results in a bug, while others don't */
+//    free(strBufRow);
+//    free(strBufColumn);
+    free(CIGAR);
 }
 
 /*
@@ -148,37 +155,36 @@ uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uin
     /*
      * Calculate the edit-distance matrix.
      */
-    printf("initialized ED matrix:\n");
-    for(uint64_t i = 0; i < rowNum; i++) {
-        for(uint64_t j = 0; j < columnNum; j++) {
-            printf("%"PRIu64"\t", EDmatrix[i][j]);
-        }
-        printf("\n\n");
-    }
+//    printf("initialized ED matrix:\n");
+//    for(uint64_t i = 0; i < rowNum; i++) {
+//        for(uint64_t j = 0; j < columnNum; j++) {
+//            printf("%"PRIu64"\t", EDmatrix[i][j]);
+//        }
+//        printf("\n\n");
+//    }
 
-    printf("rowNum: %"PRIu64", columnNum: %"PRIu64"\n", rowNum, columnNum);
+//    printf("rowNum: %"PRIu64", columnNum: %"PRIu64"\n", rowNum, columnNum);
     fillEditDistanceMatrix(strBufRow, strBufColumn, (uint64_t*)EDmatrix,
                            (uint64_t*)diagonallyExtendedMatrix, EDmax);
 
 
-    printf("calculated ED matrix:\n");
-    for(uint64_t i = 0; i < rowNum; i++) {
-        for(uint64_t j = 0; j < columnNum; j++) {
-            printf("%"PRIu64"\t", EDmatrix[i][j]);
-        }
-        printf("\n\n");
-    }
+//    printf("calculated ED matrix:\n");
+//    for(uint64_t i = 0; i < rowNum; i++) {
+//        for(uint64_t j = 0; j < columnNum; j++) {
+//            printf("%"PRIu64"\t", EDmatrix[i][j]);
+//        }
+//        printf("\n\n");
+//    }
 
     /**< \todo handle CIGAR string - generated from EDmatrix */
     bestED = processEDMatrix(strBufRow, strBufColumn, (uint64_t*)EDmatrix, CIGARbuffer, maxBufLen,
                              EDmax);
-    printf("Best edit-distance: %"PRIu64"\n", bestED);
 
     free(strBufRow);
     free(strBufColumn);
     free(strRow);
     free(strColumn);
-    return 0;
+    return bestED;
 }
 
 
@@ -204,8 +210,8 @@ static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn
      *       or "*(matrix + row * columnNum + column)".
      */
 
-    const uint64_t rowNum = strRow->length;
-    const uint64_t columnNum = strColumn->length;
+//    const uint64_t rowNum = strRow->length;
+//    const uint64_t columnNum = strColumn->length;
 
     uint64_t startRow = 0;
     uint64_t startColumn = 0;
@@ -279,20 +285,23 @@ static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn
     }
 
     printf(">>>>>>>>>> total loop count: %"PRIu64"\n", loopCount);
-    printf("ED-matrix:\n");
-    for(uint64_t m = 0; m < rowNum; m++) {
-        for(uint64_t n = 0; n < columnNum; n++) {
-            printf("%"PRIu64"\t", *(EDmatrix + m * columnNum + n));
-        }
-        printf("\n\n");
-    }
-    printf("Diagonally-extended-matrix:\n");
-    for(uint64_t m = 0; m < rowNum; m++) {
-        for(uint64_t n = 0; n < columnNum; n++) {
-            printf("%"PRIu64"\t", *(diagonallyExtendedMatrix + m * columnNum + n));
-        }
-        printf("\n\n");
-    }
+//    printf("ED-matrix:\n");
+//    for(uint64_t m = 0; m < rowNum; m++) {
+//        for(uint64_t n = 0; n < columnNum; n++) {
+//            printf("%"PRIu64"\t", *(EDmatrix + m * columnNum + n));
+//        }
+//        printf("\n\n");
+//    }
+//    printf("Diagonally-extended-matrix:\n");
+//    for(uint64_t m = 0; m < rowNum; m++) {
+//        for(uint64_t n = 0; n < columnNum; n++) {
+//            printf("%"PRIu64"\t", *(diagonallyExtendedMatrix + m * columnNum + n));
+//        }
+//        printf("\n\n");
+//    }
+
+    clearQueue(startRowQueue);
+    clearQueue(startColumnQueue);
     free(startRowQueue);
     free(startColumnQueue);
     free(queueCell);
@@ -587,9 +596,9 @@ static uint64_t processEDMatrix(StringBuffer* strRow, StringBuffer* strColumn, u
 
         uint64_t minEDvalue = min_uint64_t(min_uint64_t(EDofLastPoint, EDofLeftPoint),
                                            min_uint64_t(EDofLastPoint, EDofUpperPoint));
-        printf("%"PRIu64" (row, column): (%"PRIu64",%"PRIu64")\n", CIGARbufferPointer, row, column);
-        printf("last:%"PRIu64",upper:%"PRIu64",left:%"PRIu64"\n",
-               EDofLastPoint, EDofUpperPoint, EDofLeftPoint);
+//        printf("%"PRIu64" (row, column): (%"PRIu64",%"PRIu64")\n", CIGARbufferPointer, row, column);
+//        printf("last:%"PRIu64",upper:%"PRIu64",left:%"PRIu64"\n",
+//               EDofLastPoint, EDofUpperPoint, EDofLeftPoint);
         if(minEDvalue == EDofLastPoint) {
             CIGARbuffer[CIGARbufferPointer++] = 'M';
             row--;
@@ -607,55 +616,59 @@ static uint64_t processEDMatrix(StringBuffer* strRow, StringBuffer* strColumn, u
         }
     }
     CIGARbuffer[CIGARbufferPointer] = '\0';
-    /**< \todo bug exists here */
-    CIGARbuffer = strrev(CIGARbuffer);
-    /**< \todo bug exists here */
-    printf("CIGAR: %s\n", CIGARbuffer);
-    parseCIGAR(CIGARbuffer, maxBufLen);
+    reverseString(CIGARbuffer);
+//    printf("CIGAR: %s\n", CIGARbuffer);
+    parseCIGAR(CIGARbuffer);
     return bestED;
 }
 
 /**
  * Parse CIGARbuffer from continuous characters to numbers and characters.
  *
- * @param CIGARbuffer buffer for CIGAR string
- * @param maxBufLen maximum length of buffer for CIGAR string
+ * @param / @return CIGARbuffer buffer for CIGAR string
  */
-static void parseCIGAR(char* CIGARbuffer, uint64_t maxBufLen) {
-    char* CIGAR = (char*)malloc(sizeof(strlen(CIGARbuffer)));
+static void parseCIGAR(char* CIGARbuffer) {
+    uint64_t strLength = strlen(CIGARbuffer);
+    char* CIGAR = (char*)malloc(sizeof(char) * (strLength + 1));
     uint64_t CIGARpointer = 0;
+    uint64_t CIGARbufferPointer = 0;
     char ch = '\0';
     char prevCh = ch;
     uint64_t countSameCh = 0;
 
     /** < \note copy CIGAR buffer into another string */
-    ch = CIGARbuffer[CIGARpointer];
-    while(ch != '\0') {
-//        printf("ch: |%c|\n", ch);
-        CIGAR[CIGARpointer++] = ch;
-        ch = CIGARbuffer[CIGARpointer];
+    for(uint64_t i = 0; i < strLength; i++) {
+        CIGAR[i] = CIGARbuffer[i];
     }
-    printf("copied CIGAR: %s\n", CIGAR);
+    CIGAR[strLength] = '\0';
+//    printf("copied CIGAR: %s\n", CIGAR);
 
     countSameCh = 0;
     CIGARpointer = 0;
+    CIGARbufferPointer = 0;
     countSameCh = 0;
-    ch = CIGAR[CIGARpointer];
+    ch = CIGAR[CIGARpointer++];
     prevCh = ch;
     countSameCh++;
-    while(ch != '\0') {
-        CIGARpointer++;
+    for(; CIGARpointer < strLength; CIGARpointer++) {
         ch = CIGAR[CIGARpointer];
-        if(prevCh == ch){
+        if(prevCh == ch) {
             countSameCh++;
         } else {
-            printf("countSameCh(%c): %"PRIu64"\n", prevCh, countSameCh);
+            CIGARbuffer[CIGARbufferPointer++] = countSameCh + '0';
+            CIGARbuffer[CIGARbufferPointer++] = prevCh;
+//            printf("countSameCh(%c): %"PRIu64"\n", prevCh, countSameCh);
             countSameCh = 1;
         }
         prevCh = ch;
     }
+    CIGARbuffer[CIGARbufferPointer++] = countSameCh + '0';
+    CIGARbuffer[CIGARbufferPointer++] = prevCh;
+//    printf("countSameCh(%c): %"PRIu64"\n", prevCh, countSameCh);
+    CIGARbuffer[CIGARbufferPointer] = '\0';
 
-
+//    printf("parsed CIGAR: %s\n", CIGARbuffer);
+    free(CIGAR);
 }
 
 

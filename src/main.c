@@ -51,12 +51,12 @@ int main() {
 }
 
 void testSet() {
-//    _AuxiliaryDataTypeTestSet();
-//    _AuxiliaryFunctionTestSet();
-//    _ArrayOperationTestSet();
-//    _cDataTypeTestSet();
-//    _HashTableTestSet();
-//    _QueueTestSet();
+    _AuxiliaryDataTypeTestSet();
+    _AuxiliaryFunctionTestSet();
+    _ArrayOperationTestSet();
+    _cDataTypeTestSet();
+    _HashTableTestSet();
+    _QueueTestSet();
     _EditDistanceTestSet();
 }
 

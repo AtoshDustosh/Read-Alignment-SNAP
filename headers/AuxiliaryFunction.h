@@ -19,6 +19,12 @@ void _AuxiliaryFunctionTestSet();
 
 
 
+/**
+ * Reverse a string.
+ *
+ * @param / @return str string to be reversed
+ */
+void reverseString(char* str);
 
 /**
  * Transform a hex-coded string buffer to a string buffer.

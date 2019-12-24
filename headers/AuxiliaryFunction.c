@@ -1,6 +1,7 @@
 #include "AuxiliaryFunction.h"
 
 #include <math.h>
+#include <string.h>
 
 #include "MyArgs.h"
 
@@ -241,6 +242,20 @@ static void _transHexCodedStringBufferToStringBufferTest() {
 /*
  * Working functions.
  */
+
+void reverseString(char* str) {
+    uint64_t strLength = (uint64_t)strlen(str);
+    char* temp = (char*)malloc(sizeof(char) * (strLength + 1));
+    for(uint64_t i = 0; i < strLength; i++){
+        temp[i] = str[i];
+    }
+    temp[strLength] = '\0';
+
+    for(uint64_t i = 0; i < strLength; i++){
+        str[i] = temp[strLength - 1 - i];
+    }
+    free(temp);
+}
 
 void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBuf,
         StringBuffer* strBuf, uint64_t charNumPerHex) {

@@ -84,7 +84,6 @@ void initQueue(Queue* queueInstance) {
         printf("ERROR: null pointer occurred when initializing a queue. \n");
         exit(EXIT_FAILURE);
     }
-    clearQueue(queueInstance);
     queueInstance->head = NULL;
     queueInstance->tail = NULL;
     queueInstance->length = 0;

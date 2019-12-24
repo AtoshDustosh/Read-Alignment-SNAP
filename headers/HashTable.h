@@ -7,7 +7,7 @@
 
 typedef struct _define_HashCell {
     uint64_t key;
-    int flag;
+    int flag;   // used to count how many hash cells are after it
     struct _define_HashCell* nextCell;
 } HashCell;
 
@@ -26,6 +26,16 @@ void _HashTableTestSet();
  * Working functions.
  */
 
+
+/**
+ * Search a string in hash table and get the first hash cell of the hash index of the string.
+ *
+ * @param str string to be searched in hash table
+ * @param hashTable hash table
+ * @param tableSize size of the hash table
+ * @return first hash cell of the hash index of the input string
+ */
+HashCell* searchHashCell(char* str, HashTable* hashTable, uint64_t tableSize);
 
 /**
  * Check performance of the hash table.
@@ -48,8 +58,8 @@ void displayHashTable(HashTable* hashTable, uint64_t tableSize);
  *
  * @param str string used for calculating hash index
  * @param key key of the string
- * @param tableSize size of the hash table
  * @param hashTable hash table
+ * @param tableSize size of the hash table
  */
 void addHashCell(char* str, uint64_t key, HashTable* hashTable, uint64_t tableSize);
 

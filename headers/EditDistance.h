@@ -22,7 +22,7 @@ void _EditDistanceTestSet();
  * @param strBuf1 string buffer 1
  * @param strBuf2 string buffer 2
  * @param EDmax maximum edit distance that can be accepted
- * @param CIGARbuffer buffer for CIGAR string
+ * @param / @return CIGARbuffer buffer for CIGAR string
  * @param maxBufLen maximum length of buffer for CIGAR string
  * @return return edit distance between str1 and str2 if distance is within EDmax;
  *      return EDmax if out of EDmax.

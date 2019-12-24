@@ -1,98 +1,10 @@
 # depslib dependency file v1.0
-1575960293 source:e:\c_projects\bio-info tech experiment 2\main.c
-	<stdio.h>
-	<stdlib.h>
-	"FileOperation.h"
-	"HelperFunction.h"
-
-1575970964 e:\c_projects\bio-info tech experiment 2\fileoperation.h
-	<stdio.h>
-	<stdlib.h>
-	"HelperFunction.h"
-
-1575959887 e:\c_projects\bio-info tech experiment 2\helperfunction.h
-	<stdio.h>
-	<stdlib.h>
-	<math.h>
-
-1576223041 source:e:\c_projects\bio-info tech experiment 2\headerimplementations\fileoperation.c
-	<stdio.h>
-	<stdlib.h>
-	"../headers/HelperFunction.h"
-
-1576223137 e:\c_projects\bio-info tech experiment 2\headers\helperfunction.h
-
-1577090131 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
-	"AuxiliaryFunction.h"
-	<math.h>
-	"MyArgs.h"
-
-1576674261 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
-	"FileOperation.h"
-	<string.h>
-	"ArrayOperation.h"
-	"AuxiliaryFunction.h"
-	"MyArgs.h"
-
-1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
-
-1577090633 source:e:\c_projects\bio-info tech experiment 2\src\main.c
-	<stdio.h>
-	<stdlib.h>
-	"../headers/ArrayOperation.h"
-	"../headers/AuxiliaryDataType.h"
-	"../headers/AuxiliaryFunction.h"
-	"../headers/cDataType.h"
-	"../headers/EditDistance.h"
-	"../headers/FileOperation.h"
-	"../headers/HashTable.h"
-	"../headers/Queue.h"
-	"../headers/SNAP.h"
-
-1577001846 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
-	<stdio.h>
-	<stdlib.h>
-	<inttypes.h>
-	"AuxiliaryDataType.h"
-
-1576672737 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
-	<stdio.h>
-	<stdlib.h>
-	<inttypes.h>
-	"AuxiliaryDataType.h"
-
 1576503138 source:e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.c
 	"ArrayOperation.h"
 
 1576587622 e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.h
 	<stdio.h>
 	<stdlib.h>
-
-1577089872 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
-	"HashTable.h"
-
-1576591119 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
-
-1576413734 source:e:\c_projects\bio-info tech experiment 2\headers\datatype.c
-	"DataType.h"
-
-1576405892 e:\c_projects\bio-info tech experiment 2\headers\datatype.h
-	<stdio.h>
-	<stdlib.h>
-	<inttypes.h>
-
-1576506270 e:\c_projects\bio-info tech experiment 2\headers\hashtable.h
-	<stdio.h>
-	<stdlib.h>
-	<inttypes.h>
-
-1576656113 source:e:\c_projects\bio-info tech experiment 2\headers\cdatatype.c
-	"cDataType.h"
-
-1576501603 e:\c_projects\bio-info tech experiment 2\headers\cdatatype.h
-	<stdio.h>
-	<stdlib.h>
-	<inttypes.h>
 
 1577090328 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
 	"AuxiliaryDataType.h"
@@ -103,13 +15,69 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1576585323 source:e:\c_projects\bio-info tech experiment 2\headers\snapconstructon.c
-	"SNAPConstruction.h"
+1577159983 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+	"AuxiliaryFunction.h"
+	<math.h>
+	<string.h>
+	"MyArgs.h"
 
-1576584188 e:\c_projects\bio-info tech experiment 2\headers\snapconstruction.h
+1577158095 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
+	"AuxiliaryDataType.h"
+
+1576591119 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
+
+1576656113 source:e:\c_projects\bio-info tech experiment 2\headers\cdatatype.c
+	"cDataType.h"
+
+1576501603 e:\c_projects\bio-info tech experiment 2\headers\cdatatype.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+
+1577159047 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
+	"EditDistance.h"
+	<string.h>
+	<strings.h>
+	"AuxiliaryFunction.h"
+	"Queue.h"
+
+1577158277 e:\c_projects\bio-info tech experiment 2\headers\editdistance.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+	"AuxiliaryDataType.h"
+
+1576997878 e:\c_projects\bio-info tech experiment 2\headers\queue.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+
+1576674261 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+	"FileOperation.h"
+	<string.h>
+	"ArrayOperation.h"
+	"AuxiliaryFunction.h"
+	"MyArgs.h"
+
+1576672737 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+	"AuxiliaryDataType.h"
+
+1577089872 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
+	"HashTable.h"
+
+1577159842 e:\c_projects\bio-info tech experiment 2\headers\hashtable.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+
+1577158492 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
+	"Queue.h"
 
 1576587622 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
 	"SNAP.h"
@@ -121,33 +89,18 @@
 	"HashTable.h"
 	"AuxiliaryDataType.h"
 
-1576670609 source:e:\c_projects\bio-info tech experiment 2\headers\landauvishkin.c
-	"LandauVishkin.h"
+1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1576668319 e:\c_projects\bio-info tech experiment 2\headers\landauvishkin.h
+1577158651 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
-	<inttypes.h>
-	"AuxiliaryDataType.h"
-
-1577113143 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
-	"EditDistance.h"
-	<string.h>
-	<strings.h>
-	"AuxiliaryFunction.h"
-	"Queue.h"
-
-1576998756 e:\c_projects\bio-info tech experiment 2\headers\editdistance.h
-	<stdio.h>
-	<stdlib.h>
-	<inttypes.h>
-	"AuxiliaryDataType.h"
-
-1577090612 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
-	"Queue.h"
-
-1576997878 e:\c_projects\bio-info tech experiment 2\headers\queue.h
-	<stdio.h>
-	<stdlib.h>
-	<inttypes.h>
+	"../headers/ArrayOperation.h"
+	"../headers/AuxiliaryDataType.h"
+	"../headers/AuxiliaryFunction.h"
+	"../headers/cDataType.h"
+	"../headers/EditDistance.h"
+	"../headers/FileOperation.h"
+	"../headers/HashTable.h"
+	"../headers/Queue.h"
+	"../headers/SNAP.h"
 
