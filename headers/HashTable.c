@@ -4,7 +4,7 @@
 static void _initHashTableTest();
 static void _addHashCellTest();
 
-static void randomString(char* str, uint64_t strLength);
+static char* randomString(uint64_t strLength);
 static uint64_t MyHash(char* str);
 //static uint64_t BPHash(char* str);
 //static uint64_t ELFhash(char *str);
@@ -43,15 +43,14 @@ static void _addHashCellTest() {
     char* str;
     uint64_t strLength = 20;
     for(i = 0; i < tableSize; i++) {
-        str = (char*)malloc(sizeof(char) * strLength);
-        randomString(str, strLength);
-//        printf("%s, %"PRIu64"\n", str, MyHash(str));
+        str = randomString(strLength);
+//        printf("%"PRIu64": %s -> hash -> %"PRIu64"\n", i, str, MyHash(str));
         addHashCell(str, i, hashTable, tableSize);
         free(str);
     }
 
     printf("search hash cell of \"aaccgaca\" -> hash index: %"PRIu64"\n",
-           searchHashIndexOfString("aaccgaca", hashTable, tableSize)->data);
+           searchHashIndexOfString("aaccgaca", hashTable, tableSize));
 //    displayHashTable(hashTable, tableSize);
     checkHashTablePerformance(hashTable, tableSize);
 }
@@ -76,14 +75,10 @@ void checkHashTablePerformance(HashTable* hashTable, uint64_t tableSize) {
     float bucketUsedCount = 0;
     for(i = 0; i < tableSize; i++) {
         HashCell* hashCell = hashTable->hashList[i];
-        totalBucketLength = totalBucketLength + hashCell->flag;
-        bucketUsedCount = bucketUsedCount + (hashCell->flag && 1);
-        do {
-            if(hashCell == NULL || hashCell->flag == 0) {
-                break;
-            }
-            hashCell = hashCell->nextCell;
-        } while(1);
+        if(hashCell != NULL){
+            totalBucketLength = totalBucketLength + hashCell->flag;
+            bucketUsedCount = bucketUsedCount + (hashCell->flag && 1);
+        }
     }
 
     printf("total bucket length: %"PRIu64"\n", totalBucketLength);
@@ -100,18 +95,19 @@ void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
         uint64_t tempLength = 0;
         printf("hash cell %"PRIu64"\t", i);
         HashCell* hashCell = hashTable->hashList[i];
-        do {
-            if(hashCell == NULL || hashCell->flag == 0) {
-                break;
-            } else {
-                printf("->\t");
-            }
+        while(hashCell != NULL){
             printf("(%"PRIu64", %d, 0x%p)\t", hashCell->data, hashCell->flag,
                    hashCell->nextCell);
             tempLength++;
-            hashCell = hashCell->nextCell;
-        } while(1);
+            if(hashCell->nextCell != NULL){
+                printf("->\t");
+                hashCell = hashCell->nextCell;
+            } else {
+                break;
+            }
+        }
         printf("\n");
+
         if(tempLength > maxBucketLength) {
             maxBucketLength = tempLength;
         }
@@ -122,31 +118,23 @@ void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
 void addHashCell(char* str, uint64_t data, HashTable* hashTable, uint64_t tableSize) {
     uint64_t index = hashIndex(str, tableSize);
     HashCell* hashCell = hashTable->hashList[index];
-
-    // if there is no hash-cell using that hash index
-    if(hashCell->flag == 0) {
-        hashCell->data = data;
-        hashCell->flag = 1;
-        hashCell->nextCell = NULL;
-        return;
-    }
-
-    // if the hash index is already occupied
-    do {
-        // search to find a hash-cell whose next-hash-cell is NULL
-        hashCell->flag++;   // use flag to count #(collisions)
-        if(hashCell->nextCell != NULL) {
-            hashCell = hashCell->nextCell;
-        } else {
-            break;
-        }
-    } while(1);
-    // put a new hash-cell to the next-hash-cell
     HashCell* newHashCell = (HashCell*)malloc(sizeof(HashCell));
     newHashCell->data = data;
     newHashCell->flag = 1;
     newHashCell->nextCell = NULL;
-    hashCell->nextCell = newHashCell;
+    if(hashCell == NULL){
+        hashTable->hashList[index] = newHashCell;
+    } else {
+        while(hashCell != NULL){
+            hashCell->flag++;
+            if(hashCell->nextCell != NULL){
+                hashCell = hashCell->nextCell;
+            }else {
+                break;
+            }
+        }
+        hashCell->nextCell = newHashCell;
+    }
 }
 
 HashTable* initHashTable(uint64_t tableSize) {
@@ -158,11 +146,7 @@ HashTable* initHashTable(uint64_t tableSize) {
         exit(EXIT_FAILURE);
     }
     for(i = 0; i < tableSize; i++) {
-        HashCell* hashCell = (HashCell*)malloc(sizeof(HashCell));
-        hashCell->data = 0;
-        hashCell->flag = 0;
-        hashCell->nextCell = NULL;
-        hashTable->hashList[i] = hashCell;
+        hashTable->hashList[i] = NULL;
     }
     hashTable->tableSize = tableSize;
     return hashTable;
@@ -255,16 +239,18 @@ static uint64_t MyHash(char* str) {
 /**
  * Generate a random string at a specific length.
  *
- * @param str generated string
  * @param strLength length of string
+ * @return str generated string
  */
-static void randomString(char* str, uint64_t strLength) {
+static char* randomString(uint64_t strLength) {
+    char* str = (char*)malloc(sizeof(char) * (strLength + 1));
     uint64_t i = 0;
     for(i = 0; i < strLength; i++) {
         char randChar = (rand() % 26) % 4 + 'a';
         str[i] = randChar;
     }
     str[i] = '\0';
+    return str;
 }
 
 

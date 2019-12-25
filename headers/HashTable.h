@@ -66,7 +66,7 @@ void displayHashTable(HashTable* hashTable, uint64_t tableSize);
 void addHashCell(char* str, uint64_t data, HashTable* hashTable, uint64_t tableSize);
 
 /**
- * Initialize a hash table of specific size.
+ * Initialize a hash table of specific size with all hash cells being NULL.
  *
  * @param tableSize size of the hash table
  * @return hash table
