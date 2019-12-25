@@ -18,13 +18,13 @@ void _AuxiliaryDataTypeTestSet() {
  */
 static void _StringBufferTest() {
     printf("\n**************** _StringBufferTest ****************\n");
-    StringBuffer* strBuf1 = (StringBuffer*)malloc(sizeof(StringBuffer));
-    StringBuffer* strBuf2 = (StringBuffer*)malloc(sizeof(StringBuffer));
+    StringBuffer* strBuf1 = NULL;
+    StringBuffer* strBuf2 = NULL;
 
     char* str1 = "1234567";
     char* str2 = "1234";
-    constructStringBuffer(strBuf1, str1, strlen(str1));
-    constructStringBuffer(strBuf2, str2, strlen(str2));
+    strBuf1 = constructStringBuffer(str1, strlen(str1));
+    strBuf2 = constructStringBuffer(str2, strlen(str2));
 
     printStringBuffer(strBuf1);
     printStringBuffer(strBuf2);
@@ -57,8 +57,8 @@ static void _HexCodedStringBufferTest() {
     uint64_t arrayLength2 = 1;
     uint64_t strLength2 = 30;
 
-    constructHexCodedStringBuffer(hexCodedStrBuf1, arrayForTest1, arrayLength1, strLength1);
-    constructHexCodedStringBuffer(hexCodedStrBuf2, arrayForTest2, arrayLength2, strLength2);
+    hexCodedStrBuf1 = constructHexCodedStringBuffer(arrayForTest1, arrayLength1, strLength1);
+    hexCodedStrBuf2 = constructHexCodedStringBuffer(arrayForTest2, arrayLength2, strLength2);
 
     printHexCodedStringBuffer(hexCodedStrBuf1);
     printHexCodedStringBuffer(hexCodedStrBuf2);
@@ -75,14 +75,10 @@ static void _HexCodedStringBufferTest() {
  */
 
 
-void constructHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf, uint64_t* hexArray,
-                                   uint64_t arrayLength, uint64_t strLength) {
-    if(hexCodedStrBuf == NULL) {
-        printf("ERROR: null pointer occurred when constructing a hex-coded string buffer. \n");
-        exit(EXIT_FAILURE);
-    }
-    /**< \alert DO NOT FREE hexCodedStrBuf->hexArray!
-        When initialized, you won't know where the pointer points to */
+HexCodedStringBuffer* constructHexCodedStringBuffer(uint64_t* hexArray, uint64_t arrayLength,
+        uint64_t strLength) {
+    HexCodedStringBuffer* hexCodedStrBuf =
+        (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
     if(hexArray == NULL || arrayLength == 0) {
         hexCodedStrBuf->hexArray = NULL;
     } else {
@@ -94,15 +90,11 @@ void constructHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf, uint64_
 
     hexCodedStrBuf->arrayLength = arrayLength;
     hexCodedStrBuf->strLength = strLength;
+    return hexCodedStrBuf;
 }
 
-void constructStringBuffer(StringBuffer* strBuf, char* buffer, uint64_t length) {
-    if(strBuf == NULL) {
-        printf("ERROR: null pointer occurred when constructing a string buffer. \n");
-        exit(EXIT_FAILURE);
-    }
-    /**< \alert DO NOT FREE strBuf->buffer!
-        When initialized, you won't know where the pointer points to */
+StringBuffer* constructStringBuffer(char* buffer, uint64_t length) {
+    StringBuffer* strBuf = (StringBuffer*)malloc(sizeof(StringBuffer));
     strBuf->buffer = (char*)malloc(sizeof(char) * (length + 1));
     for(uint64_t i = 0; i < length; i++) {
         strBuf->buffer[i] = buffer[i];
@@ -110,6 +102,7 @@ void constructStringBuffer(StringBuffer* strBuf, char* buffer, uint64_t length) 
 
     strBuf->buffer[length] = '\0';
     strBuf->length = length;
+    return strBuf;
 }
 
 void initStringBuffer(StringBuffer* strBuf) {
@@ -120,7 +113,7 @@ void initStringBuffer(StringBuffer* strBuf) {
 //    free(strBuf->buffer);
 //    strBuf->buffer = NULL;
 //    strBuf->length = 0;
-    constructStringBuffer(strBuf, NULL, 0);
+    strBuf = constructStringBuffer(NULL, 0);
 }
 
 void initHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
@@ -132,7 +125,7 @@ void initHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
 //    hexCodedStrBuf->hexArray = NULL;
 //    hexCodedStrBuf->arrayLength = 0;
 //    hexCodedStrBuf->strLength = 0;
-    constructHexCodedStringBuffer(hexCodedStrBuf, NULL, 0, 0);
+    hexCodedStrBuf = constructHexCodedStringBuffer(NULL, 0, 0);
 }
 
 void printStringBuffer(StringBuffer* strBuf) {
@@ -163,7 +156,7 @@ void printHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
 }
 
 void clearStringBuffer(StringBuffer* strBuf) {
-    if(strBuf == NULL){
+    if(strBuf == NULL) {
         printf("ERROR: null pointer occurs when clearing a string buffer. \n");
         exit(EXIT_FAILURE);
     }
@@ -172,7 +165,7 @@ void clearStringBuffer(StringBuffer* strBuf) {
 }
 
 void clearHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
-    if(hexCodedStrBuf == NULL){
+    if(hexCodedStrBuf == NULL) {
         printf("ERROR: null pointer occurs when clearing a hex-coded string buffer. \n");
         exit(EXIT_FAILURE);
     }

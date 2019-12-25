@@ -41,9 +41,6 @@
 		<Unit filename="data/fastq/unitData.fastq">
 			<Option virtualFolder="data/fastq/" />
 		</Unit>
-		<Unit filename="data/fna/NC_008253.fna">
-			<Option virtualFolder="data/fna/" />
-		</Unit>
 		<Unit filename="data/fna/testExample.fna">
 			<Option virtualFolder="data/fna/" />
 		</Unit>
@@ -116,6 +113,20 @@
 			<Option virtualFolder="headers/" />
 		</Unit>
 		<Unit filename="headers/Queue.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/Read.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/Read.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/SAM.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/SAM.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
 		<Unit filename="headers/SNAP.c">

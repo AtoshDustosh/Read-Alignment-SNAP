@@ -55,6 +55,7 @@ static void _queueTest() {
     clearQueue(queueInstance);
     printf("Queue:\n");
     printQueue(queueInstance);
+    printf("Is queue empty: %"PRIu64"\n", isQueueEmpty(queueInstance));
 
     free(queueInstance);
 }
@@ -134,10 +135,10 @@ uint64_t isQueueEmpty(Queue* queueInstance) {
         printf("ERROR: null pointer occurred judging whether a queue is empty. \n");
         exit(EXIT_FAILURE);
     }
-    if(queueInstance->length != 0) {
-        return 1;
+    if(queueInstance->length == 0) {
+        return QUEUE_EMPTY;
     }
-    return 0;
+    return QUEUE_NOT_EMPTY;
 }
 
 
@@ -235,7 +236,7 @@ void printQueue(Queue* queueInstance) {
         printf("0x%p: (%#"PRIx64", 0x%p) ->\n", queueCell, queueCell->data, queueCell->next);
         queueCell = queueCell->next;
     }
-    printf("NULL\n\n");
+    printf("(queue ends)\n\n");
 }
 
 

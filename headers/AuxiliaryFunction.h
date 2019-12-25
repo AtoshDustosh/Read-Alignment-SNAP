@@ -37,8 +37,8 @@ void reverseString(char* str);
  * @param / @return strBuf string buffer
  * @param charNumPerHex #(chars) per hexadecimal number
  */
-void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBuf,
-        StringBuffer* strBuf, uint64_t charNumPerHex);
+ StringBuffer* transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBuf,
+                                                       uint64_t charNumPerHex);
 
 /**
  * Extract the hexadecimal bits of a char compressed in a 64-bit hexInt.
@@ -57,8 +57,8 @@ uint64_t extractCharBitFromHexInt(uint64_t offset, uint64_t hexInt, uint64_t cha
  * @param / @return hexCodedStrBuf hex-coded string buffer
  * @param charNumPerHex #(chars) per hexadecimal number
  */
-void transStringBufferToHexCodedStringBuffer(StringBuffer* strBuf,
-        HexCodedStringBuffer* hexCodedStrBuf, uint64_t charNumPerHex);
+HexCodedStringBuffer* transStringBufferToHexCodedStringBuffer(StringBuffer* strBuf,
+                                                              uint64_t charNumPerHex);
 
 /**
  * Get the lower case of a character.

@@ -24,12 +24,10 @@ void _HashTableTestSet() {
 static void _initHashTableTest() {
     printf("\n**************** _initHashTableTest ****************\n");
     printf("sizeof(HashCell): %d\n", sizeof(HashCell));
-    HashTable hashTable;
     uint64_t tableSize = 10;
+    HashTable* hashTable = initHashTable(tableSize);
 
-    initHashTable(tableSize, &hashTable);
-
-    displayHashTable(&hashTable, tableSize);
+    displayHashTable(hashTable, tableSize);
 }
 
 /**
@@ -37,11 +35,9 @@ static void _initHashTableTest() {
  */
 static void _addHashCellTest() {
     printf("\n**************** _addHashCellTest ****************\n");
-    HashTable hashTable;
     uint64_t tableSize = 500000;
+    HashTable* hashTable = initHashTable(tableSize);
     printf("hash table size: %"PRIu64"\n", tableSize);
-
-    initHashTable(tableSize, &hashTable);
 
     uint64_t i = 0;
     char* str;
@@ -50,14 +46,14 @@ static void _addHashCellTest() {
         str = (char*)malloc(sizeof(char) * strLength);
         randomString(str, strLength);
 //        printf("%s, %"PRIu64"\n", str, MyHash(str));
-        addHashCell(str, i, &hashTable, tableSize);
+        addHashCell(str, i, hashTable, tableSize);
         free(str);
     }
 
-//    printf("search hash cell of \"aaccgaca\": %"PRIu64"\n",
-//           searchHashCell("aaccgaca", &hashTable, tableSize)->key);
-//    displayHashTable(&hashTable, tableSize);
-    checkHashTablePerformance(&hashTable, tableSize);
+    printf("search hash cell of \"aaccgaca\" -> hash index: %"PRIu64"\n",
+           searchHashIndexOfString("aaccgaca", hashTable, tableSize)->data);
+//    displayHashTable(hashTable, tableSize);
+    checkHashTablePerformance(hashTable, tableSize);
 }
 
 
@@ -68,8 +64,8 @@ static void _addHashCellTest() {
  * Working functions.
  */
 
-HashCell* searchHashCell(char* str, HashTable* hashTable, uint64_t tableSize) {
-    return &(hashTable->hashList[hashIndex(str, tableSize)]);
+HashCell* searchHashIndexOfString(char* str, HashTable* hashTable, uint64_t tableSize) {
+    return hashTable->hashList[hashIndex(str, tableSize)];
 }
 
 
@@ -79,7 +75,7 @@ void checkHashTablePerformance(HashTable* hashTable, uint64_t tableSize) {
     uint64_t totalBucketLength = 0;
     float bucketUsedCount = 0;
     for(i = 0; i < tableSize; i++) {
-        HashCell* hashCell = &(hashTable->hashList[i]);
+        HashCell* hashCell = hashTable->hashList[i];
         totalBucketLength = totalBucketLength + hashCell->flag;
         bucketUsedCount = bucketUsedCount + (hashCell->flag && 1);
         do {
@@ -103,14 +99,14 @@ void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
     for(i = 0; i < tableSize; i++) {
         uint64_t tempLength = 0;
         printf("hash cell %"PRIu64"\t", i);
-        HashCell* hashCell = &(hashTable->hashList[i]);
+        HashCell* hashCell = hashTable->hashList[i];
         do {
             if(hashCell == NULL || hashCell->flag == 0) {
                 break;
             } else {
                 printf("->\t");
             }
-            printf("(%"PRIu64", %d, 0x%p)\t", hashCell->key, hashCell->flag,
+            printf("(%"PRIu64", %d, 0x%p)\t", hashCell->data, hashCell->flag,
                    hashCell->nextCell);
             tempLength++;
             hashCell = hashCell->nextCell;
@@ -123,13 +119,13 @@ void displayHashTable(HashTable* hashTable, uint64_t tableSize) {
     printf("Maximum bucket length: %"PRIu64"\n", maxBucketLength);
 }
 
-void addHashCell(char* str, uint64_t key, HashTable* hashTable, uint64_t tableSize) {
+void addHashCell(char* str, uint64_t data, HashTable* hashTable, uint64_t tableSize) {
     uint64_t index = hashIndex(str, tableSize);
-    HashCell* hashCell = &(hashTable->hashList[index]);
+    HashCell* hashCell = hashTable->hashList[index];
 
     // if there is no hash-cell using that hash index
     if(hashCell->flag == 0) {
-        hashCell->key = key;
+        hashCell->data = data;
         hashCell->flag = 1;
         hashCell->nextCell = NULL;
         return;
@@ -147,14 +143,15 @@ void addHashCell(char* str, uint64_t key, HashTable* hashTable, uint64_t tableSi
     } while(1);
     // put a new hash-cell to the next-hash-cell
     HashCell* newHashCell = (HashCell*)malloc(sizeof(HashCell));
-    newHashCell->key = key;
+    newHashCell->data = data;
     newHashCell->flag = 1;
     newHashCell->nextCell = NULL;
     hashCell->nextCell = newHashCell;
 }
 
-void initHashTable(uint64_t tableSize, HashTable* hashTable) {
-    hashTable->hashList = (HashCell*)malloc(sizeof(HashCell) * tableSize);
+HashTable* initHashTable(uint64_t tableSize) {
+    HashTable* hashTable = (HashTable*)malloc(sizeof(HashTable));
+    hashTable->hashList = (HashCell**)malloc(sizeof(HashCell*) * tableSize);
     uint64_t i = 0;
     if(hashTable->hashList == NULL) {
         printf("System memory not enough. \n");
@@ -162,11 +159,13 @@ void initHashTable(uint64_t tableSize, HashTable* hashTable) {
     }
     for(i = 0; i < tableSize; i++) {
         HashCell* hashCell = (HashCell*)malloc(sizeof(HashCell));
-        hashCell->key = 0;
+        hashCell->data = 0;
         hashCell->flag = 0;
         hashCell->nextCell = NULL;
-        hashTable->hashList[i] = *hashCell;
+        hashTable->hashList[i] = hashCell;
     }
+    hashTable->tableSize = tableSize;
+    return hashTable;
 }
 
 uint64_t hashIndex(char *str, uint64_t tableSize) {

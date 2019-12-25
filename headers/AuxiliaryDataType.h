@@ -57,8 +57,8 @@ void _AuxiliaryDataTypeTestSet();
  * @param arrayLength length of array
  * @param strLength length of string
  */
-void constructHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf, uint64_t* hexArray,
-                                   uint64_t arrayLength, uint64_t strLength);
+HexCodedStringBuffer* constructHexCodedStringBuffer(uint64_t* hexArray, uint64_t arrayLength,
+                                                    uint64_t strLength);
 
 /**
  * Construct a string buffer with input (buffer, length) by copying buffer.
@@ -67,7 +67,7 @@ void constructHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf, uint64_
  * @param buffer string
  * @param length string length
  */
-void constructStringBuffer(StringBuffer* strBuf, char* buffer, uint64_t length);
+StringBuffer* constructStringBuffer(char* buffer, uint64_t length);
 
 /**
  * Initialize a string buffer with empty content.

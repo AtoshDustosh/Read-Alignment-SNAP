@@ -36,7 +36,7 @@ static void _AVLTreeTest() {
     AVLNode* tree = NULL;
     AVLNode* node = NULL;
     uint64_t key = 4;
-    uint64_t totalNodesNum = 10;
+    uint64_t totalNodesNum = 7;
 
     for(uint64_t i = 0; i < totalNodesNum; i++) {
         tree = insertAVLNode(tree, createAVLNode(i, rand() % 10, NULL, NULL));
@@ -60,7 +60,7 @@ static void _AVLTreeTest() {
  */
 static void _usageOfAVLinSNAPTest() {
     printf("\n**************** _usageOfAVLinSNAPTest ****************\n");
-    uint64_t positionCount = 25;
+    uint64_t positionCount = 10;
     AVLNode* tree = NULL;
     AVLNode* node = NULL;
     uint64_t* positions = (uint64_t*)malloc(sizeof(uint64_t) * positionCount);
@@ -93,7 +93,7 @@ static void _usageOfAVLinSNAPTest() {
     AVLNode** nodes = NULL;
     nodes = findNodeswithMaxData(tree, &nodesNum);
     printf("\n>> positions that have the maximum seedCount - total number: %"PRIu64"\n", nodesNum);
-    for(uint64_t i = 0; i < nodesNum; i++){
+    for(uint64_t i = 0; i < nodesNum; i++) {
         printf("position: %"PRIu64", seedCount: %"PRIu64"\n", nodes[i]->key, nodes[i]->data);
     }
 

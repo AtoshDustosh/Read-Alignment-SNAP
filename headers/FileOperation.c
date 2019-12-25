@@ -50,14 +50,11 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA, cha
     }
 
     char ch = fgetc(fp);
-    StringBuffer* strBuf = (StringBuffer*)malloc(sizeof(StringBuffer));
-    HexCodedStringBuffer* hexCodedStrBuf =
-        (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
+    StringBuffer* strBuf = NULL;
+    HexCodedStringBuffer* hexCodedStrBuf = NULL;
     uint64_t i = 0;
 
     char* buffer = (char*)malloc(sizeof(char) * (charNumPerHex + 1));
-    uint64_t* hexArray = (uint64_t*)malloc(sizeof(uint64_t) * 1);
-    uint64_t arrayLength = 1;
 
     uint64_t hexInt = 0;
     uint64_t strLength = 0;
@@ -90,33 +87,32 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA, cha
              * \alert extract a function if you have the time and fix this pile of shit.
              */
             buffer[strLength] = '\0';
-            constructStringBuffer(strBuf, buffer, charNumPerHex);
-            constructHexCodedStringBuffer(hexCodedStrBuf, hexArray, arrayLength, strLength);
-            transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
+            strBuf = constructStringBuffer(buffer, charNumPerHex);
+            hexCodedStrBuf = transStringBufferToHexCodedStringBuffer(strBuf, charNumPerHex);
             hexInt = hexCodedStrBuf->hexArray[0];
             hexCodedDNA[i++] = hexInt;
+            clearStringBuffer(strBuf);
+            clearHexCodedStringBuffer(hexCodedStrBuf);
             printf("%s\t", buffer);
             printf("0x%16"PRIx64"\n", hexInt);
 //            if(i % 4 == 0) {
 //                printf("\n");
 //            }
             buffer = (char*)malloc(sizeof(char) * (charNumPerHex + 1));
-            hexArray = (uint64_t*)malloc(sizeof(uint64_t) * 1);
             strLength = 0;
         }
         ch = fgetc(fp);
     }
     buffer[strLength] = '\0';
-    constructStringBuffer(strBuf, buffer, charNumPerHex);
-    constructHexCodedStringBuffer(hexCodedStrBuf, hexArray, arrayLength, strLength);
-    transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
+    strBuf = constructStringBuffer(buffer, charNumPerHex);
+    hexCodedStrBuf = transStringBufferToHexCodedStringBuffer(strBuf, charNumPerHex);
     hexInt = hexCodedStrBuf->hexArray[0];
     hexCodedDNA[i++] = hexInt;
+    clearStringBuffer(strBuf);
+    clearHexCodedStringBuffer(hexCodedStrBuf);
     printf("%s\t", buffer);
     printf("0x%16"PRIx64"\n", hexInt);
 
-    clearStringBuffer(strBuf);
-    clearHexCodedStringBuffer(hexCodedStrBuf);
     free(fp);
 }
 

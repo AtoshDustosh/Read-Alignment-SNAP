@@ -113,48 +113,42 @@ static void _lowerCaseTest() {
 static void _transStringBufferToHexCodedStringBufferTest() {
     printf("\n*************** _transStringBufferToHexCodedStringBufferTest ***************\n");
     const uint64_t charNumPerHex = CHAR_NUM_PER_HEX;
-    StringBuffer* strBuf = (StringBuffer*)malloc(sizeof(StringBuffer));
-    HexCodedStringBuffer* hexCodedStrBuf =
-        (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
+    StringBuffer* strBuf = NULL;
+    HexCodedStringBuffer* hexCodedStrBuf = NULL;
 
-    initStringBuffer(strBuf);
-    initHexCodedStringBuffer(hexCodedStrBuf);
     printf("... initialization completed \n");
 
 
 // test string length within charNumPerHex
-    strBuf->buffer = "ccccagagctctccccaaaaggggttttaacc";
     // 01010101 00100010 01110111 01010101 00000000 10101010 11111111 00000101
     // 0x5522775500AAFF05
-    strBuf->length = 32;
-    transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
-
+    strBuf = constructStringBuffer("ccccagagctctccccaaaaggggttttaacc", 32);
+    hexCodedStrBuf = transStringBufferToHexCodedStringBuffer(strBuf, charNumPerHex);
     printStringBuffer(strBuf);
     printHexCodedStringBuffer(hexCodedStrBuf);
     printf("expected: 0x5522775500aaff05\n");
+    clearStringBuffer(strBuf);
+    clearHexCodedStringBuffer(hexCodedStrBuf);
 
-    strBuf->buffer = "ccccagagctctcccc";
     // 01010101 00100010 01110111 01010101 00000000 00000000 00000000 00000000
     // 0x5522775500AAFF00
-    strBuf->length = 16;
-    transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
-
+    strBuf = constructStringBuffer("ccccagagctctcccc", 16);
+    hexCodedStrBuf = transStringBufferToHexCodedStringBuffer(strBuf, charNumPerHex);
     printStringBuffer(strBuf);
     printHexCodedStringBuffer(hexCodedStrBuf);
     printf("expected: 0x5522775500000000\n");
+    clearStringBuffer(strBuf);
+    clearHexCodedStringBuffer(hexCodedStrBuf);
 
 // test string length over charNumPerHex
-    strBuf->buffer = "ccccagagctctccccaaaaggggttttaaaatatagagatatacaca";
     // 01010101 00100010 01110111 01010101 00000000 10101010 11111111 00000000 ~
     // ~ 11001100 10001000 11001100 01000100
     // 0x5522775500AAFF00 0xCC88CC4400000000
-    strBuf->length = 48;
-    transStringBufferToHexCodedStringBuffer(strBuf, hexCodedStrBuf, charNumPerHex);
-
+    strBuf = constructStringBuffer("ccccagagctctccccaaaaggggttttaaaatatagagatatacaca", 48);
+    hexCodedStrBuf = transStringBufferToHexCodedStringBuffer(strBuf, charNumPerHex);
     printStringBuffer(strBuf);
     printHexCodedStringBuffer(hexCodedStrBuf);
     printf("expected: 0x5522775500aaff00, 0xcc88cc4400000000\n");
-
     clearStringBuffer(strBuf);
     clearHexCodedStringBuffer(hexCodedStrBuf);
 }
@@ -191,10 +185,11 @@ static void _transHexCodedStringBufferToStringBufferTest() {
     /*
      * Test single-hexInt string buffer transformation.
      */
-    uint64_t hexArray1[1] = {0x27fd3de1e41a90ce};
+    uint64_t* hexArray1 = (uint64_t*)malloc(sizeof(uint64_t) * 1);
+    *(hexArray1) = 0x27fd3de1e41a90ce;
     HexCodedStringBuffer* hexCodedStrBuf =
         (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
-    StringBuffer* strBuf = (StringBuffer*)malloc(sizeof(StringBuffer));
+    StringBuffer* strBuf = NULL;
     initHexCodedStringBuffer(hexCodedStrBuf);
 
     hexCodedStrBuf->hexArray = hexArray1;
@@ -202,10 +197,11 @@ static void _transHexCodedStringBufferToStringBufferTest() {
     hexCodedStrBuf->arrayLength = 1;
 
     printHexCodedStringBuffer(hexCodedStrBuf);
-    transHexCodedStringBufferToStringBuffer(hexCodedStrBuf, strBuf, charNumPerHex);
+    strBuf = transHexCodedStringBufferToStringBuffer(hexCodedStrBuf, charNumPerHex);
     printStringBuffer(strBuf);
     printf("expected: agcttttcattctgactgcaacgggcaatatg -> strcmp:%d\n",
            strcmp(strBuf->buffer, "agcttttcattctgactgcaacgggcaatatg"));
+    clearStringBuffer(strBuf);
 
     /*
      * Test multiple-hexInt string buffer transformation.
@@ -220,7 +216,7 @@ static void _transHexCodedStringBufferToStringBufferTest() {
     hexCodedStrBuf->strLength = 57;
 
     printHexCodedStringBuffer(hexCodedStrBuf);
-    transHexCodedStringBufferToStringBuffer(hexCodedStrBuf, strBuf, charNumPerHex);
+    strBuf = transHexCodedStringBufferToStringBuffer(hexCodedStrBuf, charNumPerHex);
     printStringBuffer(strBuf);
     printf("expected: agcttttcattctgactgcaacgggcaatatgttttttttaaaaaaaatttttttta -> strcmp:%d\n",
            strcmp(strBuf->buffer, "agcttttcattctgactgcaacgggcaatatgttttttttaaaaaaaatttttttta"));
@@ -263,8 +259,9 @@ void reverseString(char* str) {
     free(temp);
 }
 
-void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBuf,
-        StringBuffer* strBuf, uint64_t charNumPerHex) {
+StringBuffer* transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBuf,
+        uint64_t charNumPerHex) {
+    StringBuffer* strBuf = (StringBuffer*)malloc(sizeof(StringBuffer));
     strBuf->buffer = (char*)malloc(sizeof(char) * (hexCodedStrBuf->strLength + 1));
     strBuf->length = hexCodedStrBuf->strLength;
 
@@ -279,6 +276,7 @@ void transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexCodedStrBu
     }
     // malloc will not append a '\0' to the end of a char*.
     strBuf->buffer[i] = '\0';
+    return strBuf;
 }
 
 uint64_t extractCharBitFromHexInt(uint64_t offset, uint64_t hexInt, uint64_t charNumPerHex) {
@@ -289,8 +287,10 @@ uint64_t extractCharBitFromHexInt(uint64_t offset, uint64_t hexInt, uint64_t cha
     return (hexInt << bitShiftLeft) >> bitShiftRight;
 }
 
-void transStringBufferToHexCodedStringBuffer(StringBuffer* strBuf,
-        HexCodedStringBuffer* hexCodedStrBuf, uint64_t charNumPerHex) {
+HexCodedStringBuffer* transStringBufferToHexCodedStringBuffer(StringBuffer* strBuf,
+        uint64_t charNumPerHex) {
+    HexCodedStringBuffer* hexCodedStrBuf =
+        (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
     // initialize hex-coded string buffer
     if(strBuf->length % charNumPerHex == 0) {
         hexCodedStrBuf->arrayLength = strBuf->length / charNumPerHex;
@@ -320,6 +320,7 @@ void transStringBufferToHexCodedStringBuffer(StringBuffer* strBuf,
             hexInt = 0x0;
         }
     }
+    return hexCodedStrBuf;
 }
 
 char lowerCase(char ch) {

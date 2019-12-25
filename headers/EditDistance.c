@@ -60,8 +60,8 @@ void _EditDistanceTestSet() {
  */
 static void _calculateEditDistanceTest() {
     printf("\n**************** _calculateEditDistanceTest ****************\n");
-    StringBuffer* strBufRow = (StringBuffer*)malloc(sizeof(StringBuffer));
-    StringBuffer* strBufColumn = (StringBuffer*)malloc(sizeof(StringBuffer));
+    StringBuffer* strBufRow = NULL;
+    StringBuffer* strBufColumn = NULL;
     uint64_t maxBufLen = BUFSIZ;
     char* CIGAR = (char*)malloc(sizeof(char) * maxBufLen);
 
@@ -75,24 +75,25 @@ static void _calculateEditDistanceTest() {
     string2 = "agcgcttgctgc";
 //    string1 = "agtcgccgctgctgc";  // out of EDmax
 //    string2 = "agggggggtgc";
-    constructStringBuffer(strBufColumn, string1, (uint64_t)strlen(string1));
-    constructStringBuffer(strBufRow, string2, (uint64_t)strlen(string2));
+    strBufColumn = constructStringBuffer(string1, (uint64_t)strlen(string1));
+    strBufRow = constructStringBuffer(string2, (uint64_t)strlen(string2));
     bestED = calculateEditDistance(strBufRow, strBufColumn, EDmax, CIGAR, maxBufLen);
     printf("Best edit-distance: %"PRIu64"\n", bestED);
     printf("CIGAR: %s\n", CIGAR);
+    clearStringBuffer(strBufColumn);
+    clearStringBuffer(strBufRow);
 
     printf("******************************************************************\n");
     string1 = "ccagtcgctgcgctt";
     string2 = "agcgcttgcgc";
-    constructStringBuffer(strBufColumn, string1, (uint64_t)strlen(string1));
-    constructStringBuffer(strBufRow, string2, (uint64_t)strlen(string2));
+    strBufColumn = constructStringBuffer(string1, (uint64_t)strlen(string1));
+    strBufRow = constructStringBuffer(string2, (uint64_t)strlen(string2));
     bestED = calculateEditDistance(strBufRow, strBufColumn, EDmax, CIGAR, maxBufLen);
     printf("Best edit-distance: %"PRIu64"\n", bestED);
     printf("CIGAR: %s\n", CIGAR);
+    clearStringBuffer(strBufColumn);
+    clearStringBuffer(strBufRow);
 
-    /**< \note I don't know why freeing strBufRow results in a bug, while others don't */
-//    free(strBufRow);
-//    free(strBufColumn);
     free(CIGAR);
 }
 
@@ -144,10 +145,10 @@ uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uin
     strColumn[0] = ' ';
     strColumn[columnNum] = '\0';
 
-    StringBuffer* strBufRow = (StringBuffer*)malloc(sizeof(StringBuffer));
-    StringBuffer* strBufColumn = (StringBuffer*)malloc(sizeof(StringBuffer));
-    constructStringBuffer(strBufRow, strRow, rowNum);
-    constructStringBuffer(strBufColumn, strColumn, columnNum);
+    StringBuffer* strBufRow = NULL;
+    StringBuffer* strBufColumn = NULL;
+    strBufRow = constructStringBuffer(strRow, rowNum);
+    strBufColumn = constructStringBuffer(strColumn, columnNum);
 
     printStringBuffer(strBufRow);
     printStringBuffer(strBufColumn);
@@ -180,8 +181,8 @@ uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uin
     bestED = processEDMatrix(strBufRow, strBufColumn, (uint64_t*)EDmatrix, CIGARbuffer, maxBufLen,
                              EDmax);
 
-    free(strBufRow);
-    free(strBufColumn);
+    clearStringBuffer(strBufRow);
+    clearStringBuffer(strBufColumn);
     free(strRow);
     free(strColumn);
     return bestED;

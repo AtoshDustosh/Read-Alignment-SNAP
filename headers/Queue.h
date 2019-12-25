@@ -6,8 +6,8 @@
 
 #include <inttypes.h>
 
-#define True 1
-#define False 0
+#define QUEUE_EMPTY 1
+#define QUEUE_NOT_EMPTY 0
 
 /**
  * Queue data structure.
@@ -76,7 +76,7 @@ void clearQueue(Queue* queueInstance);
  * Judge whether a queue is empty.
  *
  * @param queueInstance an instance of Queue - cannot be NULL pointer
- * @return 1 if queue is empty; 0 otherwise
+ * @return QUEUE_EMPTY if queue is empty; QUEUE_NOT_EMPTY otherwise
  */
 uint64_t isQueueEmpty(Queue* queueInstance);
 
@@ -112,7 +112,7 @@ QueueCell* getQueueTail(Queue* queueInstance);
  * Dequeue a queue and get the element dequeued.
  *
  * @param queueInstance an instance of Queue - cannot be NULL pointer
- * @param queueCell return element dequeued
+ * @param / @return queueCell return element dequeued
  */
 void deQueue(Queue* queueInstance, QueueCell* queueCell);
 
