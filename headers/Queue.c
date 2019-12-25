@@ -18,8 +18,7 @@ static void _queueTest() {
     printf("\n**************** _queueTest ****************\n");
     uint64_t returnValue = 0;
 
-    Queue* queueInstance = (Queue*)malloc(sizeof(Queue));
-    initQueue(queueInstance);
+    Queue* queueInstance = initQueue();
 
     returnValue = isQueueEmpty(queueInstance);
     printf("Queue is empty or not: %"PRIu64"\n", returnValue);
@@ -80,14 +79,12 @@ QueueCell* newQueueCell(uint64_t data) {
 }
 
 
-void initQueue(Queue* queueInstance) {
-    if(queueInstance == NULL) {
-        printf("ERROR: null pointer occurred when initializing a queue. \n");
-        exit(EXIT_FAILURE);
-    }
+Queue* initQueue() {
+    Queue* queueInstance = (Queue*)malloc(sizeof(Queue));
     queueInstance->head = NULL;
     queueInstance->tail = NULL;
     queueInstance->length = 0;
+    return queueInstance;
 }
 
 

@@ -22,12 +22,12 @@ static Queue* getLocationQueueOfSeed(HexCodedStringBuffer* seedHexCodedStrBuf, S
 
 
 
-static void _extractHexCodedSeedFromDNATest();
+static void _extractHexCodedFragmentFromRefTest();
 
 
 
 void _SNAPTestSet() {
-    _extractHexCodedSeedFromDNATest();
+    _extractHexCodedFragmentFromRefTest();
 }
 
 
@@ -36,13 +36,13 @@ void _SNAPTestSet() {
  * Test functions.
  */
 
-static void _extractHexCodedSeedFromDNATest() {
-    printf("\n*************** _extractHexCodedSeedFromDNATest ***************\n");
+static void _extractHexCodedFragmentFromRefTest() {
+    printf("\n*************** _extractHexCodedFragmentFromRefTest ***************\n");
     uint64_t hexCodedDNA[] = {0x27fd3de1e41a90ce, 0x27fd3de1e41a90ce};
     // agcttttcattctgactgcaacgggcaatatg
     //
     uint64_t DNAlength = 64;
-    uint64_t seedLength = 20;
+    uint64_t seedLength = 0;
     uint64_t DNAoffset = 0;
     HexCodedStringBuffer* seedHexCodedStrBuf = NULL;
     StringBuffer* seedStrBuf = NULL;
@@ -50,7 +50,7 @@ static void _extractHexCodedSeedFromDNATest() {
     seedLength = 20;
     DNAoffset = 3;
     printf("seed length: %"PRIu64", offset: %"PRIu64"\n", seedLength, DNAoffset);
-    seedHexCodedStrBuf = extractHexCodedSeedFromDNA(hexCodedDNA, DNAlength, seedLength, DNAoffset);
+    seedHexCodedStrBuf = extractHexCodedFragmentFromRef(hexCodedDNA, DNAlength, seedLength, DNAoffset);
     printf("expected: ttttcattctgactgcaacg\n");
     seedStrBuf = transHexCodedStringBufferToStringBuffer(seedHexCodedStrBuf, CHAR_NUM_PER_HEX);
     printHexCodedStringBuffer(seedHexCodedStrBuf);
@@ -62,7 +62,7 @@ static void _extractHexCodedSeedFromDNATest() {
     seedLength = 20;
     DNAoffset = 20;
     printf("seed length: %"PRIu64", offset: %"PRIu64"\n", seedLength, DNAoffset);
-    seedHexCodedStrBuf = extractHexCodedSeedFromDNA(hexCodedDNA, DNAlength, seedLength, DNAoffset);
+    seedHexCodedStrBuf = extractHexCodedFragmentFromRef(hexCodedDNA, DNAlength, seedLength, DNAoffset);
     printf("expected: acgggcaatatgagcttttc\n");
     seedStrBuf = transHexCodedStringBufferToStringBuffer(seedHexCodedStrBuf, CHAR_NUM_PER_HEX);
     printHexCodedStringBuffer(seedHexCodedStrBuf);
@@ -74,7 +74,7 @@ static void _extractHexCodedSeedFromDNATest() {
     seedLength = 32;
     DNAoffset = 16;
     printf("seed length: %"PRIu64", offset: %"PRIu64"\n", seedLength, DNAoffset);
-    seedHexCodedStrBuf = extractHexCodedSeedFromDNA(hexCodedDNA, DNAlength, seedLength, DNAoffset);
+    seedHexCodedStrBuf = extractHexCodedFragmentFromRef(hexCodedDNA, DNAlength, seedLength, DNAoffset);
     printf("expected: tgcaacgggcaatatgagcttttcattctgac\n");
     seedStrBuf = transHexCodedStringBufferToStringBuffer(seedHexCodedStrBuf, CHAR_NUM_PER_HEX);
     printHexCodedStringBuffer(seedHexCodedStrBuf);
@@ -86,8 +86,20 @@ static void _extractHexCodedSeedFromDNATest() {
     seedLength = 32;
     DNAoffset = 0;
     printf("seed length: %"PRIu64", offset: %"PRIu64"\n", seedLength, DNAoffset);
-    seedHexCodedStrBuf = extractHexCodedSeedFromDNA(hexCodedDNA, DNAlength, seedLength, DNAoffset);
+    seedHexCodedStrBuf = extractHexCodedFragmentFromRef(hexCodedDNA, DNAlength, seedLength, DNAoffset);
     printf("expected: agcttttcattctgactgcaacgggcaatatg\n");
+    seedStrBuf = transHexCodedStringBufferToStringBuffer(seedHexCodedStrBuf, CHAR_NUM_PER_HEX);
+    printHexCodedStringBuffer(seedHexCodedStrBuf);
+    printStringBuffer(seedStrBuf);
+    clearStringBuffer(seedStrBuf);
+
+    printf("\n");
+
+    seedLength = 48;
+    DNAoffset = 16;
+    printf("seed length: %"PRIu64", offset: %"PRIu64"\n", seedLength, DNAoffset);
+    seedHexCodedStrBuf = extractHexCodedFragmentFromRef(hexCodedDNA, DNAlength, seedLength, DNAoffset);
+    printf("expected: tgcaacgggcaatatgagcttttcattctgactgcaacgggcaatatg\n");
     seedStrBuf = transHexCodedStringBufferToStringBuffer(seedHexCodedStrBuf, CHAR_NUM_PER_HEX);
     printHexCodedStringBuffer(seedHexCodedStrBuf);
     printStringBuffer(seedStrBuf);
@@ -117,7 +129,7 @@ SNAP* constructSNAP(uint64_t* hexCodedRefDNA, uint64_t DNAlength, uint64_t seedL
     StringBuffer* seedStrBuf = NULL;
     for(uint64_t offset = 0; offset < tableSize; offset++) {
         HexCodedStringBuffer* seedHexCodedStrBuf =
-            extractHexCodedSeedFromDNA(hexCodedRefDNA, DNAlength, seedLength, offset);
+            extractHexCodedFragmentFromRef(hexCodedRefDNA, DNAlength, seedLength, offset);
 //        printHexCodedStringBuffer(seedHexCodedStrBuf);
         seedStrBuf = transHexCodedStringBufferToStringBuffer(seedHexCodedStrBuf, CHAR_NUM_PER_HEX);
 //        printStringBuffer(seedStrBuf);
@@ -139,38 +151,43 @@ void loadOneReadIntoSNAP(Read* read, SNAP* snap) {
     snap->read = read;
 }
 
-HexCodedStringBuffer* extractHexCodedSeedFromDNA(uint64_t* hexCodedDNA, uint64_t DNAlength,
-        uint64_t seedLength, uint64_t DNAoffset) {
-    if(seedLength > CHAR_NUM_PER_HEX || seedLength <= 0) {
-        printf("ERROR: length of a seed is too long or not valid - %"PRIu64"\n", seedLength);
-        exit(EXIT_FAILURE);
-    }
-    if(seedLength + DNAoffset > DNAlength) {
-        printf("ERROR: seed out of reference DNA - offset: %"PRIu64"\n", DNAoffset);
+HexCodedStringBuffer* extractHexCodedFragmentFromRef(uint64_t* refSeq, uint64_t refLength,
+        uint64_t fragmentLength, uint64_t refOffset) {
+    if(fragmentLength + refOffset > refLength) {
+        printf("ERROR: fragment out of reference sequence - offset: %"PRIu64"\n", refOffset);
         exit(EXIT_FAILURE);
     }
 
-    uint64_t hexArray[1] = {0};
-    uint64_t arrayLength = 1;
-    uint64_t strLength = seedLength;
+    uint64_t fragmentArrayLength = 0;
+    if(fragmentLength % CHAR_NUM_PER_HEX == 0) {
+        fragmentArrayLength = fragmentLength / CHAR_NUM_PER_HEX;
+    } else {
+        fragmentArrayLength = fragmentLength / CHAR_NUM_PER_HEX + 1;
+    }
+    uint64_t* hexArray = (uint64_t*)malloc(sizeof(uint64_t) * fragmentLength);
 
-    uint64_t hexInt = 0x0;  // the hex-coded seed string
-    for(uint64_t i = 0; i < seedLength; i++) {
-        uint64_t DNAhexIntIndex = (DNAoffset + i) / CHAR_NUM_PER_HEX;
-        uint64_t DNAhexInt = *(hexCodedDNA + DNAhexIntIndex);
-        uint64_t hexIntOffset = (i + (DNAoffset % CHAR_NUM_PER_HEX)) % CHAR_NUM_PER_HEX;
-        uint64_t charHex = extractCharBitFromHexInt(hexIntOffset, DNAhexInt, CHAR_NUM_PER_HEX);
-        uint64_t bitInterval = sizeof(uint64_t) * 8 / CHAR_NUM_PER_HEX;
-//        printf("%"PRIu64"\t->\t%#"PRIx64"\t(%c)\t(%"PRIu64")%#"PRIx64"\n",
-//                hexIntOffset, charHex, hexToChar(charHex), DNAhexIntIndex, DNAhexInt);
+    uint64_t bitInterval = sizeof(uint64_t) * 8 / CHAR_NUM_PER_HEX;
+    uint64_t fragmentHexIntIndex = 0;
+    uint64_t fragmentCharHexIndex = 0;
+
+    uint64_t fragmentHexInt = 0x0;
+    for(uint64_t i = 0; i < fragmentLength; i++) {
+        uint64_t refHexIntIndex = (refOffset + i) / CHAR_NUM_PER_HEX;
+        uint64_t refHexInt = *(refSeq + refHexIntIndex);
+        uint64_t refHexIntOffset = (i + (refOffset % CHAR_NUM_PER_HEX)) % CHAR_NUM_PER_HEX;
+        uint64_t charHex = extractCharBitFromHexInt(refHexIntOffset, refHexInt, CHAR_NUM_PER_HEX);
+        char tempChar = hexToChar(charHex);
         charHex = charHex << ((CHAR_NUM_PER_HEX - 1 - i) * bitInterval);
-        hexInt = hexInt | charHex;
-//        printf("%#"PRIx64"\n", hexInt);
+        fragmentHexInt = fragmentHexInt | charHex;
+        fragmentCharHexIndex++;
+//        printf("%"PRIu64"\t(%c) -> %#"PRIx64"\n", i, tempChar, fragmentHexInt);
+        if(fragmentCharHexIndex == CHAR_NUM_PER_HEX || i == fragmentLength - 1) {
+            hexArray[fragmentHexIntIndex++] = fragmentHexInt;
+            fragmentCharHexIndex = 0;
+            fragmentHexInt = 0x0;
+        }
     }
-//    printf("hexInt: %#"PRIx64"\n", hexInt);
-
-    hexArray[0] = hexInt;
-    return constructHexCodedStringBuffer(hexArray, arrayLength, strLength);
+    return constructHexCodedStringBuffer(hexArray, fragmentArrayLength, fragmentLength);
 }
 
 
@@ -180,7 +197,7 @@ uint64_t alignReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax, uin
     uint64_t d_second = INFINITE;
     Queue* seedQueue = constructSeedQueue(snap->read, seedLength);
 
-    printQueue(seedQueue);
+//    printQueue(seedQueue);
     /**< \todo  */
 //    while(isQueueEmpty(seedQueue) != QUEUE_EMPTY) {
 //        QueueCell* seedQueueCell = newQueueCell(0);
@@ -204,7 +221,6 @@ uint64_t alignReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax, uin
  * @return a queue of seeds
  */
 static Queue* constructSeedQueue(Read* read, uint64_t seedLength) {
-    Queue* seedQueue = (Queue*)malloc(sizeof(Queue));
     uint64_t readLength = strlen(read->SEQ);
     uint64_t seedNum = readLength - seedLength + 1;
     uint64_t seeds[seedNum];
@@ -217,8 +233,8 @@ static Queue* constructSeedQueue(Read* read, uint64_t seedLength) {
     printf("seed length: %"PRIu64", seedNum: %"PRIu64"\n", seedLength, seedNum);
     for(uint64_t i = 0; i < seedNum; i++) {
         HexCodedStringBuffer* seedHexCodedStrBuf =
-            extractHexCodedSeedFromDNA(readHexCodedStrBuf->hexArray, readHexCodedStrBuf->strLength,
-                                       seedLength, i);
+            extractHexCodedFragmentFromRef(readHexCodedStrBuf->hexArray,
+                                           readHexCodedStrBuf->strLength, seedLength, i);
         seeds[i] = seedHexCodedStrBuf->hexArray[0];
         clearHexCodedStringBuffer(seedHexCodedStrBuf);
     }
@@ -226,37 +242,39 @@ static Queue* constructSeedQueue(Read* read, uint64_t seedLength) {
     clearStringBuffer(readStrBuf);
 
 //    // print seeds
-//    for(uint64_t i = 0; i < seedNum; i++){
-//        HexCodedStringBuffer* seedHexCodedStrBuf = seeds[i];
-//        StringBuffer* seedStrBuf = (StringBuffer*)malloc(sizeof(StringBuffer));
-//        transHexCodedStringBufferToStringBuffer(seedHexCodedStrBuf, seedStrBuf, CHAR_NUM_PER_HEX);
+//    for(uint64_t i = 0; i < seedNum; i++) {
+//        HexCodedStringBuffer* seedHexCodedStrBuf =
+//            constructHexCodedStringBuffer(&seeds[i], 1, seedLength);
+//        StringBuffer* seedStrBuf =
+//            transHexCodedStringBufferToStringBuffer(seedHexCodedStrBuf, CHAR_NUM_PER_HEX);
 //        printf("i:%"PRIu64"\t", i);
-////        printStringBuffer(seedStrBuf);
-//        printHexCodedStringBuffer(seedHexCodedStrBuf);
+//        printStringBuffer(seedStrBuf);
+////        printHexCodedStringBuffer(seedHexCodedStrBuf);
 //        clearStringBuffer(seedStrBuf);
 //    }
-    initQueue(seedQueue);
+
+    Queue* seedQueue = initQueue();
     for(uint64_t i = 0; i < seedNum; i++) {
         if(i % seedLength == 0) {
-//            printf("i: %"PRIu64"\t-> %#"PRIx64"\n", i, seeds[i]->hexArray[0]);
+//            printf("i: %"PRIu64"\t-> %#"PRIx64"\n", i, seeds[i]);
             enQueue(seedQueue, newQueueCell(seeds[i]));
         }
     }
     for(uint64_t i = 0; i < seedNum; i++) {
         if(i % seedLength != 0 && i % (seedLength / 2) == 0) {
-//            printf("i: %"PRIu64"\t-> %#"PRIx64"\n", i, seeds[i]->hexArray[0]);
+//            printf("i: %"PRIu64"\t-> %#"PRIx64"\n", i, seeds[i]);
             enQueue(seedQueue, newQueueCell(seeds[i]));
         }
     }
     for(uint64_t i = 0; i < seedNum; i++) {
         if(i % seedLength != 0 && i % (seedLength / 2) != 0 && i % (seedLength / 3) == 0) {
-//            printf("i: %"PRIu64"\t-> %#"PRIx64"\n", i, seeds[i]->hexArray[0]);
+//            printf("i: %"PRIu64"\t-> %#"PRIx64"\n", i, seeds[i]);
             enQueue(seedQueue, newQueueCell(seeds[i]));
         }
     }
     for(uint64_t i = 0; i < seedNum; i++) {
         if(i % seedLength != 0 && i % (seedLength / 2) != 0 && i % (seedLength / 3) != 0) {
-//            printf("i: %"PRIu64"\t-> %#"PRIx64"\n", i, seeds[i]->hexArray[0]);
+//            printf("i: %"PRIu64"\t-> %#"PRIx64"\n", i, seeds[i]);
             enQueue(seedQueue, newQueueCell(seeds[i]));
         }
     }
@@ -273,15 +291,19 @@ static Queue* constructSeedQueue(Read* read, uint64_t seedLength) {
  * @return a queue for locations corresponding to hits on ref DNA of the seed
  */
 static Queue* getLocationQueueOfSeed(HexCodedStringBuffer* seedHexCodedStrBuf, SNAP* snap) {
-    Queue* locationQueue = (Queue*)malloc(sizeof(Queue));
+    Queue* locationQueue = initQueue();
 
     StringBuffer* seedStrBuf =
         transHexCodedStringBufferToStringBuffer(seedHexCodedStrBuf, CHAR_NUM_PER_HEX);
 
-
     HashCell* hashCell =
         searchHashIndexOfString(seedStrBuf->buffer, snap->hashTable, snap->hashTable->tableSize);
 
+    while(hashCell != NULL) {
+        uint64_t data = hashCell->data;
+
+        hashCell = hashCell->nextCell;
+    }
 
     return locationQueue;
 }

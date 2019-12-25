@@ -67,16 +67,17 @@ SNAP* constructSNAP(uint64_t* hexCodedRefDNA, uint64_t DNAlength, uint64_t seedL
 void loadOneReadIntoSNAP(Read* read, SNAP* snap);
 
 /**
- * Extract a seed from reference DNA and put it into a hex-coded string buffer.
+ * Extract a fragment of specific length from reference sequence and put it into a hex-coded string
+ * buffer.
  *
- * @param hexCodedRefDNA hex-coded reference DNA
- * @param DNAlength length of DNA
- * @param seedLength length of seed (must be <= 32)
- * @param DNAoffset offset of the seed on ref
- * @return hex-coded string buffer of the seed
+ * @param refSeq hex-coded reference sequence
+ * @param refLength length of reference sequence
+ * @param fragmentLength length of fragment
+ * @param refOffset offset of the fragment on ref sequence
+ * @return hex-coded string buffer of the fragment
  */
-HexCodedStringBuffer* extractHexCodedSeedFromDNA(uint64_t* hexCodedDNA, uint64_t DNAlength,
-                                        uint64_t seedLength, uint64_t DNAoffset);
+HexCodedStringBuffer* extractHexCodedFragmentFromRef(uint64_t* refSeq, uint64_t refLength,
+                                        uint64_t fragmentLength, uint64_t refOffset);
 
 
 /**

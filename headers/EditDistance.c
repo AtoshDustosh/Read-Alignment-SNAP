@@ -225,8 +225,8 @@ static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn
     QueueCell* queueCell = (QueueCell*)malloc(sizeof(QueueCell));
 
     /**< \note initializing enqueue operations */
-    initQueue(startRowQueue);
-    initQueue(startColumnQueue);
+    startRowQueue = initQueue();
+    startColumnQueue = initQueue();
     enQueue(startRowQueue, newQueueCell(startRow));
     enQueue(startColumnQueue, newQueueCell(startColumn));
 

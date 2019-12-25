@@ -46,11 +46,11 @@ QueueCell* newQueueCell(uint64_t data);
 
 
 /**
- * Initialize a queue.
+ * Initialize a queue and get it.
  *
- * @param queueInstance an instance of Queue - cannot be NULL pointer
+ * @return queueInstance an instance of Queue
  */
-void initQueue(Queue* queueInstance);
+Queue* initQueue();
 
 
 /**
