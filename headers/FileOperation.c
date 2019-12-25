@@ -7,7 +7,7 @@
 #include "MyArgs.h"
 
 
-static void loadOneRead_projectBufferToRead(char* buffer, uint64_t fastqLine, Read* read);
+static void loadOneReadFromFile_projectBufferToRead(char* buffer, uint64_t fastqLine, Read* read);
 
 
 uint64_t fnaDataSize(char* filePath) {
@@ -39,7 +39,7 @@ uint64_t fnaDataSize(char* filePath) {
     return dataLength;
 }
 
-void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA) {
+void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA, char* fnaFileHeader) {
     printf("\nLoading data from file %s ...\n", filePath);
     const uint64_t charNumPerHex = CHAR_NUM_PER_HEX;
 
@@ -62,14 +62,21 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA) {
     uint64_t hexInt = 0;
     uint64_t strLength = 0;
     uint64_t dataZone = 0;   // if the file pointer is now in the data zone
+    uint64_t fileHeaderPointer = 0;
     while(ch != EOF && i < dataLength) {
         // according to format of *.fna file, data part is after the first line
         if(dataZone == 0) {
             if(ch == '\n') {
                 dataZone = 1;
+                *(fnaFileHeader + fileHeaderPointer) = '\0';
+                ch = fgetc(fp);
+                continue;
+            } else {
+                *(fnaFileHeader + fileHeaderPointer) = ch;
+                fileHeaderPointer++;
+                ch = fgetc(fp);
+                continue;
             }
-            ch = fgetc(fp);
-            continue;
         } else {
             if(ch == '\n') {
                 ch = fgetc(fp);
@@ -108,14 +115,12 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA) {
     printf("%s\t", buffer);
     printf("0x%16"PRIx64"\n", hexInt);
 
-    free(buffer);
-    free(hexArray);
-    free(strBuf);
-    free(hexCodedStrBuf);
+    clearStringBuffer(strBuf);
+    clearHexCodedStringBuffer(hexCodedStrBuf);
     free(fp);
 }
 
-void loadOneRead(char* filePath, FILE** fpointer, Read* readPointer) {
+void loadOneReadFromFile(char* filePath, FILE** fpointer, Read* readPointer) {
     printf("\n");
     if(*fpointer == NULL) {
         printf("Open file %s\n", filePath);
@@ -140,7 +145,7 @@ void loadOneRead(char* filePath, FILE** fpointer, Read* readPointer) {
         if(ch == '\n') {
             buffer[bufPointer] = '\0';
             bufPointer = 0;
-            loadOneRead_projectBufferToRead(buffer, fastqLine, readPointer);
+            loadOneReadFromFile_projectBufferToRead(buffer, fastqLine, readPointer);
             clearCharArray(buffer, BUFSIZ);
             fastqLine++;
             continue;
@@ -177,7 +182,7 @@ void loadOneRead(char* filePath, FILE** fpointer, Read* readPointer) {
  * @param fastqLine line index of a read's information in ?.fastq file
  * @param read a read
  */
-static void loadOneRead_projectBufferToRead(char* buffer, uint64_t fastqLine, Read* read) {
+static void loadOneReadFromFile_projectBufferToRead(char* buffer, uint64_t fastqLine, Read* read) {
 //    printf("fastq line: %"PRIu64"\n", fastqLine);
 
     switch(fastqLine) {
@@ -193,7 +198,7 @@ static void loadOneRead_projectBufferToRead(char* buffer, uint64_t fastqLine, Re
         strcpy(read->QUAL, buffer);
         break;
     default:
-        printf("Function loadOneRead_projectBufferToRead args error. \n");
+        printf("Function loadOneReadFromFile_projectBufferToRead args error. \n");
         exit(EXIT_FAILURE);
     }
 }

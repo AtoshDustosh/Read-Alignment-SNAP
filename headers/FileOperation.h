@@ -6,6 +6,7 @@
 #include <inttypes.h>
 
 #include "AuxiliaryDataType.h"
+#include "Read.h"
 
 /**
  * Get the size of data (DNA sequence) of a ?.fna file.
@@ -20,9 +21,10 @@ uint64_t fnaDataSize(char* filePath);
  *
  * @param filePath file path
  * @param dataLength length of ?.fna data
- * @param hexCodedDNA hex-coded DNA sequence
+ * @param / @return hexCodedDNA hex-coded DNA sequence
+ * @param / @return file header of ?.fna data file
  */
-void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA);
+void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA, char* fnaFileHeader);
 
 /**
  * Open a ?.fastq file and load a read into memory.
@@ -33,7 +35,7 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA);
  *      of next read when the method finishes
  * @param read Read data type used for storing a read
  */
-void loadOneRead(char* filePath, FILE** fpointer, Read* read);
+void loadOneReadFromFile(char* filePath, FILE** fpointer, Read* read);
 
 
 #endif // FILEOPERATION_H_INCLUDED

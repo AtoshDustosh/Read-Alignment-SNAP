@@ -5,23 +5,6 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-/**
- * A type used for storing the alignment results of a read.
- *
- */
-typedef struct _define_Read {
-    char QNAME[BUFSIZ]; // name of read
-    int FLAG;           // bit-flags
-    char RNAME[BUFSIZ]; // name of reference
-    int POS;            // offset on ref
-    float MAPQ;         // (pass)
-    char CIGAR[BUFSIZ]; // CIGAR
-    char RNEXT[BUFSIZ]; // name of reference of mate read alignment
-    int PNEXT;          // offset on ref of mate read
-    int TLEN;           // length of template
-    char SEQ[BUFSIZ];   // sequence of read
-    char QUAL[BUFSIZ];  // quality of read
-} Read;
 
 /**
  * A type used for storing a string.
@@ -115,10 +98,17 @@ void printStringBuffer(StringBuffer* strBuf);
 void printHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf);
 
 /**
- * Initialize a struct Read.
+ * Clear the memory occupation of a string buffer.
  *
- * @param read pointer to a Read struct type - cannot be NULL pointer
+ * @param strBuf a string buffer
  */
-void initializeRead(Read *read);
+void clearStringBuffer(StringBuffer* strBuf);
+
+/**
+ * Clear the memory occupation of a hex-coded string buffer.
+ *
+ * @param hexCodedStrBuf a hex-coded string buffer
+ */
+void clearHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf);
 
 #endif // AUXILIARYDATATYPE_H_INCLUDED

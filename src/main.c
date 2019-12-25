@@ -18,39 +18,59 @@
  * Global variables for ?.fna file.
  */
 static char* fnaFilePath = "data/fna/testdata_30.fna";
+static char* fnaFileHeader = NULL;
 
 /*
  * Global variables for ?.fastq files.
  */
-static char* fastqFilePath1 = "data/fastq/testdata_30_1.fastq";
-static FILE* fpointer1 = NULL;
-static Read read1;
-//static char* fastqFilePath2 = "data/fastq/testdata_30_2.fastq";
-//static FILE* fpointer2 = NULL;
-//static Read read2;
+static char* fastqFilePath = "data/fastq/testdata_30_1.fastq";
+static FILE* fpointer = NULL;
+static Read* read = NULL;
 
-void initialization();
-void testSet();
 
 static uint64_t DNAlength = 0;
-static uint64_t* hexCodedRefDNA;
+static uint64_t* hexCodedRefDNA = NULL;
 
 static SNAP* snap = NULL;
 static uint64_t seedLength = 20;
+static uint64_t EDmax = 2;
+static uint64_t hitMax = 200;
+static uint64_t confidenceThreshold = 5;
+
+
+
+void testSet();
+
 
 
 int main() {
-//    testSet();
+    testSet();
 
     DNAlength = fnaDataSize(fnaFilePath);
+    fnaFileHeader = (char*)malloc(sizeof(char) * BUFSIZ);
     hexCodedRefDNA = (uint64_t*)malloc(sizeof(uint64_t) * DNAlength);
-    loadFnaData(fnaFilePath, DNAlength, hexCodedRefDNA);
+    loadFnaData(fnaFilePath, DNAlength, hexCodedRefDNA, fnaFileHeader);
+    printf("\nreference DNA name: %s\n", fnaFileHeader);
 
     snap = constructSNAP(hexCodedRefDNA, DNAlength, seedLength);
-//    initialization();
-//    loadOneRead(fastqFilePath1, &fpointer1, &read1);
-//    loadOneRead(fastqFilePath1, &fpointer1, &read1);
-//
+
+    read = (Read*)malloc(sizeof(Read));
+    initRead(read);
+    loadOneReadFromFile(fastqFilePath, &fpointer, read);
+    printRead(read);
+
+    loadOneReadIntoSNAP(read, snap);
+    alignReadUsingSNAP(snap, seedLength, EDmax, hitMax, confidenceThreshold);
+
+
+
+//    loadOneReadFromFile(fastqFilePath, &fpointer, read);
+//    printRead(read);
+
+
+
+
+
     free(hexCodedRefDNA);
     free(snap);
     return 0;
@@ -68,7 +88,3 @@ void testSet() {
     _SNAPTestSet();
 }
 
-void initialization() {
-    initializeRead(&read1);
-//    initializeRead(&read2);
-}

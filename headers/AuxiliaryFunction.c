@@ -155,8 +155,8 @@ static void _transStringBufferToHexCodedStringBufferTest() {
     printHexCodedStringBuffer(hexCodedStrBuf);
     printf("expected: 0x5522775500aaff00, 0xcc88cc4400000000\n");
 
-//    free(strBuf);
-//    free(hexCodedStrBuf);
+    clearStringBuffer(strBuf);
+    clearHexCodedStringBuffer(hexCodedStrBuf);
 }
 
 /**
@@ -204,12 +204,17 @@ static void _transHexCodedStringBufferToStringBufferTest() {
     printHexCodedStringBuffer(hexCodedStrBuf);
     transHexCodedStringBufferToStringBuffer(hexCodedStrBuf, strBuf, charNumPerHex);
     printStringBuffer(strBuf);
-    printf("expected: agcttttcattctgactgcaacgggcaatatg\n");
+    printf("expected: agcttttcattctgactgcaacgggcaatatg -> strcmp:%d\n",
+           strcmp(strBuf->buffer, "agcttttcattctgactgcaacgggcaatatg"));
 
     /*
      * Test multiple-hexInt string buffer transformation.
      */
-    uint64_t hexArray2[2] = {0x27fd3de1e41a90ce, 0xffff0000ffff0000};
+    /** < \note if you use "uint64 array[2]" to create an array and pass it to hex-coded string
+        buffer. Freeing the array in hex-coded string buffer will result in bugs. */
+    uint64_t* hexArray2 = (uint64_t*)malloc(sizeof(uint64_t) * 2);
+    *(hexArray2) = 0x27fd3de1e41a90ce;
+    *(hexArray2 + 1) = 0xffff0000ffff0000;
     hexCodedStrBuf->hexArray = hexArray2;
     hexCodedStrBuf->arrayLength = 2;
     hexCodedStrBuf->strLength = 57;
@@ -217,10 +222,11 @@ static void _transHexCodedStringBufferToStringBufferTest() {
     printHexCodedStringBuffer(hexCodedStrBuf);
     transHexCodedStringBufferToStringBuffer(hexCodedStrBuf, strBuf, charNumPerHex);
     printStringBuffer(strBuf);
-    printf("expected: agcttttcattctgactgcaacgggcaatatgttttttttaaaaaaaatttttttta\n");
+    printf("expected: agcttttcattctgactgcaacgggcaatatgttttttttaaaaaaaatttttttta -> strcmp:%d\n",
+           strcmp(strBuf->buffer, "agcttttcattctgactgcaacgggcaatatgttttttttaaaaaaaatttttttta"));
 
-//    free(hexCodedStrBuf);
-//    free(strBuf);
+    clearStringBuffer(strBuf);
+    clearHexCodedStringBuffer(hexCodedStrBuf);
 }
 
 
@@ -308,7 +314,7 @@ void transStringBufferToHexCodedStringBuffer(StringBuffer* strBuf,
 //        printf("%c\t%"PRIu64"\t%#"PRIx64"\n", bufChar, bitShift, hexInt);
         bufChar = strBuf->buffer[str_index++];
         // put hexInt into hex-coded string buffer when it's fully coded
-        if(str_index % (charNumPerHex + 1) == 0 || bufChar == '\0') {
+        if(bitShift == 0 || bufChar == '\0') {
             hexCodedStrBuf->hexArray[array_i++] = hexInt;
 //            printf("########hexInt: %#"PRIx64"\n", hexInt);
             hexInt = 0x0;

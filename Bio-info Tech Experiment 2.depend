@@ -6,16 +6,16 @@
 	<stdio.h>
 	<stdlib.h>
 
-1577195581 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
+1577266145 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
 	"AuxiliaryDataType.h"
 	<string.h>
 
-1577192943 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
+1577266046 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 
-1577194240 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1577268108 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	<math.h>
 	<string.h>
@@ -55,18 +55,19 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577199580 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+1577266546 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
 	"FileOperation.h"
 	<string.h>
 	"ArrayOperation.h"
 	"AuxiliaryFunction.h"
 	"MyArgs.h"
 
-1576672737 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
+1577263130 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 	"AuxiliaryDataType.h"
+	"Read.h"
 
 1577160078 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
 	"HashTable.h"
@@ -76,24 +77,27 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577158492 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
+1577269296 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
-1577199565 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
+1577269230 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
 	"SNAP.h"
+	<string.h>
 	"MyArgs.h"
 	"AuxiliaryFunction.h"
+	"Queue.h"
 
-1577196931 e:\c_projects\bio-info tech experiment 2\headers\snap.h
+1577263548 e:\c_projects\bio-info tech experiment 2\headers\snap.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 	"HashTable.h"
+	"Read.h"
 	"AuxiliaryDataType.h"
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1577199304 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577268144 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/ArrayOperation.h"
@@ -116,4 +120,18 @@
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
+
+1577262309 e:\c_projects\bio-info tech experiment 2\headers\read.h
+	<stdio.h>
+	<stdlib.h>
+
+1577262606 source:e:\c_projects\bio-info tech experiment 2\headers\read.c
+	"Read.h"
+
+1577259625 source:e:\c_projects\bio-info tech experiment 2\headers\sam.c
+	"SAM.h"
+
+1577259593 e:\c_projects\bio-info tech experiment 2\headers\sam.h
+	<stdio.h>
+	<stdlib.h>
 

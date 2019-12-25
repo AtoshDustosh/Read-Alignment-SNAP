@@ -36,8 +36,8 @@ static void _StringBufferTest() {
     printStringBuffer(strBuf1);
     printStringBuffer(strBuf2);
 
-    free(strBuf1);
-    free(strBuf2);
+    clearStringBuffer(strBuf1);
+    clearStringBuffer(strBuf2);
 }
 
 /**
@@ -63,8 +63,8 @@ static void _HexCodedStringBufferTest() {
     printHexCodedStringBuffer(hexCodedStrBuf1);
     printHexCodedStringBuffer(hexCodedStrBuf2);
 
-    free(hexCodedStrBuf1);
-    free(hexCodedStrBuf2);
+    clearHexCodedStringBuffer(hexCodedStrBuf1);
+    clearHexCodedStringBuffer(hexCodedStrBuf2);
 }
 
 
@@ -162,23 +162,24 @@ void printHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
            hexCodedStrBuf->arrayLength, hexCodedStrBuf->strLength);
 }
 
-
-void initializeRead(Read *read) {
-    if(read == NULL) {
-        printf("ERROR: null pointer occurred when initializing a read. \n");
+void clearStringBuffer(StringBuffer* strBuf) {
+    if(strBuf == NULL){
+        printf("ERROR: null pointer occurs when clearing a string buffer. \n");
         exit(EXIT_FAILURE);
     }
-//    read->QNAME = (char*)malloc(sizeof(char) * BUFSIZ);
-    read->FLAG = 0x0;
-//    read->RNAME = (char*)malloc(sizeof(char) * BUFSIZ);
-    read->POS = 0;
-    read->MAPQ = 0;
-//    read->CIGAR = (char*)malloc(sizeof(char) * BUFSIZ);
-//    read->RNEXT = (char*)malloc(sizeof(char) * BUFSIZ);
-    read->PNEXT = 0;
-    read->TLEN = 0;
-//    read->SEQ = (char*)malloc(sizeof(char) * BUFSIZ);
-//    read->QUAL = (char*)malloc(sizeof(char) * BUFSIZ);
+    free(strBuf->buffer);
+    free(strBuf);
 }
+
+void clearHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
+    if(hexCodedStrBuf == NULL){
+        printf("ERROR: null pointer occurs when clearing a hex-coded string buffer. \n");
+        exit(EXIT_FAILURE);
+    }
+    free(hexCodedStrBuf->hexArray);
+    free(hexCodedStrBuf);
+}
+
+
 
 

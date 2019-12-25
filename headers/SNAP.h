@@ -6,18 +6,33 @@
 #include <inttypes.h>
 
 #include "HashTable.h"
+#include "Read.h"
 #include "AuxiliaryDataType.h"
+
+
+/*
+ * Results of SNAP alignment.
+ */
+#define MULTIPLE_HITS 2
+#define SINGLE_HIT 1
+#define NOT_FOUND 0
+
+
 
 /**
  * A struct type for SNAP.
  */
 typedef struct _define_SNAP {
-    uint64_t* hexCodedRefDNA;   // hex-coded reference DNA
-    uint64_t DNAlength;         // length of DNA
+    uint64_t* hexCodedRefDNA; // hex-coded reference DNA
+    uint64_t DNAlength;       // length of DNA
     uint64_t seedLength;      // length of a seed
-    HashTable* hashTable;       // hash table constructed out of reference DNA
-    Read* read;                 // a read to be aligned
+    HashTable* hashTable;     // hash table constructed out of reference DNA
+    Read* read;              // a read (segment) - SNAP only process one read
 } SNAP;
+
+
+
+
 
 
 /**
@@ -43,6 +58,13 @@ void _SNAPTestSet();
  */
 SNAP* constructSNAP(uint64_t* hexCodedRefDNA, uint64_t DNAlength, uint64_t seedLength);
 
+/**
+ * Load a read into a SNAP structure.
+ *
+ * @param read a read
+ * @param snap a SNAP structure
+ */
+void loadOneReadIntoSNAP(Read* read, SNAP* snap);
 
 /**
  * Extract a seed from reference DNA and put it into a hex-coded string buffer.
@@ -53,7 +75,30 @@ SNAP* constructSNAP(uint64_t* hexCodedRefDNA, uint64_t DNAlength, uint64_t seedL
  * @param DNAoffset offset of the seed on ref
  * @return hex-coded string buffer of the seed
  */
-HexCodedStringBuffer* extractHexCodedSeedFromRef(uint64_t* hexCodedDNA, uint64_t DNAlength,
+HexCodedStringBuffer* extractHexCodedSeedFromDNA(uint64_t* hexCodedDNA, uint64_t DNAlength,
                                         uint64_t seedLength, uint64_t DNAoffset);
+
+
+/**
+ * Align a read using SNAP with specific parameters.
+ *
+ * @param snap a SNAP structure that is already fully constructed
+ * @param seedLength length of seed (must be <= 32)
+ * @param EDmax maximum edit-distance
+ * @param hitMax maximum hit count per seed
+ * @param confidenceThreshold confidence threshold - limit the difference of the best alignment
+ *      and the second-best alignment
+ * @return single hit, multiple hits or not found
+ */
+uint64_t alignReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax, uint64_t hitMax,
+                            uint64_t confidenceThreshold);
+
+
+
+
+
+
+
+
 
 #endif // SNAP_H_INCLUDED
