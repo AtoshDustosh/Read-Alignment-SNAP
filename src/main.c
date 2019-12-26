@@ -34,9 +34,9 @@ static uint64_t* hexCodedRefDNA = NULL;
 
 static SNAP* snap = NULL;
 static uint64_t seedLength = 20;
-static uint64_t EDmax = 2;
+static uint64_t EDmax = 3;
 static uint64_t hitMax = 200;
-static uint64_t confidenceThreshold = 5;
+static uint64_t confidenceThreshold = 3;
 
 
 
@@ -45,7 +45,7 @@ void testSet();
 
 
 int main() {
-    testSet();
+//    testSet();
 
     DNAlength = fnaDataSize(fnaFilePath);
     fnaFileHeader = (char*)malloc(sizeof(char) * BUFSIZ);
@@ -63,9 +63,16 @@ int main() {
     loadOneReadIntoSNAP(read, snap);
     printf("align one read with seedLength:%"PRIu64", EDmax:%"PRIu64", hitMax:%"PRIu64", "
            "confidence threshold:%"PRIu64"\n", seedLength, EDmax, hitMax, confidenceThreshold);
-    alignReadUsingSNAP(snap, seedLength, EDmax, hitMax, confidenceThreshold);
+    uint16_t result = alignReadUsingSNAP(snap, seedLength, EDmax, hitMax, confidenceThreshold);
 
-
+    printf("align result: ");
+    if(result == SINGLE_HIT){
+        printf("single hit.\n");
+    } else if (result == MULTIPLE_HITS){
+        printf("multiple hit.\n");
+    } else{
+        printf("not found\n");
+    }
 
 //    loadOneReadFromFile(fastqFilePath, &fpointer, read);
 //    printRead(read);

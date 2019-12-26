@@ -15,13 +15,13 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577340340 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1577367400 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	<math.h>
 	<string.h>
 	"MyArgs.h"
 
-1577276648 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1577364954 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -80,7 +80,7 @@
 1577359512 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
-1577363229 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
+1577372100 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
 	"SNAP.h"
 	<string.h>
 	"MyArgs.h"
@@ -89,7 +89,7 @@
 	"EditDistance.h"
 	"Queue.h"
 
-1577363451 e:\c_projects\bio-info tech experiment 2\headers\snap.h
+1577372522 e:\c_projects\bio-info tech experiment 2\headers\snap.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -99,7 +99,7 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1577358461 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577372010 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/ArrayOperation.h"

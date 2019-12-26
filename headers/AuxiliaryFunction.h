@@ -21,7 +21,13 @@ void _AuxiliaryFunctionTestSet();
  */
 
 
-
+/**
+ * Copy a string and return a pointer to the copy.
+ *
+ * @param str the string to be copied
+ * @return a copy of the string
+ */
+char* copyString(char* str);
 
 /**
  * Reverse a string.
@@ -114,6 +120,5 @@ uint64_t min_uint64_t(uint64_t value1, uint64_t value2);
  * @param value2 value2
  */
 uint64_t max_uint64_t(uint64_t value1, uint64_t value2);
-
 
 #endif // AUXILIARYFUNCTION_H_INCLUDED

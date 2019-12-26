@@ -242,6 +242,19 @@ static void _transHexCodedStringBufferToStringBufferTest() {
  * Working functions.
  */
 
+char* copyString(char* str) {
+    char* copiedStr = (char*)malloc(sizeof(char) * strlen(str));
+    uint64_t i = 0;
+    while(*(str + i) != '\0'){
+        copiedStr[i] = str[i];
+        i++;
+    }
+    copiedStr[i] = '\0';
+    return copiedStr;
+}
+
+
+
 void reverseString(char* str) {
     uint64_t strLength = (uint64_t)strlen(str);
     char* temp = (char*)malloc(sizeof(char) * (strLength + 1));
@@ -266,8 +279,8 @@ StringBuffer* transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexC
 
     for(i = 0; i < hexCodedStrBuf->strLength; i++) {
         uint64_t hexArrayIndex = i / charNumPerHex;
-        uint64_t charHex =
-            extractCharBitFromHexInt(i, hexCodedStrBuf->hexArray[hexArrayIndex], charNumPerHex);
+        uint64_t hexInt = (hexCodedStrBuf->hexArray)[hexArrayIndex];
+        uint64_t charHex = extractCharBitFromHexInt(i, hexInt, charNumPerHex);
         strBuf->buffer[i] = hexToChar(charHex);
 //        printf("charHex: 0x%"PRIx64", char: %c\n", charHex, strBuf->buffer[i]);
     }
