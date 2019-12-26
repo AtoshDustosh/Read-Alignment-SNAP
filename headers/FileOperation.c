@@ -151,7 +151,7 @@ void loadOneReadFromFile(char* filePath, FILE** fpointer, Read* readPointer) {
             buffer[bufPointer++] = ch;
             break;
         case 1: // sequence line
-            buffer[bufPointer++] = ch;
+            buffer[bufPointer++] = lowerCase(ch);
             break;
         case 2: // supplementary line
             break;

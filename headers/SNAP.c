@@ -7,6 +7,7 @@
 #include "MyArgs.h"
 #include "AuxiliaryFunction.h"
 #include "AVLTree.h"
+#include "EditDistance.h"
 #include "Queue.h"
 
 
@@ -18,10 +19,12 @@ static Queue* constructSeedQueue(Read* read, uint64_t seedLength);
 static Queue* getLocationQueueOfSeed(HexCodedStringBuffer* seedHexCodedStrBuf, SNAP* snap);
 static AVLNode* accumulateLocationsUsingAVLTree(AVLNode* tree, Queue* locationQueue,
         uint64_t seedOffset);
-static uint64_t getEDofBestAlignment(SNAP* snap, uint64_t* mostHittingLocations,
-                                     uint64_t mostHittingLocationsNum, uint64_t d_limit,
-                                     uint64_t* bestAlignmentLocation);
-
+static uint64_t getEDofBestAlignment( SNAP* snap, uint64_t* mostHittingLocations,
+                                      uint64_t mostHittingLocationsNum, uint64_t d_limit,
+                                      uint64_t* bestAlignmentLocation);
+static void updateBestAndSecondBest(uint64_t* d_best, uint64_t* d_bestRefOffset,
+                                    uint64_t* d_second, uint64_t* d_secondRefOffset,
+                                    uint64_t d_new, uint64_t d_newRefOffset);
 
 
 
@@ -122,6 +125,8 @@ static void _extractHexCodedFragmentFromRefTest() {
 
 
     clearHexCodedStringBuffer(seedHexCodedStrBuf);
+    clearStringBuffer(refStrBuf);
+    clearHexCodedStringBuffer(refHexCodedStrBuf);
 }
 
 
@@ -169,7 +174,8 @@ void loadOneReadIntoSNAP(Read* read, SNAP* snap) {
 HexCodedStringBuffer* extractHexCodedFragmentFromRef(uint64_t* refSeq, uint64_t refLength,
         uint64_t fragmentLength, uint64_t refOffset) {
     if(fragmentLength + refOffset > refLength) {
-        printf("ERROR: fragment out of reference sequence - offset: %"PRIu64"\n", refOffset);
+        printf("ERROR: fragment out of reference sequence - ref offset: %"PRIu64", fragment "
+               "length: %"PRIu64"\n", refOffset, fragmentLength);
         exit(EXIT_FAILURE);
     }
 
@@ -206,11 +212,13 @@ HexCodedStringBuffer* extractHexCodedFragmentFromRef(uint64_t* refSeq, uint64_t 
 }
 
 
-uint64_t alignReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax, uint64_t hitMax,
-                            uint64_t confidenceThreshold) {
+uint64_t alignReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
+                            uint64_t hitMax, uint64_t confidenceThreshold) {
     const uint64_t d_max = EDmax;
     uint64_t d_best = INFINITE;
+    uint64_t d_bestRefOffset = 0;
     uint64_t d_second = INFINITE;
+    uint64_t d_secondRefOffset = 0;
     uint64_t d_limit = EDmax;
 
     char* readSeq = snap->read->SEQ;
@@ -241,12 +249,11 @@ uint64_t alignReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax, uin
         printf("%"PRIu64"\t-> seed seq: ", seedSeqNum);
         printStringBuffer(seedStrBuf);
 
-        printf("\n");
         /** < \note find locations exactly matched with the seed on hash table of ref DNA.
             Queue cells contain offsets of locations on the ref DNA, and this set of locations
             correspond to one seed of the read */
         Queue* locationQueue = getLocationQueueOfSeed(seedHexCodedStrBuf, snap);
-        printQueue(locationQueue);
+//        printQueue(locationQueue);
 
         /** < \note accumulate locations using AVL data structure for later procedure */
         locationAVLTree = accumulateLocationsUsingAVLTree(locationAVLTree, locationQueue,
@@ -275,9 +282,16 @@ uint64_t alignReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax, uin
         }
 
         /** < \note compute the best edit-distances of these locations */
-        uint64_t bestAlignmentLocation = 0;
+        uint64_t d_newRefOffset = 0;
+//        printf("... calculate edit-distance of best alignment with d_limit:%"PRIu64"\n", d_limit);
         uint64_t d_new = getEDofBestAlignment(snap, mostHittingLocations, mostHittingLocationsNum,
-                                              d_limit, &bestAlignmentLocation);
+                                              d_limit, &d_newRefOffset);
+        printf("d_best: %"PRIu64", best alignment location: %"PRIu64"\n", d_new, d_newRefOffset);
+
+        /** < \note update d_best and d_second according to d_new */
+        updateBestAndSecondBest(&d_best, &d_bestRefOffset, &d_second, &d_secondRefOffset,
+                                d_new, d_newRefOffset);
+
 
 
 
@@ -285,7 +299,10 @@ uint64_t alignReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax, uin
         clearQueue(locationQueue);
         free(mostHittingLocations);
         free(mostHittingLocationsAVLNodes);
+        printf("\n");
     }
+    updateBestAndSecondBest(&d_best, &d_bestRefOffset, &d_second, &d_secondRefOffset,
+                            36, 25626);
 
 //    printf("\nAVL tree of locations: \n");
 //    traversePrintAVLTree(locationAVLTree);
@@ -433,23 +450,73 @@ static AVLNode* accumulateLocationsUsingAVLTree(AVLNode* tree, Queue* locationQu
 static uint64_t getEDofBestAlignment(SNAP* snap, uint64_t* mostHittingLocations,
                                      uint64_t mostHittingLocationsNum, uint64_t d_limit,
                                      uint64_t* bestAlignmentLocation) {
+    const uint64_t* refHexCodedDNA = snap->hexCodedRefDNA;
+    const uint64_t refLength = snap->DNAlength;
     char* readSeq = snap->read->SEQ;
-    uint64_t readLength = (uint64_t)sizeof(readSeq);
+    const uint64_t readLength = (uint64_t)strlen(readSeq);
+    StringBuffer* readStrBuf = constructStringBuffer(readSeq, readLength);
 
 
     uint64_t bestED = INFINITE;
-    char* CIGARbuffer = (char*)malloc(sizeof(char) * BUFSIZ);
 
-    for(uint64_t i = 0; i < mostHittingLocationsNum; i++){
-
+    for(uint64_t locationSeqNum = 0; locationSeqNum < mostHittingLocationsNum; locationSeqNum++) {
+        uint64_t location = mostHittingLocations[locationSeqNum];
+        uint64_t refSegmentLength = readLength + d_limit;
+        for(uint64_t i = 0; i < d_limit; i++) {
+            char CIGARbuffer[BUFSIZ];
+            uint64_t refSegmentOffset = location - i;
+            if(refSegmentOffset < 0) {
+                break;
+            }
+            printf("ref length:%"PRIu64", refSegmentLength:%"PRIu64", refSegmentOffset:%"PRIu64"\n",
+                   refLength, refSegmentLength, refSegmentOffset);
+            HexCodedStringBuffer* refSegmentHexCodedStrBuf = extractHexCodedFragmentFromRef(
+                        refHexCodedDNA, refLength, refSegmentLength, refSegmentOffset);
+            StringBuffer* refSegmentStrBuf = transHexCodedStringBufferToStringBuffer(
+                                                 refSegmentHexCodedStrBuf, CHAR_NUM_PER_HEX);
+//            printf("### ");
+//            printStringBuffer(refSegmentStrBuf);
+            uint64_t EDvalue = calculateEditDistance(readStrBuf, refSegmentStrBuf, d_limit,
+                               CIGARbuffer, BUFSIZ);
+//            printf("edit distance: %"PRIu64"\n", EDvalue);
+//            printf("CIGAR: %s\n", CIGARbuffer);
+            if(EDvalue < bestED) {
+                bestED = EDvalue;
+                *bestAlignmentLocation = refSegmentOffset;
+            }
+        }
     }
 
-
-
-
-    return 0;
+//    clearStringBuffer(readStrBuf);
+    return bestED;
 }
 
+/**
+ * Update d_best and d_second according to d_new (one step of the SNAP procedure).
+ *
+ * @param / @return d_best best ED value up to now
+ * @param / @return d_bestRefOffset offset on ref corresponding to d_best
+ * @param / @return d_second second best ED value up to now
+ * @param / @return d_secondRefOffset offset on ref corresponding to d_second
+ * @param d_new new ED value calculated
+ * @param d_newRefOffset offset on ref corresponding to d_new
+ */
+static void updateBestAndSecondBest(uint64_t* d_best, uint64_t* d_bestRefOffset,
+                                    uint64_t* d_second, uint64_t* d_secondRefOffset,
+                                    uint64_t d_new, uint64_t d_newRefOffset) {
+    if(d_new < *d_best) {
+        *d_second = *d_best;
+        *d_secondRefOffset = *d_bestRefOffset;
+        *d_best = d_new;
+        *d_bestRefOffset = d_newRefOffset;
+    } else if (d_new >= *d_best && d_new < *d_second) {
+        *d_second = d_new;
+        *d_secondRefOffset = d_newRefOffset;
+    } else {
+        return;
+    }
+    return;
+}
 
 
 

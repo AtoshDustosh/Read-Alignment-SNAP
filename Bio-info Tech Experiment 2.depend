@@ -37,14 +37,14 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577281827 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
+1577361184 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
 	"EditDistance.h"
 	<string.h>
 	<strings.h>
 	"AuxiliaryFunction.h"
 	"Queue.h"
 
-1577158277 e:\c_projects\bio-info tech experiment 2\headers\editdistance.h
+1577357937 e:\c_projects\bio-info tech experiment 2\headers\editdistance.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -55,7 +55,7 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577277998 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+1577350671 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
 	"FileOperation.h"
 	<string.h>
 	"ArrayOperation.h"
@@ -77,18 +77,19 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577342146 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
+1577359512 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
-1577345134 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
+1577363229 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
 	"SNAP.h"
 	<string.h>
 	"MyArgs.h"
 	"AuxiliaryFunction.h"
 	"AVLTree.h"
+	"EditDistance.h"
 	"Queue.h"
 
-1577347459 e:\c_projects\bio-info tech experiment 2\headers\snap.h
+1577363451 e:\c_projects\bio-info tech experiment 2\headers\snap.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -98,7 +99,7 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1577343023 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577358461 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/ArrayOperation.h"

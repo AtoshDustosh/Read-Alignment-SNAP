@@ -61,6 +61,8 @@ int main() {
     printRead(read);
 
     loadOneReadIntoSNAP(read, snap);
+    printf("align one read with seedLength:%"PRIu64", EDmax:%"PRIu64", hitMax:%"PRIu64", "
+           "confidence threshold:%"PRIu64"\n", seedLength, EDmax, hitMax, confidenceThreshold);
     alignReadUsingSNAP(snap, seedLength, EDmax, hitMax, confidenceThreshold);
 
 

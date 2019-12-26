@@ -94,21 +94,55 @@ static void _calculateEditDistanceTest() {
     clearStringBuffer(strBufColumn);
     clearStringBuffer(strBufRow);
 
+    printf("******************************************************************\n");
+    string1 = "ccagtcgctgcgcttacac";
+    string2 = "ccagtcgctgcgctt";
+    strBufColumn = constructStringBuffer(string1, (uint64_t)strlen(string1));
+    strBufRow = constructStringBuffer(string2, (uint64_t)strlen(string2));
+    bestED = calculateEditDistance(strBufRow, strBufColumn, EDmax, CIGAR, maxBufLen);
+    printf("Best edit-distance: %"PRIu64"\n", bestED);
+    printf("CIGAR: %s\n", CIGAR);
+    clearStringBuffer(strBufColumn);
+    clearStringBuffer(strBufRow);
+
+    printf("******************************************************************\n");
+    string1 = "ttttccagtcgctgcgctt";
+    string2 = "ccagtcgctgcgctt";
+    strBufColumn = constructStringBuffer(string1, (uint64_t)strlen(string1));
+    strBufRow = constructStringBuffer(string2, (uint64_t)strlen(string2));
+    bestED = calculateEditDistance(strBufRow, strBufColumn, EDmax, CIGAR, maxBufLen);
+    printf("Best edit-distance: %"PRIu64"\n", bestED);
+    printf("CIGAR: %s\n", CIGAR);
+    clearStringBuffer(strBufColumn);
+    clearStringBuffer(strBufRow);
+
+    printf("******************************************************************\n");
+    string1 = "tttttccagtcgctgcgctt";
+    string2 = "ccagtcgctgcgctt";
+    strBufColumn = constructStringBuffer(string1, (uint64_t)strlen(string1));
+    strBufRow = constructStringBuffer(string2, (uint64_t)strlen(string2));
+    bestED = calculateEditDistance(strBufRow, strBufColumn, EDmax, CIGAR, maxBufLen);
+    printf("Best edit-distance: %"PRIu64"\n", bestED);
+    printf("CIGAR: %s\n", CIGAR);
+    clearStringBuffer(strBufColumn);
+    clearStringBuffer(strBufRow);
+
+
     free(CIGAR);
 }
 
 /*
  * Working functions.
  */
-uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uint64_t EDmax,
+uint64_t calculateEditDistance(StringBuffer* patternStrBuf, StringBuffer* refStrBuf, uint64_t EDmax,
                                char* CIGARbuffer, uint64_t maxBufLen) {
     /*
      * Actually, considering the size of EDmax, we don't need to use uint64_t, and uint8_t
      * is enough for EDmax and scoreMatrix.
      * But for better correctness, we leave optimizations for future work.
      */
-    const uint64_t rowNum = strBuf1->length + 1;
-    const uint64_t columnNum = strBuf2->length + 1;
+    const uint64_t rowNum = patternStrBuf->length + 1;
+    const uint64_t columnNum = refStrBuf->length + 1;
 
     uint64_t bestED = 0;
 
@@ -134,24 +168,24 @@ uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uin
             i++) { // initialize first column (bounder) of edit-distance matrix
         EDmatrix[0][i] = i;
     }
-    for(uint64_t i = 0; i < rowNum; i++) {      // copy strBuf1
-        strRow[i + 1] = strBuf1->buffer[i];
+    for(uint64_t i = 0; i < rowNum; i++) {      // copy patternStrBuf
+        strRow[i + 1] = patternStrBuf->buffer[i];
     }
     strRow[0] = ' ';
     strRow[rowNum] = '\0';
-    for(uint64_t i = 0; i < columnNum; i++) {   // copy strBuf2
-        strColumn[i + 1] = strBuf2->buffer[i];
+    for(uint64_t i = 0; i < columnNum; i++) {   // copy refStrBuf
+        strColumn[i + 1] = refStrBuf->buffer[i];
     }
     strColumn[0] = ' ';
     strColumn[columnNum] = '\0';
 
-    StringBuffer* strBufRow = NULL;
-    StringBuffer* strBufColumn = NULL;
-    strBufRow = constructStringBuffer(strRow, rowNum);
-    strBufColumn = constructStringBuffer(strColumn, columnNum);
+    StringBuffer* strBufRow = constructStringBuffer(strRow, rowNum);
+    StringBuffer* strBufColumn = constructStringBuffer(strColumn, columnNum);
 
-    printStringBuffer(strBufRow);
-    printStringBuffer(strBufColumn);
+//    printf("reference: ");
+//    printStringBuffer(strBufColumn);
+//    printf("pattern:   ");
+//    printStringBuffer(strBufRow);
 
     /*
      * Calculate the edit-distance matrix.
@@ -183,8 +217,6 @@ uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uin
 
     clearStringBuffer(strBufRow);
     clearStringBuffer(strBufColumn);
-    free(strRow);
-    free(strColumn);
     return bestED;
 }
 
@@ -285,7 +317,7 @@ static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn
                             EDmatrix, diagonallyExtendedMatrix, EDmax);
     }
 
-    printf(">>>>>>>>>> total loop count: %"PRIu64"\n", loopCount);
+//    printf(">>>>>>>>>> total loop count: %"PRIu64" >>>>> ", loopCount);
 //    printf("ED-matrix:\n");
 //    for(uint64_t m = 0; m < rowNum; m++) {
 //        for(uint64_t n = 0; n < columnNum; n++) {
@@ -301,10 +333,9 @@ static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn
 //        printf("\n\n");
 //    }
 
+
     clearQueue(startRowQueue);
     clearQueue(startColumnQueue);
-    free(startRowQueue);
-    free(startColumnQueue);
     free(queueCell);
 }
 
@@ -450,10 +481,10 @@ static void splitAfterExtension(StringBuffer* strRow, StringBuffer* strColumn,
     uint64_t rowNum = strRow->length;
     uint64_t columnNum = strColumn->length;
 
-    if(endRow + 1 == rowNum && endColumn + 1 == columnNum) { // procedure finishes
+    if(endRow + 1 >= rowNum && endColumn + 1 >= columnNum) { // procedure finishes
 //        printf("reaches end of matrix. \n");
         return;
-    } else if(endRow + 1 == rowNum && endColumn + 1 < columnNum) {  // reaches bounder of row
+    } else if(endRow + 1 >= rowNum && endColumn + 1 < columnNum) {  // reaches bounder of row
         char charOfThisRow = strRow->buffer[endRow];
         char charOfThisColumn = strColumn->buffer[endColumn + 1];
 
@@ -476,7 +507,7 @@ static void splitAfterExtension(StringBuffer* strRow, StringBuffer* strColumn,
             }
             *(EDmatrix + endRow * columnNum + (endColumn + 1)) = newEDvalue;
         }
-    } else if(endRow + 1 < rowNum && endColumn + 1 == columnNum) {  // reaches bounder of column
+    } else if(endRow + 1 < rowNum && endColumn + 1 >= columnNum) {  // reaches bounder of column
         char charOfThisRow = strRow->buffer[endRow + 1];
         char charOfThisColumn = strColumn->buffer[endColumn];
 
@@ -555,7 +586,7 @@ static void splitAfterExtension(StringBuffer* strRow, StringBuffer* strColumn,
  * @param CIGARbuffer buffer for CIGAR string
  * @param maxBufLen maximum length of buffer for CIGAR string
  * @param EDmax maximum edit distance that can be allowed
- * @return best edit-distance
+ * @return best edit-distance if it's within limit; INITEDVALUE if out of limit
  */
 static uint64_t processEDMatrix(StringBuffer* strRow, StringBuffer* strColumn, uint64_t* EDmatrix,
                                 char* CIGARbuffer, uint64_t maxBufLen, const uint64_t EDmax) {
@@ -567,13 +598,14 @@ static uint64_t processEDMatrix(StringBuffer* strRow, StringBuffer* strColumn, u
      */
     uint64_t bestED = INITEDVALUE;
     uint64_t bestEDColumn = 0;
-    for(uint64_t i = 0; i < columnNum; i++) {
+    for(uint64_t i = 1; i < columnNum; i++) {
         uint64_t EDvalue = *(EDmatrix + (rowNum - 1) * columnNum + i);
         if(EDvalue < bestED) {
             bestED = EDvalue;
             bestEDColumn = i;
         }
     }
+
 
     /**
      * Reconstruct CIGAR string from ED matrix
@@ -648,6 +680,8 @@ static void parseCIGAR(char* CIGARbuffer) {
     CIGARpointer = 0;
     CIGARbufferPointer = 0;
     countSameCh = 0;
+    char numString[BUFSIZ];
+    uint64_t numStrLength = 0;
     ch = CIGAR[CIGARpointer++];
     prevCh = ch;
     countSameCh++;
@@ -656,16 +690,24 @@ static void parseCIGAR(char* CIGARbuffer) {
         if(prevCh == ch) {
             countSameCh++;
         } else {
-            CIGARbuffer[CIGARbufferPointer++] = countSameCh + '0';
+            sprintf(numString, "%"PRIu64, countSameCh);
+            numStrLength = (uint64_t)strlen(numString);
+//            printf("numStringLength: %"PRIu64", numString: \"%s\"\n", numStrLength, numString);
+            for(uint64_t i = 0; i < numStrLength; i++){
+                CIGARbuffer[CIGARbufferPointer++] = numString[i];
+            }
             CIGARbuffer[CIGARbufferPointer++] = prevCh;
-//            printf("countSameCh(%c): %"PRIu64"\n", prevCh, countSameCh);
             countSameCh = 1;
         }
         prevCh = ch;
     }
-    CIGARbuffer[CIGARbufferPointer++] = countSameCh + '0';
+    sprintf(numString, "%"PRIu64, countSameCh);
+    numStrLength = (uint64_t)strlen(numString);
+//    printf("numStringLength: %"PRIu64", numString: \"%s\"\n", numStrLength, numString);
+    for(uint64_t i = 0; i < numStrLength; i++){
+        CIGARbuffer[CIGARbufferPointer++] = numString[i];
+    }
     CIGARbuffer[CIGARbufferPointer++] = prevCh;
-//    printf("countSameCh(%c): %"PRIu64"\n", prevCh, countSameCh);
     CIGARbuffer[CIGARbufferPointer] = '\0';
 
 //    printf("parsed CIGAR: %s\n", CIGARbuffer);

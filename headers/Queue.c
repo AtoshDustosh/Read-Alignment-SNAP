@@ -52,11 +52,6 @@ static void _queueTest() {
     // clear the queue
     printf("Clear the queue (0x%p) ...\n", queueInstance);
     clearQueue(queueInstance);
-    printf("Queue:\n");
-    printQueue(queueInstance);
-    printf("Is queue empty: %"PRIu64"\n", isQueueEmpty(queueInstance));
-
-    free(queueInstance);
 }
 
 

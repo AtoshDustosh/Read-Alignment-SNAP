@@ -77,7 +77,7 @@ void loadOneReadIntoSNAP(Read* read, SNAP* snap);
  * @return hex-coded string buffer of the fragment
  */
 HexCodedStringBuffer* extractHexCodedFragmentFromRef(uint64_t* refSeq, uint64_t refLength,
-                                        uint64_t fragmentLength, uint64_t refOffset);
+        uint64_t fragmentLength, uint64_t refOffset);
 
 
 /**
@@ -91,8 +91,8 @@ HexCodedStringBuffer* extractHexCodedFragmentFromRef(uint64_t* refSeq, uint64_t 
  *      and the second-best alignment
  * @return single hit, multiple hits or not found
  */
-uint64_t alignReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax, uint64_t hitMax,
-                            uint64_t confidenceThreshold);
+uint64_t alignReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
+                             uint64_t hitMax, uint64_t confidenceThreshold);
 
 
 

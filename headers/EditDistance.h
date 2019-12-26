@@ -19,15 +19,14 @@ void _EditDistanceTestSet();
 /**
  * Calculate edit distance between 2 strings.
  *
- * @param strBuf1 string buffer 1
- * @param strBuf2 string buffer 2
+ * @param patternStrBuf string buffer of pattern sequence
+ * @param refStrBuf string buffer of reference sequence
  * @param EDmax maximum edit distance that can be accepted
  * @param / @return CIGARbuffer buffer for CIGAR string
  * @param maxBufLen maximum length of buffer for CIGAR string
- * @return return edit distance between str1 and str2 if distance is within EDmax;
- *      return EDmax if out of EDmax.
+ * @return best edit-distance if it's within limit; INITEDVALUE if out of limit
  */
-uint64_t calculateEditDistance(StringBuffer* strBuf1, StringBuffer* strBuf2, uint64_t EDmax,
+uint64_t calculateEditDistance(StringBuffer* patternStrBuf, StringBuffer* refStrBuf, uint64_t EDmax,
                                char* CIGARbuffer, uint64_t maxBufLen);
 
 #endif // LANDAUVISHKIN_H_INCLUDED
