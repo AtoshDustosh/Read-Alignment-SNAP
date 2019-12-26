@@ -6,6 +6,9 @@
 #include <inttypes.h>
 
 
+#define HEX_CODED_STRINGBUFFER_SAME 0
+#define HEX_CODED_STRINGBUFFER_DIFFERNET 1
+
 /**
  * A type used for storing a string.
  *
@@ -70,18 +73,16 @@ HexCodedStringBuffer* constructHexCodedStringBuffer(uint64_t* hexArray, uint64_t
 StringBuffer* constructStringBuffer(char* buffer, uint64_t length);
 
 /**
- * Initialize a string buffer with empty content.
+ * Compare 2 hex-coded string buffer.
  *
- * @param strBuf string buffer - cannot be NULL pointer
+ * @param hexCodedStrBuf1 hex-coded string buffer 1
+ * @param hexCodedStrBuf2 hex-coded string buffer 2
+ * @return HEX_CODED_STRINGBUFFER_SAME if hex-buffer-1 == hex-buffer-2;
+ *          HEX_CODED_STRINGBUFFER_DIFFERENT otherwise
  */
-void initStringBuffer(StringBuffer* strBuf);
+uint64_t compareHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf1,
+                                     HexCodedStringBuffer* hexCodedStrBuf2);
 
-/**
- * Initialize a hex-coded string buffer with empty content.
- *
- * @param hexCodedStrBuf hex-coded string buffer - cannot be NULL pointer
- */
-void initHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf);
 
 /**
  * Print a string buffer.

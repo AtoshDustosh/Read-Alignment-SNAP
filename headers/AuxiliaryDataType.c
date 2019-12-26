@@ -5,10 +5,12 @@
 
 static void _StringBufferTest();
 static void _HexCodedStringBufferTest();
+static void _compareHexCodedStringBufferTest();
 
 void _AuxiliaryDataTypeTestSet() {
     _StringBufferTest();
     _HexCodedStringBufferTest();
+    _compareHexCodedStringBufferTest();
 }
 
 
@@ -45,12 +47,10 @@ static void _StringBufferTest() {
  */
 static void _HexCodedStringBufferTest() {
     printf("\n**************** _HexCodedStringBufferTest ****************\n");
-    HexCodedStringBuffer* hexCodedStrBuf1 =
-        (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
-    HexCodedStringBuffer* hexCodedStrBuf2 =
-        (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
+    HexCodedStringBuffer* hexCodedStrBuf1 = NULL;
+    HexCodedStringBuffer* hexCodedStrBuf2 = NULL;
 
-    uint64_t arrayForTest1[] = {1, 2};
+    uint64_t arrayForTest1[] = {0x1321adf1353, 0x1321adf1353};
     uint64_t arrayLength1 = 2;
     uint64_t strLength1 = 34;
     uint64_t arrayForTest2[] = {0x0123456789abcdef};
@@ -67,6 +67,40 @@ static void _HexCodedStringBufferTest() {
     clearHexCodedStringBuffer(hexCodedStrBuf2);
 }
 
+/**
+ * Test function compareHexCodedStringBuffer.
+ */
+static void _compareHexCodedStringBufferTest() {
+    printf("\n**************** _compareHexCodedStringBufferTest ****************\n");
+    HexCodedStringBuffer* hexCodedStrBuf1 = NULL;
+    HexCodedStringBuffer* hexCodedStrBuf2 = NULL;
+
+    uint64_t arrayForTest1[] = {0x1321adf1353, 0x1321adf1353};
+    uint64_t arrayLength1 = 2;
+    uint64_t strLength1 = 34;
+    uint64_t arrayForTest2[] = {0x0123456789abcdef};
+    uint64_t arrayLength2 = 1;
+    uint64_t strLength2 = 30;
+
+    printf("... construct hex-coded string buffer 1\n");
+    hexCodedStrBuf1 = constructHexCodedStringBuffer(arrayForTest1, arrayLength1, strLength1);
+    printHexCodedStringBuffer(hexCodedStrBuf1);
+
+    printf("... construct hex-coded string buffer 2\n");
+    hexCodedStrBuf2 = constructHexCodedStringBuffer(arrayForTest2, arrayLength2, strLength2);
+    printHexCodedStringBuffer(hexCodedStrBuf2);
+
+    printf("\n");
+
+    printf("compare hex-buffer-1 and hex-buffer-2: %"PRIu64"\n",
+           compareHexCodedStringBuffer(hexCodedStrBuf1, hexCodedStrBuf2));
+    printf("compare hex-buffer-1 and hex-buffer-1: %"PRIu64"\n",
+           compareHexCodedStringBuffer(hexCodedStrBuf1, hexCodedStrBuf1));
+    printf("compare hex-buffer-2 and hex-buffer-2: %"PRIu64"\n",
+           compareHexCodedStringBuffer(hexCodedStrBuf2, hexCodedStrBuf2));
+
+
+}
 
 
 
@@ -105,27 +139,29 @@ StringBuffer* constructStringBuffer(char* buffer, uint64_t length) {
     return strBuf;
 }
 
-void initStringBuffer(StringBuffer* strBuf) {
-//    if(strBuf == NULL) {
-//        printf("ERROR: null pointer occurred when constructing a string buffer. \n");
-//        exit(EXIT_FAILURE);
-//    }
-//    free(strBuf->buffer);
-//    strBuf->buffer = NULL;
-//    strBuf->length = 0;
-    strBuf = constructStringBuffer(NULL, 0);
-}
 
-void initHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf) {
-//    if(hexCodedStrBuf == NULL) {
-//        printf("ERROR: null pointer occurred when constructing a hex-coded string buffer. \n");
-//        exit(EXIT_FAILURE);
-//    }
-//    free(hexCodedStrBuf->hexArray);
-//    hexCodedStrBuf->hexArray = NULL;
-//    hexCodedStrBuf->arrayLength = 0;
-//    hexCodedStrBuf->strLength = 0;
-    hexCodedStrBuf = constructHexCodedStringBuffer(NULL, 0, 0);
+uint64_t compareHexCodedStringBuffer(HexCodedStringBuffer* hexCodedStrBuf1,
+                                     HexCodedStringBuffer* hexCodedStrBuf2) {
+    if(hexCodedStrBuf1->strLength != hexCodedStrBuf2->strLength ||
+            hexCodedStrBuf1->arrayLength != hexCodedStrBuf2->arrayLength) {
+//        printf("string length or array length not equal. \n");
+        return HEX_CODED_STRINGBUFFER_DIFFERNET;
+    }
+    uint64_t arrayLength = hexCodedStrBuf1->arrayLength;
+    for(uint64_t i = 0; i < arrayLength; i++) {
+        uint64_t hexInt1 = hexCodedStrBuf1->hexArray[i];
+        uint64_t hexInt2 = hexCodedStrBuf2->hexArray[i];
+
+        uint64_t cmpValue = hexInt1 ^ hexInt2;
+//        printf("cmpValue: %#"PRIx64"\n", cmpValue);
+        /** < \note calculation priority: "!=" > "^". */
+        if(cmpValue != 0) {
+//            printf("unequal: %#"PRIx64", %#"PRIx64" -> %#"PRIx64"\n",
+//                   hexInt1, hexInt2, cmpValue);
+            return HEX_CODED_STRINGBUFFER_DIFFERNET;
+        }
+    }
+    return HEX_CODED_STRINGBUFFER_SAME;
 }
 
 void printStringBuffer(StringBuffer* strBuf) {

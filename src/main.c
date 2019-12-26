@@ -23,6 +23,7 @@ static char* fnaFileHeader = NULL;
 /*
  * Global variables for ?.fastq files.
  */
+/** < \note remained to be optimized (structural problems) */
 static char* fastqFilePath = "data/fastq/testdata_30_1.fastq";
 static FILE* fpointer = NULL;
 static Read* read = NULL;

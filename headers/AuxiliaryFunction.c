@@ -185,16 +185,13 @@ static void _transHexCodedStringBufferToStringBufferTest() {
     /*
      * Test single-hexInt string buffer transformation.
      */
-    uint64_t* hexArray1 = (uint64_t*)malloc(sizeof(uint64_t) * 1);
+    StringBuffer* strBuf = NULL;
+    uint64_t arrayLength = 1;
+    uint64_t strLength = 32;
+    uint64_t* hexArray1 = (uint64_t*)malloc(sizeof(uint64_t) * arrayLength);
     *(hexArray1) = 0x27fd3de1e41a90ce;
     HexCodedStringBuffer* hexCodedStrBuf =
-        (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
-    StringBuffer* strBuf = NULL;
-    initHexCodedStringBuffer(hexCodedStrBuf);
-
-    hexCodedStrBuf->hexArray = hexArray1;
-    hexCodedStrBuf->strLength = 32;
-    hexCodedStrBuf->arrayLength = 1;
+        constructHexCodedStringBuffer(hexArray1, arrayLength, strLength);
 
     printHexCodedStringBuffer(hexCodedStrBuf);
     strBuf = transHexCodedStringBufferToStringBuffer(hexCodedStrBuf, charNumPerHex);
@@ -202,25 +199,25 @@ static void _transHexCodedStringBufferToStringBufferTest() {
     printf("expected: agcttttcattctgactgcaacgggcaatatg -> strcmp:%d\n",
            strcmp(strBuf->buffer, "agcttttcattctgactgcaacgggcaatatg"));
     clearStringBuffer(strBuf);
+    clearHexCodedStringBuffer(hexCodedStrBuf);
 
     /*
      * Test multiple-hexInt string buffer transformation.
      */
     /** < \note if you use "uint64 array[2]" to create an array and pass it to hex-coded string
         buffer. Freeing the array in hex-coded string buffer will result in bugs. */
-    uint64_t* hexArray2 = (uint64_t*)malloc(sizeof(uint64_t) * 2);
+    arrayLength = 2;
+    strLength = 57;
+    uint64_t* hexArray2 = (uint64_t*)malloc(sizeof(uint64_t) * arrayLength);
     *(hexArray2) = 0x27fd3de1e41a90ce;
     *(hexArray2 + 1) = 0xffff0000ffff0000;
-    hexCodedStrBuf->hexArray = hexArray2;
-    hexCodedStrBuf->arrayLength = 2;
-    hexCodedStrBuf->strLength = 57;
+    hexCodedStrBuf = constructHexCodedStringBuffer(hexArray2, arrayLength, strLength);
 
     printHexCodedStringBuffer(hexCodedStrBuf);
     strBuf = transHexCodedStringBufferToStringBuffer(hexCodedStrBuf, charNumPerHex);
     printStringBuffer(strBuf);
     printf("expected: agcttttcattctgactgcaacgggcaatatgttttttttaaaaaaaatttttttta -> strcmp:%d\n",
            strcmp(strBuf->buffer, "agcttttcattctgactgcaacgggcaatatgttttttttaaaaaaaatttttttta"));
-
     clearStringBuffer(strBuf);
     clearHexCodedStringBuffer(hexCodedStrBuf);
 }

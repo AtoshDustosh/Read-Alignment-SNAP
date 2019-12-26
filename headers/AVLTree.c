@@ -85,13 +85,17 @@ static void _usageOfAVLinSNAPTest() {
             seedCounts[i] = seedCounts[i] - 1;  /** < \note stop when seedCount[i] == 0 */
         }
     }
+    node = findAVLNode(tree, positionCount * 2);
+    printf("Not found position (%"PRIu64") -> returned AVL node: ", positionCount * 2);
+    if(node == NULL) { printf("NULL");}
+    else {printf("(address): %p", node);}
+    printf("\n");
     printf("> traverse and print:\n");
     traversePrintAVLTree(tree);
 
 
     uint64_t nodesNum = 0;
-    AVLNode** nodes = NULL;
-    nodes = findNodeswithMaxData(tree, &nodesNum);
+    AVLNode** nodes = findNodeswithMaxData(tree, &nodesNum);
     printf("\n>> positions that have the maximum seedCount - total number: %"PRIu64"\n", nodesNum);
     for(uint64_t i = 0; i < nodesNum; i++) {
         printf("position: %"PRIu64", seedCount: %"PRIu64"\n", nodes[i]->key, nodes[i]->data);

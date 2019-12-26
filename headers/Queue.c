@@ -124,6 +124,7 @@ void clearQueue(Queue* queueInstance) {
 //    printf("NULL\n\n");
     queueInstance->head = NULL;
     queueInstance->tail = NULL;
+    free(queueInstance);
 }
 
 
@@ -223,12 +224,12 @@ void printQueue(Queue* queueInstance) {
 
     queueCell = queueInstance->head;
     printf("queue length: %"PRIu64"\n", queueInstance->length);
-    if(queueCell != NULL) {
-        printf("queue head: (%#"PRIx64", 0x%p)\n",
-               queueInstance->head->data, queueInstance->head->next);
-        printf("queue tail: (%#"PRIx64", 0x%p)\n",
-               queueInstance->tail->data, queueInstance->tail->next);
-    }
+//    if(queueCell != NULL) {
+//        printf("queue head: (%#"PRIx64", 0x%p)\n",
+//               queueInstance->head->data, queueInstance->head->next);
+//        printf("queue tail: (%#"PRIx64", 0x%p)\n",
+//               queueInstance->tail->data, queueInstance->tail->next);
+//    }
     while(queueCell != NULL) {
         printf("0x%p: (%#"PRIx64", 0x%p) ->\n", queueCell, queueCell->data, queueCell->next);
         queueCell = queueCell->next;

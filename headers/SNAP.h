@@ -54,7 +54,7 @@ void _SNAPTestSet();
  * @param hexCodedRefDNA hex-coded reference DNA
  * @param DNAlength length of DNA
  * @param seedLength length of seed
- * @return a SNAP structure
+ * @return an SNAP structure
  */
 SNAP* constructSNAP(uint64_t* hexCodedRefDNA, uint64_t DNAlength, uint64_t seedLength);
 
@@ -62,7 +62,7 @@ SNAP* constructSNAP(uint64_t* hexCodedRefDNA, uint64_t DNAlength, uint64_t seedL
  * Load a read into a SNAP structure.
  *
  * @param read a read
- * @param snap a SNAP structure
+ * @param snap an SNAP structure
  */
 void loadOneReadIntoSNAP(Read* read, SNAP* snap);
 
@@ -83,7 +83,7 @@ HexCodedStringBuffer* extractHexCodedFragmentFromRef(uint64_t* refSeq, uint64_t 
 /**
  * Align a read using SNAP with specific parameters.
  *
- * @param snap a SNAP structure that is already fully constructed
+ * @param snap an SNAP structure that is already fully constructed
  * @param seedLength length of seed (must be <= 32)
  * @param EDmax maximum edit-distance
  * @param hitMax maximum hit count per seed

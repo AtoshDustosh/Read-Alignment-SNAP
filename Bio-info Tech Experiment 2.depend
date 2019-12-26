@@ -6,16 +6,16 @@
 	<stdio.h>
 	<stdlib.h>
 
-1577278519 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
+1577341865 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
 	"AuxiliaryDataType.h"
 	<string.h>
 
-1577277828 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
+1577341836 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 
-1577278522 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1577340340 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	<math.h>
 	<string.h>
@@ -77,17 +77,18 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577281840 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
+1577342146 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
-1577286246 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
+1577345134 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
 	"SNAP.h"
 	<string.h>
 	"MyArgs.h"
 	"AuxiliaryFunction.h"
+	"AVLTree.h"
 	"Queue.h"
 
-1577285211 e:\c_projects\bio-info tech experiment 2\headers\snap.h
+1577347459 e:\c_projects\bio-info tech experiment 2\headers\snap.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -97,7 +98,7 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1577285905 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577343023 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/ArrayOperation.h"
@@ -111,7 +112,7 @@
 	"../headers/Queue.h"
 	"../headers/SNAP.h"
 
-1577278540 source:e:\c_projects\bio-info tech experiment 2\headers\avltree.c
+1577343194 source:e:\c_projects\bio-info tech experiment 2\headers\avltree.c
 	"AVLTree.h"
 	"AuxiliaryFunction.h"
 	"Queue.h"
