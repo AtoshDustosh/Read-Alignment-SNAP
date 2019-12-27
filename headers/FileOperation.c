@@ -93,8 +93,8 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA, cha
             hexCodedDNA[i++] = hexInt;
             clearStringBuffer(strBuf);
             clearHexCodedStringBuffer(hexCodedStrBuf);
-            printf("%s\t", buffer);
-            printf("0x%16"PRIx64"\n", hexInt);
+//            printf("%s\t", buffer);
+//            printf("0x%16"PRIx64"\n", hexInt);
 //            if(i % 4 == 0) {
 //                printf("\n");
 //            }
@@ -110,8 +110,8 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA, cha
     hexCodedDNA[i++] = hexInt;
     clearStringBuffer(strBuf);
     clearHexCodedStringBuffer(hexCodedStrBuf);
-    printf("%s\t", buffer);
-    printf("0x%16"PRIx64"\n", hexInt);
+//    printf("%s\t", buffer);
+//    printf("0x%16"PRIx64"\n", hexInt);
 
     free(fp);
 }
@@ -151,7 +151,7 @@ void loadOneReadFromFile(char* filePath, FILE** fpointer, Read* readPointer) {
             buffer[bufPointer++] = ch;
             break;
         case 1: // sequence line
-            buffer[bufPointer++] = lowerCase(ch);
+            buffer[bufPointer++] = UpperCase(ch);
             break;
         case 2: // supplementary line
             break;

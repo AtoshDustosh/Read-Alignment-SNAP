@@ -27,7 +27,7 @@ typedef struct _define_SNAP {
     uint64_t DNAlength;       // length of DNA
     uint64_t seedLength;      // length of a seed
     HashTable* hashTable;     // hash table constructed out of reference DNA
-    Read* read;              // a read (segment) - SNAP only process one read
+    Read* read;              // a read (segment) - SNAP only process one read per time
 } SNAP;
 
 
@@ -92,7 +92,7 @@ HexCodedStringBuffer* extractHexCodedFragmentFromRef(uint64_t* refSeq, uint64_t 
  *      and the second-best alignment
  * @return single hit, multiple hits or not found
  */
-uint64_t alignReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
+uint64_t alignOneReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
                              uint64_t hitMax, uint64_t confidenceThreshold);
 
 

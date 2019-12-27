@@ -6,7 +6,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1577341865 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
+1577444657 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
 	"AuxiliaryDataType.h"
 	<string.h>
 
@@ -15,13 +15,13 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577367400 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1577444729 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	<math.h>
 	<string.h>
 	"MyArgs.h"
 
-1577364954 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1577444686 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -37,7 +37,7 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577361184 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
+1577442948 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
 	"EditDistance.h"
 	<string.h>
 	<strings.h>
@@ -55,7 +55,7 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577350671 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+1577444787 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
 	"FileOperation.h"
 	<string.h>
 	"ArrayOperation.h"
@@ -80,7 +80,7 @@
 1577359512 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
-1577372100 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
+1577444238 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
 	"SNAP.h"
 	<string.h>
 	"MyArgs.h"
@@ -89,7 +89,7 @@
 	"EditDistance.h"
 	"Queue.h"
 
-1577372522 e:\c_projects\bio-info tech experiment 2\headers\snap.h
+1577444307 e:\c_projects\bio-info tech experiment 2\headers\snap.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -99,7 +99,7 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1577372010 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577444238 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	"../headers/ArrayOperation.h"

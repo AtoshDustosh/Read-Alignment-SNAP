@@ -186,6 +186,8 @@ uint64_t calculateEditDistance(StringBuffer* patternStrBuf, StringBuffer* refStr
 //    printStringBuffer(strBufColumn);
 //    printf("pattern:   ");
 //    printStringBuffer(strBufRow);
+//    printf("ED matrix - rowNum: %"PRIu64", columnNum: %"PRIu64"\n",
+//           strBufRow->length, strBufColumn->length);
 
     /*
      * Calculate the edit-distance matrix.
@@ -214,6 +216,7 @@ uint64_t calculateEditDistance(StringBuffer* patternStrBuf, StringBuffer* refStr
     /**< \todo handle CIGAR string - generated from EDmatrix */
     bestED = processEDMatrix(strBufRow, strBufColumn, (uint64_t*)EDmatrix, CIGARbuffer, maxBufLen,
                              EDmax);
+//    printf(" in calculation of edit-distance - print CIGAR: %s\n", CIGARbuffer);
 
     clearStringBuffer(strBufRow);
     clearStringBuffer(strBufColumn);
@@ -243,8 +246,8 @@ static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn
      *       or "*(matrix + row * columnNum + column)".
      */
 
-//    const uint64_t rowNum = strRow->length;
-//    const uint64_t columnNum = strColumn->length;
+    const uint64_t rowNum = strRow->length;
+    const uint64_t columnNum = strColumn->length;
 
     uint64_t startRow = 0;
     uint64_t startColumn = 0;
@@ -274,6 +277,8 @@ static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn
         startColumn = queueCell->data;
 
 //        printf(">>>>> dequeue and start from (%"PRIu64", %"PRIu64")\n", startRow, startColumn);
+//        printStringBuffer(strRow);
+//        printStringBuffer(strColumn);
 //        printf("ED-matrix:\n");
 //        for(uint64_t m = 0; m < rowNum; m++) {
 //            for(uint64_t n = 0; n < columnNum; n++) {
@@ -298,6 +303,10 @@ static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn
                                  EDmatrix, diagonallyExtendedMatrix, EDmax);
 //        printf("extend diagonally:(%"PRIu64",%"PRIu64") to (%"PRIu64",%"PRIu64")\n",
 //               startRow, startColumn, endRow, endColumn);
+//        if(endRow == rowNum || endColumn == columnNum) {
+//            printf("ERROR: endRow and endColumn out of range. \n");
+//            exit(EXIT_FAILURE);
+//        }
 
         /**< \note extend horizontally and vertically from all points that have just been extended
         diagonally */
@@ -355,6 +364,9 @@ static void extendEDMatrixDiagonally(StringBuffer* strRow, StringBuffer* strColu
         if(row == 0 || column == 0) {
             continue;
         }
+//        if(*endRow == rowNum - 1 || *endColumn == columnNum - 1) {
+//            break;
+//        }
         char charOfThisRow = strRow->buffer[row];
         char charOfThisColumn = strColumn->buffer[column];
         uint64_t EDofLastPoint = *(EDmatrix + (row - 1) * columnNum + (column - 1));
@@ -481,10 +493,10 @@ static void splitAfterExtension(StringBuffer* strRow, StringBuffer* strColumn,
     uint64_t rowNum = strRow->length;
     uint64_t columnNum = strColumn->length;
 
-    if(endRow + 1 >= rowNum && endColumn + 1 >= columnNum) { // procedure finishes
+    if(endRow + 1 == rowNum && endColumn + 1 == columnNum) { // procedure finishes
 //        printf("reaches end of matrix. \n");
         return;
-    } else if(endRow + 1 >= rowNum && endColumn + 1 < columnNum) {  // reaches bounder of row
+    } else if(endRow + 1 == rowNum && endColumn + 1 < columnNum) {  // reaches bounder of row
         char charOfThisRow = strRow->buffer[endRow];
         char charOfThisColumn = strColumn->buffer[endColumn + 1];
 
@@ -507,7 +519,7 @@ static void splitAfterExtension(StringBuffer* strRow, StringBuffer* strColumn,
             }
             *(EDmatrix + endRow * columnNum + (endColumn + 1)) = newEDvalue;
         }
-    } else if(endRow + 1 < rowNum && endColumn + 1 >= columnNum) {  // reaches bounder of column
+    } else if(endRow + 1 < rowNum && endColumn + 1 == columnNum) {  // reaches bounder of column
         char charOfThisRow = strRow->buffer[endRow + 1];
         char charOfThisColumn = strColumn->buffer[endColumn];
 
@@ -530,7 +542,7 @@ static void splitAfterExtension(StringBuffer* strRow, StringBuffer* strColumn,
             }
             *(EDmatrix + (endRow + 1) * columnNum + endColumn) = newEDvalue;
         }
-    } else {    // split into 3 streams
+    } else if(endRow + 1 < rowNum && endColumn + 1 < columnNum) {    // split into 3 streams
         uint64_t continueExtension = 0;
         uint64_t EDofNextPoint = *(EDmatrix + (endRow + 1) * columnNum + (endColumn + 1));
         uint64_t EDofRightPoint = *(EDmatrix + endRow * columnNum + (endColumn + 1));
@@ -693,7 +705,7 @@ static void parseCIGAR(char* CIGARbuffer) {
             sprintf(numString, "%"PRIu64, countSameCh);
             numStrLength = (uint64_t)strlen(numString);
 //            printf("numStringLength: %"PRIu64", numString: \"%s\"\n", numStrLength, numString);
-            for(uint64_t i = 0; i < numStrLength; i++){
+            for(uint64_t i = 0; i < numStrLength; i++) {
                 CIGARbuffer[CIGARbufferPointer++] = numString[i];
             }
             CIGARbuffer[CIGARbufferPointer++] = prevCh;
@@ -704,7 +716,7 @@ static void parseCIGAR(char* CIGARbuffer) {
     sprintf(numString, "%"PRIu64, countSameCh);
     numStrLength = (uint64_t)strlen(numString);
 //    printf("numStringLength: %"PRIu64", numString: \"%s\"\n", numStrLength, numString);
-    for(uint64_t i = 0; i < numStrLength; i++){
+    for(uint64_t i = 0; i < numStrLength; i++) {
         CIGARbuffer[CIGARbufferPointer++] = numString[i];
     }
     CIGARbuffer[CIGARbufferPointer++] = prevCh;

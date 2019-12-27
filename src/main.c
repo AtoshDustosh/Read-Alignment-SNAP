@@ -45,7 +45,7 @@ void testSet();
 
 
 int main() {
-//    testSet();
+    testSet();
 
     DNAlength = fnaDataSize(fnaFilePath);
     fnaFileHeader = (char*)malloc(sizeof(char) * BUFSIZ);
@@ -61,9 +61,10 @@ int main() {
     printRead(read);
 
     loadOneReadIntoSNAP(read, snap);
+    strcpy(read->RNAME, fnaFileHeader);
     printf("align one read with seedLength:%"PRIu64", EDmax:%"PRIu64", hitMax:%"PRIu64", "
            "confidence threshold:%"PRIu64"\n", seedLength, EDmax, hitMax, confidenceThreshold);
-    uint16_t result = alignReadUsingSNAP(snap, seedLength, EDmax, hitMax, confidenceThreshold);
+    uint16_t result = alignOneReadUsingSNAP(snap, seedLength, EDmax, hitMax, confidenceThreshold);
 
     printf("align result: ");
     if(result == SINGLE_HIT){
@@ -74,6 +75,7 @@ int main() {
         printf("not found\n");
     }
 
+    printRead(read);
 //    loadOneReadFromFile(fastqFilePath, &fpointer, read);
 //    printRead(read);
 

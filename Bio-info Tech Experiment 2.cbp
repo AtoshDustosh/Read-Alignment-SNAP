@@ -41,6 +41,9 @@
 		<Unit filename="data/fastq/unitData.fastq">
 			<Option virtualFolder="data/fastq/" />
 		</Unit>
+		<Unit filename="data/fna/NC_008253.fna">
+			<Option virtualFolder="data/fna/" />
+		</Unit>
 		<Unit filename="data/fna/testExample.fna">
 			<Option virtualFolder="data/fna/" />
 		</Unit>

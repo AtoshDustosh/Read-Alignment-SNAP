@@ -274,12 +274,13 @@ StringBuffer* transHexCodedStringBufferToStringBuffer(HexCodedStringBuffer* hexC
     StringBuffer* strBuf = (StringBuffer*)malloc(sizeof(StringBuffer));
     strBuf->buffer = (char*)malloc(sizeof(char) * (hexCodedStrBuf->strLength + 1));
     strBuf->length = hexCodedStrBuf->strLength;
+    uint64_t* hexArray = hexCodedStrBuf->hexArray;
 
     uint64_t i = 0;
 
     for(i = 0; i < hexCodedStrBuf->strLength; i++) {
         uint64_t hexArrayIndex = i / charNumPerHex;
-        uint64_t hexInt = (hexCodedStrBuf->hexArray)[hexArrayIndex];
+        uint64_t hexInt = *(hexArray + hexArrayIndex);
         uint64_t charHex = extractCharBitFromHexInt(i, hexInt, charNumPerHex);
         strBuf->buffer[i] = hexToChar(charHex);
 //        printf("charHex: 0x%"PRIx64", char: %c\n", charHex, strBuf->buffer[i]);
@@ -341,31 +342,39 @@ char lowerCase(char ch) {
     }
 }
 
+char UpperCase(char ch) {
+    if(ch >= 'a' && ch <= 'z') {
+        return ch - ('a' - 'A');
+    } else {
+        return ch;
+    }
+}
+
 char hexToChar(uint64_t hex) {
     switch(hex) {
     case HEX_FOR_LETTER_A:
-        return 'a';
+        return 'A';
     case HEX_FOR_LETTER_C:
-        return 'c';
+        return 'C';
     case HEX_FOR_LETTER_G:
-        return 'g';
+        return 'G';
     case HEX_FOR_LETTER_T:
-        return 't';
+        return 'T';
     default:
         return '*';
     }
 }
 
 uint64_t charToHex(char ch) {
-    ch = lowerCase(ch);
+    ch = UpperCase(ch);
     switch(ch) {
-    case 'a':
+    case 'A':
         return HEX_FOR_LETTER_A;
-    case 'c':
+    case 'C':
         return HEX_FOR_LETTER_C;
-    case 'g':
+    case 'G':
         return HEX_FOR_LETTER_G;
-    case 't':
+    case 'T':
         return HEX_FOR_LETTER_T;
     default:
         return 0x0;

@@ -71,9 +71,18 @@ HexCodedStringBuffer* transStringBufferToHexCodedStringBuffer(StringBuffer* strB
  *
  * @param ch an English letter
  * @return lower case of ch if ch is in upper case, i.e. 'A' -> 'a';
- *      ch otherwise, i.e. 'A' -> 'A', '*' -> '*'
+ *      ch otherwise, i.e. 'a' -> 'a', '*' -> '*'
  */
 char lowerCase(char ch);
+
+/**
+ * Get the upper case of a character.
+ *
+ * @param ch an English letter
+ * @return upper case of ch if ch is in lower case, i.e. 'a' -> 'A';
+ *      ch otherwise, i.e. 'A' -> 'A', '*' -> '*'
+ */
+char UpperCase(char ch);
 
 /**
  * Transform hexadecimal numbers into characters (a, c, g, t)
