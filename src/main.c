@@ -55,6 +55,7 @@ int main() {
     loadFnaData(fnaFilePath, DNAlength, hexCodedRefDNA, fnaFileHeader);
     printf("\nreference DNA name: %s\n", fnaFileHeader);
 
+    /** < construct SNAP based on ?.fna file */
     snap = constructSNAP(hexCodedRefDNA, DNAlength, seedLength);
 
     read = (Read*)malloc(sizeof(Read));

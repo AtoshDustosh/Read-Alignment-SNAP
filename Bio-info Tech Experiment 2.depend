@@ -80,7 +80,7 @@
 1577359512 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
-1577444238 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
+1577458647 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
 	"SNAP.h"
 	<string.h>
 	"MyArgs.h"
@@ -99,9 +99,10 @@
 
 1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1577454100 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577457893 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
 	"../headers/ArrayOperation.h"
 	"../headers/AuxiliaryDataType.h"
 	"../headers/AuxiliaryFunction.h"
@@ -113,7 +114,7 @@
 	"../headers/Queue.h"
 	"../headers/SNAP.h"
 
-1577343194 source:e:\c_projects\bio-info tech experiment 2\headers\avltree.c
+1577458570 source:e:\c_projects\bio-info tech experiment 2\headers\avltree.c
 	"AVLTree.h"
 	"AuxiliaryFunction.h"
 	"Queue.h"
@@ -137,10 +138,10 @@
 	<stdio.h>
 	<stdlib.h>
 
-1577453454 source:e:\c_projects\bio-info tech experiment 2\headers\pairendaligner.c
-	"PairEndAligner.h"
+1577454918 source:e:\c_projects\bio-info tech experiment 2\headers\pairendaligner.c
+	"PairendAligner.h"
 
-1577453798 e:\c_projects\bio-info tech experiment 2\headers\pairendaligner.h
+1577454825 e:\c_projects\bio-info tech experiment 2\headers\pairendaligner.h
 	<stdio.h>
 	<stdlib.h>
 	"SNAP.h"

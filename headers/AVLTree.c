@@ -217,6 +217,10 @@ void traversePrintAVLTree(AVLNode* root) {  // breadth first traverse
 
 
 AVLNode** findNodeswithMaxData(AVLNode* root, uint64_t* nodesNum) {
+    if(root == NULL){
+        *nodesNum = 0;
+        return NULL;
+    }
     uint64_t AVLTreeMaxSize = 2;
     for(uint64_t i = 0; i < root->height; i++) {
         AVLTreeMaxSize = AVLTreeMaxSize * 2;

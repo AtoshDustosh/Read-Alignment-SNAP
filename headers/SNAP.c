@@ -148,6 +148,7 @@ SNAP* constructSNAP(uint64_t* hexCodedRefDNA, uint64_t DNAlength, uint64_t seedL
 
     /** < \note construct hash table */
     StringBuffer* seedStrBuf = NULL;
+    printf("... building hash table\n");
     for(uint64_t refOffset = 0; refOffset < tableSize; refOffset++) {
         HexCodedStringBuffer* seedHexCodedStrBuf =
             extractHexCodedFragmentFromRef(hexCodedRefDNA, DNAlength, seedLength, refOffset);
@@ -484,6 +485,10 @@ static uint64_t getEDofBestAlignment(uint64_t* refHexCodedDNA, uint64_t refLengt
     char CIGARbuffer[BUFSIZ];
     char* bestCIGAR = NULL;
     uint64_t bestED = INFINITE;
+
+    if(mostHittingLocationsNum == 0){
+        return bestED;
+    }
 
     /** < value of "mostHittingLocationsNum" is very small, usually being lower than 10 */
     for(uint64_t locationSeqNum = 0; locationSeqNum < mostHittingLocationsNum; locationSeqNum++) {
