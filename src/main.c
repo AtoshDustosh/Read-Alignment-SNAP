@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <string.h>
+
 #include "../headers/ArrayOperation.h"
 #include "../headers/AuxiliaryDataType.h"
 #include "../headers/AuxiliaryFunction.h"
@@ -34,7 +36,7 @@ static uint64_t* hexCodedRefDNA = NULL;
 
 static SNAP* snap = NULL;
 static uint64_t seedLength = 20;
-static uint64_t EDmax = 3;
+static uint64_t EDmax = 7;
 static uint64_t hitMax = 200;
 static uint64_t confidenceThreshold = 3;
 
@@ -45,7 +47,7 @@ void testSet();
 
 
 int main() {
-    testSet();
+//    testSet();
 
     DNAlength = fnaDataSize(fnaFilePath);
     fnaFileHeader = (char*)malloc(sizeof(char) * BUFSIZ);

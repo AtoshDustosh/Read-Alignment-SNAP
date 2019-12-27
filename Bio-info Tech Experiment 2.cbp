@@ -111,6 +111,13 @@
 		<Unit filename="headers/MyArgs.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
+		<Unit filename="headers/PairendAligner.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/PairendAligner.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
 		<Unit filename="headers/Queue.c">
 			<Option compilerVar="CC" />
 			<Option virtualFolder="headers/" />

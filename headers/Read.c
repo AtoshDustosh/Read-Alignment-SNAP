@@ -30,6 +30,10 @@ void initRead(Read *read) {
 
 
 void printRead(Read* read) {
+    if(read == NULL){
+        printf("ERROR: null pointer occurs when printing a read.\n");
+        exit(EXIT_FAILURE);
+    }
     printf("QNAME\t%s\n", read->QNAME);
     printf("FLAG\t0x%x\n", read->FLAG);
     printf("RNAME\t%s\n", read->RNAME);
@@ -46,6 +50,19 @@ void printRead(Read* read) {
 }
 
 
+void clearRead(Read* read) {
+    if(read == NULL){
+        printf("ERROR: null pointer occurs when clearing a read.\n");
+        exit(EXIT_FAILURE);
+    }
+    free(read->QNAME);
+    free(read->RNAME);
+    free(read->CIGAR);
+    free(read->RNEXT);
+    free(read->SEQ);
+    free(read->QUAL);
+    free(read);
+}
 
 
 

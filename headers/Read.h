@@ -38,4 +38,11 @@ void initRead(Read *read);
  */
 void printRead(Read* read);
 
+/**
+ * Clear a read and free its memory.
+ *
+ * @param read a Read struct type
+ */
+void clearRead(Read* read);
+
 #endif // READ_H_INCLUDED
