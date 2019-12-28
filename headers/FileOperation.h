@@ -34,8 +34,9 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA, cha
  * @param fpointer pointer to a file pointer - points to start position in file
  *      of next read when the method finishes
  * @param read Read data type used for storing a read
+ * @param 1 if there are more reads to be processed in the ?.fastq file; 0 otherwise
  */
-void loadOneReadFromFile(char* filePath, FILE** fpointer, Read* read);
+uint64_t loadOneReadFromFile(char* filePath, FILE** fpointer, Read* read);
 
 
 #endif // FILEOPERATION_H_INCLUDED

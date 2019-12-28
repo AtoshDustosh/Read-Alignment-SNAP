@@ -1,83 +1,83 @@
 # depslib dependency file v1.0
-1576503138 source:e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.c
 	"ArrayOperation.h"
 
-1576587622 e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\arrayoperation.h
 	<stdio.h>
 	<stdlib.h>
 
-1577444657 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
 	"AuxiliaryDataType.h"
 	<string.h>
 
-1577341836 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 
-1577444729 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	<math.h>
 	<string.h>
 	"MyArgs.h"
 
-1577444686 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 	"AuxiliaryDataType.h"
 
-1577192663 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\myargs.h
 
-1576656113 source:e:\c_projects\bio-info tech experiment 2\headers\cdatatype.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\cdatatype.c
 	"cDataType.h"
 
-1576501603 e:\c_projects\bio-info tech experiment 2\headers\cdatatype.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\cdatatype.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 
-1577442948 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
 	"EditDistance.h"
 	<string.h>
 	<strings.h>
 	"AuxiliaryFunction.h"
 	"Queue.h"
 
-1577357937 e:\c_projects\bio-info tech experiment 2\headers\editdistance.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\editdistance.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 	"AuxiliaryDataType.h"
 
-1577281827 e:\c_projects\bio-info tech experiment 2\headers\queue.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\queue.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 
-1577444787 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+1577526285 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
 	"FileOperation.h"
 	<string.h>
 	"ArrayOperation.h"
 	"AuxiliaryFunction.h"
 	"MyArgs.h"
 
-1577263130 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
+1577526108 e:\c_projects\bio-info tech experiment 2\headers\fileoperation.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 	"AuxiliaryDataType.h"
 	"Read.h"
 
-1577281596 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
 	"HashTable.h"
 
-1577281344 e:\c_projects\bio-info tech experiment 2\headers\hashtable.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\hashtable.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 
-1577359512 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
 1577458647 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
@@ -89,7 +89,7 @@
 	"EditDistance.h"
 	"Queue.h"
 
-1577444307 e:\c_projects\bio-info tech experiment 2\headers\snap.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\snap.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
@@ -97,9 +97,9 @@
 	"Read.h"
 	"AuxiliaryDataType.h"
 
-1576305290 source:e:\c_projects\bio-info tech experiment 2\package-info.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1577457893 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577526562 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -114,36 +114,184 @@
 	"../headers/Queue.h"
 	"../headers/SNAP.h"
 
-1577458570 source:e:\c_projects\bio-info tech experiment 2\headers\avltree.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\avltree.c
 	"AVLTree.h"
 	"AuxiliaryFunction.h"
 	"Queue.h"
 
-1577181670 e:\c_projects\bio-info tech experiment 2\headers\avltree.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\avltree.h
 	<stdio.h>
 	<stdlib.h>
 	<inttypes.h>
 
-1577453397 e:\c_projects\bio-info tech experiment 2\headers\read.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\read.h
 	<stdio.h>
 	<stdlib.h>
 
-1577453395 source:e:\c_projects\bio-info tech experiment 2\headers\read.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\read.c
 	"Read.h"
 
-1577259625 source:e:\c_projects\bio-info tech experiment 2\headers\sam.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\sam.c
 	"SAM.h"
 
-1577259593 e:\c_projects\bio-info tech experiment 2\headers\sam.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\sam.h
 	<stdio.h>
 	<stdlib.h>
 
-1577454918 source:e:\c_projects\bio-info tech experiment 2\headers\pairendaligner.c
+1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\pairendaligner.c
 	"PairendAligner.h"
 
-1577454825 e:\c_projects\bio-info tech experiment 2\headers\pairendaligner.h
+1577458804 e:\c_projects\bio-info tech experiment 2\headers\pairendaligner.h
 	<stdio.h>
 	<stdlib.h>
 	"SNAP.h"
 	"Read.h"
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\arrayoperation.c
+	"ArrayOperation.h"
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\arrayoperation.h
+	<stdio.h>
+	<stdlib.h>
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\auxiliarydatatype.c
+	"AuxiliaryDataType.h"
+	<string.h>
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\auxiliarydatatype.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\auxiliaryfunction.c
+	"AuxiliaryFunction.h"
+	<math.h>
+	<string.h>
+	"MyArgs.h"
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\auxiliaryfunction.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+	"AuxiliaryDataType.h"
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\myargs.h
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\avltree.c
+	"AVLTree.h"
+	"AuxiliaryFunction.h"
+	"Queue.h"
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\avltree.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\queue.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\cdatatype.c
+	"cDataType.h"
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\cdatatype.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\editdistance.c
+	"EditDistance.h"
+	<string.h>
+	<strings.h>
+	"AuxiliaryFunction.h"
+	"Queue.h"
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\editdistance.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+	"AuxiliaryDataType.h"
+
+1577526285 source:e:\download\read-alignment-master\read-alignment-master\headers\fileoperation.c
+	"FileOperation.h"
+	<string.h>
+	"ArrayOperation.h"
+	"AuxiliaryFunction.h"
+	"MyArgs.h"
+
+1577526108 e:\download\read-alignment-master\read-alignment-master\headers\fileoperation.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+	"AuxiliaryDataType.h"
+	"Read.h"
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\read.h
+	<stdio.h>
+	<stdlib.h>
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\hashtable.c
+	"HashTable.h"
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\hashtable.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\pairendaligner.c
+	"PairendAligner.h"
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\pairendaligner.h
+	<stdio.h>
+	<stdlib.h>
+	"SNAP.h"
+	"Read.h"
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\snap.h
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+	"HashTable.h"
+	"Read.h"
+	"AuxiliaryDataType.h"
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\queue.c
+	"Queue.h"
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\read.c
+	"Read.h"
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\sam.c
+	"SAM.h"
+
+1577458804 e:\download\read-alignment-master\read-alignment-master\headers\sam.h
+	<stdio.h>
+	<stdlib.h>
+
+1577525972 source:e:\download\read-alignment-master\read-alignment-master\headers\snap.c
+	"SNAP.h"
+	<string.h>
+	"MyArgs.h"
+	"AuxiliaryFunction.h"
+	"AVLTree.h"
+	"EditDistance.h"
+	"Queue.h"
+
+1577458804 source:e:\download\read-alignment-master\read-alignment-master\package-info.c
+
+1577526238 source:e:\download\read-alignment-master\read-alignment-master\src\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../headers/ArrayOperation.h"
+	"../headers/AuxiliaryDataType.h"
+	"../headers/AuxiliaryFunction.h"
+	"../headers/AVLTree.h"
+	"../headers/cDataType.h"
+	"../headers/EditDistance.h"
+	"../headers/FileOperation.h"
+	"../headers/HashTable.h"
+	"../headers/Queue.h"
+	"../headers/SNAP.h"
 

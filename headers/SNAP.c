@@ -228,6 +228,7 @@ uint64_t alignOneReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
     StringBuffer* readStrBuf = constructStringBuffer(readSeq, readLength);
     HexCodedStringBuffer* readHexCodedStrBuf =
         transStringBufferToHexCodedStringBuffer(readStrBuf, CHAR_NUM_PER_HEX);
+    clearStringBuffer(readStrBuf);
 
     /** < \note construct a seed queue for processing seeds in a specific order.
         Queue cells contain offsets of seeds on the read */
@@ -248,15 +249,16 @@ uint64_t alignOneReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
         HexCodedStringBuffer* seedHexCodedStrBuf = extractHexCodedFragmentFromRef(
                     readHexCodedStrBuf->hexArray, readLength, seedLength, seedOffset);
 
-        StringBuffer* seedStrBuf = transHexCodedStringBufferToStringBuffer(seedHexCodedStrBuf,
-                                   CHAR_NUM_PER_HEX);
-        printf("%"PRIu64" seed\t->\t", seedSeqNum);
-        printf("offset:%"PRIu64"\t", seedOffset);
-        printf("sequence:");
-        printStringBuffer(seedStrBuf);
-        printf("d_best:%"PRIu64", d_bestRefOffset:%"PRIu64", d_second:%"PRIu64", "
-               "d_secondRefOffset:%"PRIu64", d_limit:%"PRIu64"\n", d_best, d_bestRefOffset,
-               d_second, d_secondRefOffset, d_limit);
+//        StringBuffer* seedStrBuf = transHexCodedStringBufferToStringBuffer(seedHexCodedStrBuf,
+//                                   CHAR_NUM_PER_HEX);
+//        printf("%"PRIu64" seed\t->\t", seedSeqNum);
+//        printf("offset:%"PRIu64"\t", seedOffset);
+//        printf("sequence:");
+//        printStringBuffer(seedStrBuf);
+//        clearStringBuffer(seedStrBuf);
+//        printf("d_best:%"PRIu64", d_bestRefOffset:%"PRIu64", d_second:%"PRIu64", "
+//               "d_secondRefOffset:%"PRIu64", d_limit:%"PRIu64"\n", d_best, d_bestRefOffset,
+//               d_second, d_secondRefOffset, d_limit);
 
         /** < \note find locations exactly matched with the seed on hash table of ref DNA.
             Queue cells contain offsets of locations on the ref DNA, and this set of locations
@@ -264,6 +266,7 @@ uint64_t alignOneReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
         Queue* locationQueue = getLocationQueueOfSeed(seedHexCodedStrBuf, snap->hashTable,
                                snap->hexCodedRefDNA, snap->DNAlength);
 //        printQueue(locationQueue);
+        clearHexCodedStringBuffer(seedHexCodedStrBuf);
 
         /** < \note accumulate locations using AVL data structure for later procedure */
         locationAVLTree = accumulateLocationsUsingAVLTree(locationAVLTree, locationQueue,
@@ -275,10 +278,10 @@ uint64_t alignOneReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
                 &mostHittingLocationsNum);
         uint64_t* mostHittingLocations =
             (uint64_t*)malloc(sizeof(uint64_t) * mostHittingLocationsNum);
-        printf("Most hitting locations: \n");
+//        printf("Most hitting locations: \n");
         for(uint64_t i = 0; i < mostHittingLocationsNum; i++) {
             mostHittingLocations[i] = mostHittingLocationsAVLNodes[i]->key;
-            uint64_t hitCount = mostHittingLocationsAVLNodes[i]->data;
+//            uint64_t hitCount = mostHittingLocationsAVLNodes[i]->data;
 //            printf("location: %"PRIu64", hitCount: %"PRIu64"\n", mostHittingLocations[i], hitCount);
         }
 
@@ -293,17 +296,17 @@ uint64_t alignOneReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
 
         /** < \note compute the best edit-distances of these locations */
         uint64_t d_newRefOffset = 0;
-        printf("... calculate edit-distance of best alignment with d_limit:%"PRIu64"\n", d_limit);
+//        printf("... calculate edit-distance of best alignment with d_limit:%"PRIu64"\n", d_limit);
         uint64_t d_new = getEDofBestAlignment(snap->hexCodedRefDNA, snap->DNAlength, snap->read,
                                               mostHittingLocations, mostHittingLocationsNum,
                                               d_limit, &d_newRefOffset);
-        printf("d_new: %"PRIu64", sequence offset of d_new: %"PRIu64"\n", d_new, d_newRefOffset);
+//        printf("d_new: %"PRIu64", sequence offset of d_new: %"PRIu64"\n", d_new, d_newRefOffset);
 
         /** < \note update d_best and d_second according to d_new */
         updateBestAndSecondBest(&d_best, &d_bestRefOffset, &d_second, &d_secondRefOffset,
                                 d_new, d_newRefOffset);
-        printf("... updated d_best:%"PRIu64", d_bestRefOffset:%"PRIu64", d_second:%"PRIu64", "
-               "d_secondRefOffset:%"PRIu64"\n", d_best, d_bestRefOffset, d_second, d_secondRefOffset);
+//        printf("... updated d_best:%"PRIu64", d_bestRefOffset:%"PRIu64", d_second:%"PRIu64", "
+//               "d_secondRefOffset:%"PRIu64"\n", d_best, d_bestRefOffset, d_second, d_secondRefOffset);
 
         if(nonoverlappingSeedsCount < nonoverlappingSeedsTotal) {
             nonoverlappingSeedsCount++;
@@ -319,10 +322,13 @@ uint64_t alignOneReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
             return MULTIPLE_HITS;
         } else if(nonoverlappingSeedsCount >= d_best + confidenceThreshold) {
             break;
+        } else if(nonoverlappingSeedsCount == nonoverlappingSeedsTotal &&
+                  d_best > nonoverlappingSeedsTotal){
+            break;
         }
 
         seedSeqNum++;
-        printf("\n");
+//        printf("\n");
     }
     clearQueue(seedQueue);
     clearAVLTree(locationAVLTree);
@@ -353,7 +359,7 @@ static Queue* constructSeedQueue(Read* read, uint64_t seedLength) {
     uint64_t seedNum = readLength - seedLength + 1;
     uint64_t seeds[seedNum];
 
-    printf("seed length: %"PRIu64", seedNum: %"PRIu64"\n", seedLength, seedNum);
+//    printf("seed length: %"PRIu64", seedNum: %"PRIu64"\n", seedLength, seedNum);
     for(uint64_t i = 0; i < seedNum; i++) {
         seeds[i] = i;
     }
@@ -383,7 +389,7 @@ static Queue* constructSeedQueue(Read* read, uint64_t seedLength) {
             enQueue(seedQueue, newQueueCell(seeds[i]));
         }
     }
-    printf("... seed queue constructed. \n");
+//    printf("... seed queue constructed. \n");
     return seedQueue;
 }
 
@@ -406,6 +412,7 @@ static Queue* getLocationQueueOfSeed(HexCodedStringBuffer* seedHexCodedStrBuf, H
 
     HashCell* hashCell =
         searchHashIndexOfString(seedStrBuf->buffer, hashTable, tableSize);
+    clearStringBuffer(seedStrBuf);
 
     while(hashCell != NULL) {
         uint64_t refOffset = hashCell->data;
@@ -508,15 +515,15 @@ static uint64_t getEDofBestAlignment(uint64_t* refHexCodedDNA, uint64_t refLengt
             uint64_t EDvalue = calculateEditDistance(readStrBuf, refSegmentStrBuf, d_limit,
                                CIGARbuffer, BUFSIZ);
             if(EDvalue < bestED) {
-        printf("new ED of locations:%"PRIu64"\n", bestED);
+//                printf("new ED of locations:%"PRIu64"\n", bestED);
                 bestED = EDvalue;
                 *bestAlignmentLocation = refSegmentOffset;
                 free(bestCIGAR);
                 bestCIGAR = copyString(CIGARbuffer);
             }
             clearStringBuffer(refSegmentStrBuf);
-            printf("refSegmentOffset(%"PRIu64")\t->\tedit-distance(%"PRIu64")\t->\tCIGAR:%s\n",
-                   refSegmentOffset, EDvalue, CIGARbuffer);
+//            printf("refSegmentOffset(%"PRIu64")\t->\tedit-distance(%"PRIu64")\t->\tCIGAR:%s\n",
+//                   refSegmentOffset, EDvalue, CIGARbuffer);
         }
     }
     // copy the best CIGAR to the field of a Read

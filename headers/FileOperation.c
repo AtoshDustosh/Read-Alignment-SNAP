@@ -116,7 +116,7 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA, cha
     free(fp);
 }
 
-void loadOneReadFromFile(char* filePath, FILE** fpointer, Read* readPointer) {
+uint64_t loadOneReadFromFile(char* filePath, FILE** fpointer, Read* read) {
     printf("\n");
     if(*fpointer == NULL) {
         printf("Open file %s\n", filePath);
@@ -141,10 +141,12 @@ void loadOneReadFromFile(char* filePath, FILE** fpointer, Read* readPointer) {
         if(ch == '\n') {
             buffer[bufPointer] = '\0';
             bufPointer = 0;
-            loadOneReadFromFile_projectBufferToRead(buffer, fastqLine, readPointer);
+            loadOneReadFromFile_projectBufferToRead(buffer, fastqLine, read);
             clearCharArray(buffer, BUFSIZ);
             fastqLine++;
             continue;
+        } else if (ch == EOF) {
+            break;
         }
         switch(fastqLine) {
         case 0: // header line
@@ -159,9 +161,17 @@ void loadOneReadFromFile(char* filePath, FILE** fpointer, Read* readPointer) {
             buffer[bufPointer++] = ch;
             break;
         default:
-            return;
+            printf("ERROR: error occurs when loading a read. \n");
+            exit(EXIT_FAILURE);
         }
     }
+    if(ch == EOF){
+        printf("... reaches end of the fastq file. \n");
+        return 0;
+    } else {
+        return 1;
+    }
+
 }
 
 
