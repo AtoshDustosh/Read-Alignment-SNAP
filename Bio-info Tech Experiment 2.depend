@@ -6,7 +6,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
+1577529517 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
 	"AuxiliaryDataType.h"
 	<string.h>
 
@@ -37,7 +37,7 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
+1577537082 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
 	"EditDistance.h"
 	<string.h>
 	<strings.h>
@@ -80,7 +80,7 @@
 1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
-1577458647 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
+1577537208 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
 	"SNAP.h"
 	<string.h>
 	"MyArgs.h"
@@ -99,7 +99,7 @@
 
 1577458804 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1577526562 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577537082 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -112,6 +112,7 @@
 	"../headers/FileOperation.h"
 	"../headers/HashTable.h"
 	"../headers/Queue.h"
+	"../headers/SAM.h"
 	"../headers/SNAP.h"
 
 1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\avltree.c
@@ -124,19 +125,21 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577458804 e:\c_projects\bio-info tech experiment 2\headers\read.h
+1577534711 e:\c_projects\bio-info tech experiment 2\headers\read.h
 	<stdio.h>
 	<stdlib.h>
 
-1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\read.c
+1577534723 source:e:\c_projects\bio-info tech experiment 2\headers\read.c
 	"Read.h"
+	<string.h>
 
-1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\sam.c
+1577535509 source:e:\c_projects\bio-info tech experiment 2\headers\sam.c
 	"SAM.h"
 
-1577458804 e:\c_projects\bio-info tech experiment 2\headers\sam.h
+1577534377 e:\c_projects\bio-info tech experiment 2\headers\sam.h
 	<stdio.h>
 	<stdlib.h>
+	"Read.h"
 
 1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\pairendaligner.c
 	"PairendAligner.h"
@@ -262,13 +265,6 @@
 1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\read.c
 	"Read.h"
 
-1577458804 source:e:\download\read-alignment-master\read-alignment-master\headers\sam.c
-	"SAM.h"
-
-1577458804 e:\download\read-alignment-master\read-alignment-master\headers\sam.h
-	<stdio.h>
-	<stdlib.h>
-
 1577525972 source:e:\download\read-alignment-master\read-alignment-master\headers\snap.c
 	"SNAP.h"
 	<string.h>
@@ -293,5 +289,5 @@
 	"../headers/FileOperation.h"
 	"../headers/HashTable.h"
 	"../headers/Queue.h"
-	"../headers/SNAP.h"
+	"../headers/SNAP.h
 

@@ -99,7 +99,8 @@ static void _compareHexCodedStringBufferTest() {
     printf("compare hex-buffer-2 and hex-buffer-2: %"PRIu64"\n",
            compareHexCodedStringBuffer(hexCodedStrBuf2, hexCodedStrBuf2));
 
-
+    clearHexCodedStringBuffer(hexCodedStrBuf1);
+    clearHexCodedStringBuffer(hexCodedStrBuf2);
 }
 
 

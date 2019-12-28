@@ -246,8 +246,8 @@ static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn
      *       or "*(matrix + row * columnNum + column)".
      */
 
-    const uint64_t rowNum = strRow->length;
-    const uint64_t columnNum = strColumn->length;
+//    const uint64_t rowNum = strRow->length;
+//    const uint64_t columnNum = strColumn->length;
 
     uint64_t startRow = 0;
     uint64_t startColumn = 0;
@@ -618,6 +618,12 @@ static uint64_t processEDMatrix(StringBuffer* strRow, StringBuffer* strColumn, u
         }
     }
 
+    if(bestED == INITEDVALUE) {
+        /** < cannot find a match within EDmax */
+        CIGARbuffer[0] = '*';
+        CIGARbuffer[1] = '\0';
+        return bestED;
+    }
 
     /**
      * Reconstruct CIGAR string from ED matrix

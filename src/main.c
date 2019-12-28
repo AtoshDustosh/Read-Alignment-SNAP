@@ -12,28 +12,38 @@
 #include "../headers/FileOperation.h"
 #include "../headers/HashTable.h"
 #include "../headers/Queue.h"
+#include "../headers/SAM.h"
 #include "../headers/SNAP.h"
-
-
 
 /*
  * Global variables for ?.fna file.
  */
-static char* fnaFilePath = "data/fna/testdata_1000.fna";
+static char* fnaFilePath = "data/fna/NC_008253.fna";
 static char* fnaFileHeader = NULL;
 
 /*
  * Global variables for ?.fastq files.
  */
 /** < \note remained to be optimized (structural problems) */
-static char* fastqFilePath = "data/fastq/testdata_30_1.fastq";
+static char* fastqFilePath = "data/fastq/testdata_2500_1.fastq";
 static FILE* fpointer = NULL;
 static Read* read = NULL;
 
+/*
+ * Global variables for ?.sam files
+ */
+static char* samFilePath = "data/sam/sam_testdata_2500_1.sam";
+static SAM* sam = NULL;
 
+/*
+ * Global variables of basic information
+ */
 static uint64_t DNAlength = 0;
 static uint64_t* hexCodedRefDNA = NULL;
 
+/*
+ * Global variables for SNAP
+ */
 static SNAP* snap = NULL;
 static uint64_t seedLength = 20;
 static uint64_t EDmax = 7;
@@ -57,8 +67,11 @@ int main() {
 
     /** < construct SNAP based on ?.fna file */
     snap = constructSNAP(hexCodedRefDNA, DNAlength, seedLength);
-    uint64_t result = 0;
+    sam = constructSAM(samFilePath);
 
+    /** < load and process all reads in ?.fastq file one by one */
+    uint64_t result = 0;
+    uint64_t count = 0;
     while(1) {
         read = (Read*)malloc(sizeof(Read));
         initRead(read);
@@ -70,6 +83,7 @@ int main() {
 //    printRead(read);
         loadOneReadIntoSNAP(read, snap);
         strcpy(read->RNAME, fnaFileHeader);
+        printf("align read (%"PRIu64")\n", count++);
         printf("align one read with seedLength:%"PRIu64", EDmax:%"PRIu64", hitMax:%"PRIu64", "
                "confidence threshold:%"PRIu64"\n", seedLength, EDmax, hitMax, confidenceThreshold);
         result = alignOneReadUsingSNAP(snap, seedLength, EDmax, hitMax, confidenceThreshold);
@@ -83,6 +97,7 @@ int main() {
             printf("not found\n");
         }
         printRead(read);
+        fprintReadUsingSAM(copyRead(read), sam);
         clearRead(read);
     }
 

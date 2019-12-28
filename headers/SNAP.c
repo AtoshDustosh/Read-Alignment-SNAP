@@ -3,7 +3,6 @@
 
 #include <string.h>
 
-
 #include "MyArgs.h"
 #include "AuxiliaryFunction.h"
 #include "AVLTree.h"
@@ -65,6 +64,8 @@ static void _extractHexCodedFragmentFromRefTest() {
     printf("Reference sequence: \n");
     printHexCodedStringBuffer(refHexCodedStrBuf);
     printStringBuffer(refStrBuf);
+    clearStringBuffer(refStrBuf);
+    clearHexCodedStringBuffer(refHexCodedStrBuf);
 
     seedLength = 20;
     DNAoffset = 3;
@@ -75,6 +76,7 @@ static void _extractHexCodedFragmentFromRefTest() {
     printHexCodedStringBuffer(seedHexCodedStrBuf);
     printStringBuffer(seedStrBuf);
     clearStringBuffer(seedStrBuf);
+    clearHexCodedStringBuffer(seedHexCodedStrBuf);
 
     printf("\n");
 
@@ -87,6 +89,7 @@ static void _extractHexCodedFragmentFromRefTest() {
     printHexCodedStringBuffer(seedHexCodedStrBuf);
     printStringBuffer(seedStrBuf);
     clearStringBuffer(seedStrBuf);
+    clearHexCodedStringBuffer(seedHexCodedStrBuf);
 
     printf("\n");
 
@@ -99,6 +102,7 @@ static void _extractHexCodedFragmentFromRefTest() {
     printHexCodedStringBuffer(seedHexCodedStrBuf);
     printStringBuffer(seedStrBuf);
     clearStringBuffer(seedStrBuf);
+    clearHexCodedStringBuffer(seedHexCodedStrBuf);
 
     printf("\n");
 
@@ -111,6 +115,7 @@ static void _extractHexCodedFragmentFromRefTest() {
     printHexCodedStringBuffer(seedHexCodedStrBuf);
     printStringBuffer(seedStrBuf);
     clearStringBuffer(seedStrBuf);
+    clearHexCodedStringBuffer(seedHexCodedStrBuf);
 
     printf("\n");
 
@@ -123,11 +128,7 @@ static void _extractHexCodedFragmentFromRefTest() {
     printHexCodedStringBuffer(seedHexCodedStrBuf);
     printStringBuffer(seedStrBuf);
     clearStringBuffer(seedStrBuf);
-
-
     clearHexCodedStringBuffer(seedHexCodedStrBuf);
-    clearStringBuffer(refStrBuf);
-    clearHexCodedStringBuffer(refHexCodedStrBuf);
 }
 
 
@@ -157,6 +158,10 @@ SNAP* constructSNAP(uint64_t* hexCodedRefDNA, uint64_t DNAlength, uint64_t seedL
 //        printStringBuffer(seedStrBuf);
         addHashCell(seedStrBuf->buffer, refOffset, snap->hashTable, tableSize);
         clearStringBuffer(seedStrBuf);
+        if(refOffset % (tableSize / 50) == 0) {
+            uint64_t completionPercent = refOffset / (tableSize / 100);
+            printf("... completed %"PRIu64"%%\n", completionPercent);
+        }
     }
 
     printf("\n... hash table for reference DNA constructed. \n");
@@ -316,6 +321,7 @@ uint64_t alignOneReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
         free(mostHittingLocationsAVLNodes);
 
         if(d_best < confidenceThreshold && d_second < d_best + confidenceThreshold) {
+            clearHexCodedStringBuffer(readHexCodedStrBuf);
             clearQueue(seedQueue);
             clearAVLTree(locationAVLTree);
             putSNAPresultIntoRead(d_bestRefOffset, snap);
@@ -330,6 +336,7 @@ uint64_t alignOneReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
         seedSeqNum++;
 //        printf("\n");
     }
+    clearHexCodedStringBuffer(readHexCodedStrBuf);
     clearQueue(seedQueue);
     clearAVLTree(locationAVLTree);
     if(d_best <= d_max && d_second >= d_best + confidenceThreshold) {
@@ -339,6 +346,8 @@ uint64_t alignOneReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
         putSNAPresultIntoRead(d_bestRefOffset, snap);
         return MULTIPLE_HITS;
     } else {
+        snap->read->CIGAR[0] = '*';
+        snap->read->CIGAR[1] = '\0';
         return NOT_FOUND;
     }
 }
@@ -423,6 +432,7 @@ static Queue* getLocationQueueOfSeed(HexCodedStringBuffer* seedHexCodedStrBuf, H
 
         uint64_t compareResult = compareHexCodedStringBuffer(refSmerHexCodedStrBuf,
                                  seedHexCodedStrBuf);
+        clearHexCodedStringBuffer(refSmerHexCodedStrBuf);
 //        printf("\t");
 //        printf("compare result: %"PRIu64"\t", compareResult);
 //        printStringBuffer(refSmerStrBuf);
@@ -492,6 +502,7 @@ static uint64_t getEDofBestAlignment(uint64_t* refHexCodedDNA, uint64_t refLengt
     char CIGARbuffer[BUFSIZ];
     char* bestCIGAR = NULL;
     uint64_t bestED = INFINITE;
+    free(readSeq);
 
     if(mostHittingLocationsNum == 0){
         return bestED;
@@ -529,6 +540,7 @@ static uint64_t getEDofBestAlignment(uint64_t* refHexCodedDNA, uint64_t refLengt
     // copy the best CIGAR to the field of a Read
     strcpy(read->CIGAR, bestCIGAR);
 
+    free(bestCIGAR);
     clearStringBuffer(readStrBuf);
     return bestED;
 }

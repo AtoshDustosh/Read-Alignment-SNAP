@@ -1,6 +1,6 @@
 #include "Read.h"
 
-
+#include <string.h>
 
 void initRead(Read *read) {
     if(read == NULL) {
@@ -49,6 +49,27 @@ void printRead(Read* read) {
 
 }
 
+Read* copyRead(Read* read) {
+    if(read == NULL){
+        printf("ERROR: null pointer occurs when copying a read.\n");
+        exit(EXIT_FAILURE);
+    }
+    Read* copiedRead = (Read*)malloc(sizeof(Read));
+
+    initRead(copiedRead);
+    strcpy(copiedRead->QNAME, read->QNAME);
+    copiedRead->FLAG = read->FLAG;
+    strcpy(copiedRead->RNAME, read->RNAME);
+    copiedRead->POS = read->POS;
+    copiedRead->MAPQ = read->MAPQ;
+    strcpy(copiedRead->CIGAR, read->CIGAR);
+    strcpy(copiedRead->RNEXT, read->RNEXT);
+    copiedRead->PNEXT = read->PNEXT;
+    copiedRead->TLEN = read->TLEN;
+    strcpy(copiedRead->SEQ, read->SEQ);
+    strcpy(copiedRead->QUAL, read->QUAL);
+    return copiedRead;
+}
 
 void clearRead(Read* read) {
     if(read == NULL){
