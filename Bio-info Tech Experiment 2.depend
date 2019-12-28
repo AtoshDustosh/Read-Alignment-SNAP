@@ -6,7 +6,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1577529517 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
+1577541630 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliarydatatype.c
 	"AuxiliaryDataType.h"
 	<string.h>
 
@@ -15,7 +15,7 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
+1577541630 source:e:\c_projects\bio-info tech experiment 2\headers\auxiliaryfunction.c
 	"AuxiliaryFunction.h"
 	<math.h>
 	<string.h>
@@ -37,7 +37,7 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577537082 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
+1577541508 source:e:\c_projects\bio-info tech experiment 2\headers\editdistance.c
 	"EditDistance.h"
 	<string.h>
 	<strings.h>
@@ -55,7 +55,7 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577526285 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
+1577541394 source:e:\c_projects\bio-info tech experiment 2\headers\fileoperation.c
 	"FileOperation.h"
 	<string.h>
 	"ArrayOperation.h"
@@ -69,7 +69,7 @@
 	"AuxiliaryDataType.h"
 	"Read.h"
 
-1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
+1577541646 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
 	"HashTable.h"
 
 1577458804 e:\c_projects\bio-info tech experiment 2\headers\hashtable.h
@@ -77,7 +77,7 @@
 	<stdlib.h>
 	<inttypes.h>
 
-1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
+1577541368 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
 1577537208 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
@@ -99,7 +99,7 @@
 
 1577458804 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1577537082 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577540350 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -115,7 +115,7 @@
 	"../headers/SAM.h"
 	"../headers/SNAP.h"
 
-1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\avltree.c
+1577541508 source:e:\c_projects\bio-info tech experiment 2\headers\avltree.c
 	"AVLTree.h"
 	"AuxiliaryFunction.h"
 	"Queue.h"
@@ -133,12 +133,13 @@
 	"Read.h"
 	<string.h>
 
-1577535509 source:e:\c_projects\bio-info tech experiment 2\headers\sam.c
+1577540874 source:e:\c_projects\bio-info tech experiment 2\headers\sam.c
 	"SAM.h"
 
-1577534377 e:\c_projects\bio-info tech experiment 2\headers\sam.h
+1577540366 e:\c_projects\bio-info tech experiment 2\headers\sam.h
 	<stdio.h>
 	<stdlib.h>
+	<inttypes.h>
 	"Read.h"
 
 1577458804 source:e:\c_projects\bio-info tech experiment 2\headers\pairendaligner.c

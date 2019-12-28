@@ -68,6 +68,10 @@ static void _queueTest() {
 QueueCell* newQueueCell(uint64_t data) {
     /**< \note memory required by malloc will not be freed when the function ends */
     QueueCell* queueCell = (QueueCell*)malloc(sizeof(QueueCell));
+    if(queueCell == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     queueCell->data = data;
     queueCell->next = NULL;
     return queueCell;
@@ -76,6 +80,10 @@ QueueCell* newQueueCell(uint64_t data) {
 
 Queue* initQueue() {
     Queue* queueInstance = (Queue*)malloc(sizeof(Queue));
+    if(queueInstance == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     queueInstance->head = NULL;
     queueInstance->tail = NULL;
     queueInstance->length = 0;

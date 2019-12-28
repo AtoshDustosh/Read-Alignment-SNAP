@@ -55,6 +55,10 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA, cha
     uint64_t i = 0;
 
     char* buffer = (char*)malloc(sizeof(char) * (charNumPerHex + 1));
+    if(buffer == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
 
     uint64_t hexInt = 0;
     uint64_t strLength = 0;
@@ -99,6 +103,10 @@ void loadFnaData(char* filePath, uint64_t dataLength, uint64_t* hexCodedDNA, cha
 //                printf("\n");
 //            }
             buffer = (char*)malloc(sizeof(char) * (charNumPerHex + 1));
+            if(buffer == NULL) {
+                printf("ERROR: System memory not enough. \n");
+                exit(EXIT_FAILURE);
+            }
             strLength = 0;
         }
         ch = fgetc(fp);

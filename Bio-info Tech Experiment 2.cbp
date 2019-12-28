@@ -5,7 +5,7 @@
 		<Option title="Bio-info Tech Experiment 2" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="headers\;src\;data\;data\fna\;data\fastq\;" />
+		<Option virtualFolders="headers\;src\;data\;data\fna\;data\fastq\;data\sam\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/Bio-info Tech Experiment 2" prefix_auto="1" extension_auto="1" />
@@ -32,6 +32,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="data/fastq/testdata_2500_1.fastq">
+			<Option virtualFolder="data/fastq/" />
+		</Unit>
+		<Unit filename="data/fastq/testdata_2500_2.fastq">
+			<Option virtualFolder="data/fastq/" />
+		</Unit>
 		<Unit filename="data/fastq/testdata_30_1.fastq">
 			<Option virtualFolder="data/fastq/" />
 		</Unit>
@@ -58,6 +64,12 @@
 		</Unit>
 		<Unit filename="data/fna/testdata_30.fna">
 			<Option virtualFolder="data/fna/" />
+		</Unit>
+		<Unit filename="data/sam/sam_testdata_2500_1.sam">
+			<Option virtualFolder="data/sam/" />
+		</Unit>
+		<Unit filename="data/sam/sam_testdata_30_1.sam">
+			<Option virtualFolder="data/sam/" />
 		</Unit>
 		<Unit filename="headers/AVLTree.c">
 			<Option compilerVar="CC" />
@@ -130,6 +142,13 @@
 			<Option virtualFolder="headers/" />
 		</Unit>
 		<Unit filename="headers/Read.h">
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/SAM.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="headers/" />
+		</Unit>
+		<Unit filename="headers/SAM.h">
 			<Option virtualFolder="headers/" />
 		</Unit>
 		<Unit filename="headers/SNAP.c">

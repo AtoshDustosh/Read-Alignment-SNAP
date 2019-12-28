@@ -65,6 +65,10 @@ static void _usageOfAVLinSNAPTest() {
     AVLNode* node = NULL;
     uint64_t* positions = (uint64_t*)malloc(sizeof(uint64_t) * positionCount);
     uint64_t* seedCounts = (uint64_t*)malloc(sizeof(uint64_t) * positionCount);
+    if(seedCounts == NULL || positions == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
 
     printf("\n>> add hits of the first seed\n");
     for(uint64_t i = 0; i < positionCount; i++) {
@@ -202,6 +206,10 @@ void traversePrintAVLTree(AVLNode* root) {  // breadth first traverse
 
     uint64_t front = 0, rear = 0;
     AVLNode** queue = (AVLNode**)malloc(sizeof(AVLNode*) * AVLTreeMaxSize);
+    if(queue == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     AVLNode* qCell = NULL;
 
     queue[rear++] = root;
@@ -227,6 +235,10 @@ AVLNode** findNodeswithMaxData(AVLNode* root, uint64_t* nodesNum) {
     }
     uint64_t front = 0, rear = 0;
     AVLNode** queue = (AVLNode**)malloc(sizeof(AVLNode*) * AVLTreeMaxSize);
+    if(queue == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     AVLNode* qCell = NULL;
     uint64_t maxDataValue = 0;
 
@@ -245,6 +257,10 @@ AVLNode** findNodeswithMaxData(AVLNode* root, uint64_t* nodesNum) {
 
     /** < \note traverse to find the nodes that have the maximum data */
     AVLNode** nodes = (AVLNode**)malloc(sizeof(AVLNode*) * AVLTreeMaxSize);
+    if(nodes == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     *nodesNum = 0;
     front = 0;
     rear = 0;

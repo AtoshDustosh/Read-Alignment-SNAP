@@ -140,6 +140,10 @@ static void _extractHexCodedFragmentFromRefTest() {
 SNAP* constructSNAP(uint64_t* hexCodedRefDNA, uint64_t DNAlength, uint64_t seedLength) {
     uint64_t tableSize = DNAlength - seedLength + 1;
     SNAP* snap = (SNAP*)malloc(sizeof(SNAP));
+    if(snap == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
 
     snap->hexCodedRefDNA = hexCodedRefDNA;
     snap->hashTable = initHashTable(tableSize);
@@ -193,6 +197,10 @@ HexCodedStringBuffer* extractHexCodedFragmentFromRef(uint64_t* refSeq, uint64_t 
         fragmentArrayLength = fragmentLength / CHAR_NUM_PER_HEX + 1;
     }
     uint64_t* hexArray = (uint64_t*)malloc(sizeof(uint64_t) * fragmentLength);
+    if(hexArray == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
 
     volatile const uint64_t bitInterval = sizeof(uint64_t) * 8 / CHAR_NUM_PER_HEX;
     uint64_t fragmentHexIntIndex = 0;
@@ -283,6 +291,10 @@ uint64_t alignOneReadUsingSNAP(SNAP* snap, uint64_t seedLength, uint64_t EDmax,
                 &mostHittingLocationsNum);
         uint64_t* mostHittingLocations =
             (uint64_t*)malloc(sizeof(uint64_t) * mostHittingLocationsNum);
+        if(mostHittingLocations == NULL) {
+            printf("ERROR: System memory not enough. \n");
+            exit(EXIT_FAILURE);
+        }
 //        printf("Most hitting locations: \n");
         for(uint64_t i = 0; i < mostHittingLocationsNum; i++) {
             mostHittingLocations[i] = mostHittingLocationsAVLNodes[i]->key;
@@ -458,6 +470,10 @@ static AVLNode* accumulateLocationsUsingAVLTree(AVLNode* tree, Queue* locationQu
         uint64_t seedOffset) {
     AVLNode* node = NULL;
     QueueCell* queueCell = (QueueCell*)malloc(sizeof(QueueCell));
+    if(queueCell == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
 
     while(isQueueEmpty(locationQueue) != QUEUE_EMPTY) {
         deQueue(locationQueue, queueCell);

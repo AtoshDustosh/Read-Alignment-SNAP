@@ -64,6 +64,10 @@ static void _calculateEditDistanceTest() {
     StringBuffer* strBufColumn = NULL;
     uint64_t maxBufLen = BUFSIZ;
     char* CIGAR = (char*)malloc(sizeof(char) * maxBufLen);
+    if(CIGAR == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
 
     uint64_t EDmax = 4;
     uint64_t bestED = 0;
@@ -151,6 +155,10 @@ uint64_t calculateEditDistance(StringBuffer* patternStrBuf, StringBuffer* refStr
      */
     char* strRow = (char*)malloc(sizeof(char) * (rowNum + 1));
     char* strColumn = (char*)malloc(sizeof(char) * (columnNum + 1));
+    if(strRow == NULL || strColumn == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     uint64_t EDmatrix[rowNum][columnNum];
     uint64_t diagonallyExtendedMatrix[rowNum][columnNum];
 
@@ -258,6 +266,10 @@ static void fillEditDistanceMatrix(StringBuffer* strRow, StringBuffer* strColumn
     Queue* startRowQueue = (Queue*)malloc(sizeof(Queue));
     Queue* startColumnQueue = (Queue*)malloc(sizeof(Queue));
     QueueCell* queueCell = (QueueCell*)malloc(sizeof(QueueCell));
+    if(queueCell == NULL || startColumnQueue == NULL || startRowQueue == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
 
     /**< \note initializing enqueue operations */
     startRowQueue = initQueue();
@@ -681,6 +693,10 @@ static uint64_t processEDMatrix(StringBuffer* strRow, StringBuffer* strColumn, u
 static void parseCIGAR(char* CIGARbuffer) {
     uint64_t strLength = strlen(CIGARbuffer);
     char* CIGAR = (char*)malloc(sizeof(char) * (strLength + 1));
+    if(CIGAR == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     uint64_t CIGARpointer = 0;
     uint64_t CIGARbufferPointer = 0;
     char ch = '\0';

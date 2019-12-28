@@ -119,6 +119,10 @@ void addHashCell(char* str, uint64_t data, HashTable* hashTable, uint64_t tableS
     uint64_t index = hashIndex(str, tableSize);
     HashCell* hashCell = hashTable->hashList[index];
     HashCell* newHashCell = (HashCell*)malloc(sizeof(HashCell));
+    if(newHashCell == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     newHashCell->data = data;
     newHashCell->flag = 1;
     newHashCell->nextCell = NULL;
@@ -139,7 +143,15 @@ void addHashCell(char* str, uint64_t data, HashTable* hashTable, uint64_t tableS
 
 HashTable* initHashTable(uint64_t tableSize) {
     HashTable* hashTable = (HashTable*)malloc(sizeof(HashTable));
+    if(hashTable == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     hashTable->hashList = (HashCell**)malloc(sizeof(HashCell*) * tableSize);
+    if(hashTable->hashList == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     uint64_t i = 0;
     if(hashTable->hashList == NULL) {
         printf("System memory not enough. \n");
@@ -244,6 +256,10 @@ static uint64_t MyHash(char* str) {
  */
 static char* randomString(uint64_t strLength) {
     char* str = (char*)malloc(sizeof(char) * (strLength + 1));
+    if(str == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     uint64_t i = 0;
     for(i = 0; i < strLength; i++) {
         char randChar = (rand() % 26) % 4 + 'a';

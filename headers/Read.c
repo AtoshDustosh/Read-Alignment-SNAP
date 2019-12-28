@@ -8,21 +8,45 @@ void initRead(Read *read) {
         exit(EXIT_FAILURE);
     }
     read->QNAME = (char*)malloc(sizeof(char) * BUFSIZ);
+    if(read->QNAME == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     read->QNAME[0] = '\0';
     read->FLAG = 0x0;
     read->RNAME = (char*)malloc(sizeof(char) * BUFSIZ);
+    if(read->RNAME == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     read->RNAME[0] = '\0';
     read->POS = 0;
     read->MAPQ = 0;
     read->CIGAR = (char*)malloc(sizeof(char) * BUFSIZ);
+    if(read->CIGAR == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     read->CIGAR[0] = '\0';
     read->RNEXT = (char*)malloc(sizeof(char) * BUFSIZ);
+    if(read->RNEXT == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     read->RNEXT[0] = '\0';
     read->PNEXT = 0;
     read->TLEN = 0;
     read->SEQ = (char*)malloc(sizeof(char) * BUFSIZ);
+    if(read->SEQ == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     read->SEQ[0] = '\0';
     read->QUAL = (char*)malloc(sizeof(char) * BUFSIZ);
+    if(read->QUAL == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     read->QUAL[0] = '\0';
 }
 
@@ -55,6 +79,10 @@ Read* copyRead(Read* read) {
         exit(EXIT_FAILURE);
     }
     Read* copiedRead = (Read*)malloc(sizeof(Read));
+    if(copiedRead == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
 
     initRead(copiedRead);
     strcpy(copiedRead->QNAME, read->QNAME);

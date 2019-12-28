@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <inttypes.h>
+
 #include "Read.h"
 
 typedef struct _define_SAM {
@@ -17,9 +19,11 @@ typedef struct _define_SAM {
  * Construct a SAM structure.
  *
  * @param char* filePath path of ?.sam file
+ * @param refName name of reference DNA
+ * @param refLength length of reference DNA
  * @return a new SAM structure
  */
-SAM* constructSAM(char* filePath);
+SAM* constructSAM(char* filePath, char* refName, uint64_t refLength);
 
 
 /**

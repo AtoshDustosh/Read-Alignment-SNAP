@@ -2,8 +2,13 @@
 
 
 
-SAM* constructSAM(char* filePath) {
+SAM* constructSAM(char* filePath, char* refName, uint64_t refLength) {
     SAM* sam = (SAM*)malloc(sizeof(SAM));
+    if(sam == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
+
     FILE* fpointer = fopen(filePath, "w");
 
     sam->filePath = filePath;
@@ -14,8 +19,8 @@ SAM* constructSAM(char* filePath) {
     sam->fpointer = fpointer;
     sam->lastRead = NULL;
     sam->newRead = NULL;
-    fprintf(sam->fpointer, "%s\n", "@HD VN:version");
-    fprintf(sam->fpointer, "%s\n", "@SQ SN:ref_name LN:ref_length");
+    fprintf(sam->fpointer, "@HD VN:version\n");
+    fprintf(sam->fpointer, "@SQ SN:%s LN:%"PRIu64"\n", refName, refLength);
     return sam;
 }
 

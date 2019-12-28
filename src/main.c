@@ -25,14 +25,14 @@ static char* fnaFileHeader = NULL;
  * Global variables for ?.fastq files.
  */
 /** < \note remained to be optimized (structural problems) */
-static char* fastqFilePath = "data/fastq/testdata_2500_1.fastq";
+static char* fastqFilePath = "data/fastq/testdata_30_1.fastq";
 static FILE* fpointer = NULL;
 static Read* read = NULL;
 
 /*
  * Global variables for ?.sam files
  */
-static char* samFilePath = "data/sam/sam_testdata_2500_1.sam";
+static char* samFilePath = "data/sam/sam_testdata_30_1.sam";
 static SAM* sam = NULL;
 
 /*
@@ -67,13 +67,17 @@ int main() {
 
     /** < construct SNAP based on ?.fna file */
     snap = constructSNAP(hexCodedRefDNA, DNAlength, seedLength);
-    sam = constructSAM(samFilePath);
+    sam = constructSAM(samFilePath, fnaFileHeader, DNAlength);
 
     /** < load and process all reads in ?.fastq file one by one */
     uint64_t result = 0;
     uint64_t count = 0;
     while(1) {
         read = (Read*)malloc(sizeof(Read));
+        if(read == NULL) {
+            printf("ERROR: System memory not enough. \n");
+            exit(EXIT_FAILURE);
+        }
         initRead(read);
         result = loadOneReadFromFile(fastqFilePath, &fpointer, read);
         if(result == 0) {

@@ -114,10 +114,18 @@ HexCodedStringBuffer* constructHexCodedStringBuffer(uint64_t* hexArray, uint64_t
         uint64_t strLength) {
     HexCodedStringBuffer* hexCodedStrBuf =
         (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
+    if(hexCodedStrBuf == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     if(hexArray == NULL || arrayLength == 0) {
         hexCodedStrBuf->hexArray = NULL;
     } else {
         hexCodedStrBuf->hexArray = (uint64_t*)malloc(sizeof(uint64_t) * arrayLength);
+        if(hexCodedStrBuf->hexArray == NULL) {
+            printf("ERROR: System memory not enough. \n");
+            exit(EXIT_FAILURE);
+        }
         for(uint64_t i = 0; i < arrayLength; i++) {
             hexCodedStrBuf->hexArray[i] = hexArray[i];
         }
@@ -130,7 +138,15 @@ HexCodedStringBuffer* constructHexCodedStringBuffer(uint64_t* hexArray, uint64_t
 
 StringBuffer* constructStringBuffer(char* buffer, uint64_t length) {
     StringBuffer* strBuf = (StringBuffer*)malloc(sizeof(StringBuffer));
+    if(strBuf == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     strBuf->buffer = (char*)malloc(sizeof(char) * (length + 1));
+    if(strBuf->buffer == NULL) {
+        printf("ERROR: System memory not enough. \n");
+        exit(EXIT_FAILURE);
+    }
     for(uint64_t i = 0; i < length; i++) {
         strBuf->buffer[i] = buffer[i];
     }
