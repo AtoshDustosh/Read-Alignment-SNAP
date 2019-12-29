@@ -69,7 +69,7 @@
 	"AuxiliaryDataType.h"
 	"Read.h"
 
-1577541646 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
+1577627682 source:e:\c_projects\bio-info tech experiment 2\headers\hashtable.c
 	"HashTable.h"
 
 1577458804 e:\c_projects\bio-info tech experiment 2\headers\hashtable.h
@@ -80,7 +80,7 @@
 1577541368 source:e:\c_projects\bio-info tech experiment 2\headers\queue.c
 	"Queue.h"
 
-1577537208 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
+1577541368 source:e:\c_projects\bio-info tech experiment 2\headers\snap.c
 	"SNAP.h"
 	<string.h>
 	"MyArgs.h"
@@ -99,7 +99,7 @@
 
 1577458804 source:e:\c_projects\bio-info tech experiment 2\package-info.c
 
-1577540350 source:e:\c_projects\bio-info tech experiment 2\src\main.c
+1577623942 source:e:\c_projects\bio-info tech experiment 2\src\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -129,11 +129,11 @@
 	<stdio.h>
 	<stdlib.h>
 
-1577534723 source:e:\c_projects\bio-info tech experiment 2\headers\read.c
+1577541677 source:e:\c_projects\bio-info tech experiment 2\headers\read.c
 	"Read.h"
 	<string.h>
 
-1577540874 source:e:\c_projects\bio-info tech experiment 2\headers\sam.c
+1577624264 source:e:\c_projects\bio-info tech experiment 2\headers\sam.c
 	"SAM.h"
 
 1577540366 e:\c_projects\bio-info tech experiment 2\headers\sam.h

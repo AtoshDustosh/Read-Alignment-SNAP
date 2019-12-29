@@ -45,7 +45,7 @@ static uint64_t* hexCodedRefDNA = NULL;
  * Global variables for SNAP
  */
 static SNAP* snap = NULL;
-static uint64_t seedLength = 20;
+static uint64_t seedLength = 21;
 static uint64_t EDmax = 7;
 static uint64_t hitMax = 200;
 static uint64_t confidenceThreshold = 3;
@@ -88,19 +88,19 @@ int main() {
         loadOneReadIntoSNAP(read, snap);
         strcpy(read->RNAME, fnaFileHeader);
         printf("align read (%"PRIu64")\n", count++);
-        printf("align one read with seedLength:%"PRIu64", EDmax:%"PRIu64", hitMax:%"PRIu64", "
-               "confidence threshold:%"PRIu64"\n", seedLength, EDmax, hitMax, confidenceThreshold);
+//        printf("align one read with seedLength:%"PRIu64", EDmax:%"PRIu64", hitMax:%"PRIu64", "
+//               "confidence threshold:%"PRIu64"\n", seedLength, EDmax, hitMax, confidenceThreshold);
         result = alignOneReadUsingSNAP(snap, seedLength, EDmax, hitMax, confidenceThreshold);
 
-        printf("align result: ");
-        if(result == SINGLE_HIT) {
-            printf("single hit.\n");
-        } else if (result == MULTIPLE_HITS) {
-            printf("multiple hit.\n");
-        } else {
-            printf("not found\n");
-        }
-        printRead(read);
+//        printf("align result: ");
+//        if(result == SINGLE_HIT) {
+//            printf("single hit.\n");
+//        } else if (result == MULTIPLE_HITS) {
+//            printf("multiple hit.\n");
+//        } else {
+//            printf("not found\n");
+//        }
+//        printRead(read);
         fprintReadUsingSAM(copyRead(read), sam);
         clearRead(read);
     }

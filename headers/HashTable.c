@@ -191,14 +191,16 @@ uint64_t hashIndex(char *str, uint64_t tableSize) {
  */
 static uint64_t MyHash(char* str) {
     uint64_t hash = 0;
+    uint64_t seed = 131;
 
     while(*str != '\0') {
-        uint64_t x = hash & 0xf000000000000000;
-        hash = (hash << 2) + *str;
-        if(x != 0) {
-            hash = hash ^ (x >> 60);
-            hash = hash & ~x;
-        }
+//        uint64_t x = hash & 0xf000000000000000;
+//        hash = (hash << 2) + *str;
+//        if(x != 0) {
+//            hash = hash ^ (x >> 60);
+//            hash = hash & ~x;
+//        }
+        hash = hash * seed + (*str);
         str++;  // use pointers to go forward on a string
     }
     return (hash & 0x7fffffffffffffff);
