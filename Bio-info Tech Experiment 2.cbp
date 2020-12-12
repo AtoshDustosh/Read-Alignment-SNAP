@@ -32,9 +32,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="data/fastq/NC_008253_1.fastq">
-			<Option virtualFolder="data/fastq/" />
-		</Unit>
 		<Unit filename="data/fastq/testdata_2500_1.fastq">
 			<Option virtualFolder="data/fastq/" />
 		</Unit>

@@ -173,7 +173,7 @@ uint64_t calculateEditDistance(StringBuffer* patternStrBuf, StringBuffer* refStr
         EDmatrix[i][0] = i;
     }
     for(uint64_t i = 0; i < columnNum;
-            i++) { // initialize first column (bounder) of edit-distance matrix
+            i++) {      // initialize first column (bounder) of edit-distance matrix
         EDmatrix[0][i] = i;
     }
     for(uint64_t i = 0; i < rowNum; i++) {      // copy patternStrBuf
@@ -607,7 +607,7 @@ static void splitAfterExtension(StringBuffer* strRow, StringBuffer* strColumn,
  * @param strColumn column string of the edit-distance matrix
  * @param EDmatrix edit-distance matrix - for i = 0 : n-1 {EDmatrix[0][i] = EDmatrix[i][0] = i};
  *      all other values are initialized as INITEDVALUE
- * @param CIGARbuffer buffer for CIGAR string
+ * @param CIGARbuffer buffer for CIGAR string; "*" if cannot find a match within EDmax
  * @param maxBufLen maximum length of buffer for CIGAR string
  * @param EDmax maximum edit distance that can be allowed
  * @return best edit-distance if it's within limit; INITEDVALUE if out of limit

@@ -16,7 +16,8 @@ void initPairendAligner(char* fastqFilePath1, char* fastqFilePath2,
     pairendAligner->fastqFilePath2 = fastqFilePath2;
 
     /**
-     * \todo integrate operations of FileOperation.h and main.c together. They can be used here.
+     * \todo integrate operations of FileOperation.h and main.c together.
+     * They can be used here.
      *
      */
 }

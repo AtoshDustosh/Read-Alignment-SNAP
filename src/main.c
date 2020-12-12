@@ -57,7 +57,8 @@ void testSet();
 
 
 int main() {
-//    testSet();
+    testSet();
+    return;
 
     DNAlength = fnaDataSize(fnaFilePath);
     fnaFileHeader = (char*)malloc(sizeof(char) * BUFSIZ);

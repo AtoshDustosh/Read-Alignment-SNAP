@@ -110,8 +110,8 @@ static void _compareHexCodedStringBufferTest() {
  */
 
 
-HexCodedStringBuffer* constructHexCodedStringBuffer(uint64_t* hexArray, uint64_t arrayLength,
-        uint64_t strLength) {
+HexCodedStringBuffer* constructHexCodedStringBuffer(uint64_t* hexArray,
+              uint64_t arrayLength, uint64_t strLength) {
     HexCodedStringBuffer* hexCodedStrBuf =
         (HexCodedStringBuffer*)malloc(sizeof(HexCodedStringBuffer));
     if(hexCodedStrBuf == NULL) {
